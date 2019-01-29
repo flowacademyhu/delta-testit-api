@@ -4,8 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     answerId: DataTypes.INTEGER
   }, {});
-  Test.associate = function(models) {
-    // associations can be defined here
+  Test.associate = function (models) {
+    Test.hasMany(models.Result);
+    Test.hasMany(models.TestQuestion);
+    Test.belongsTo(models.User);
   };
   return Test;
 };

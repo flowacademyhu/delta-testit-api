@@ -7,8 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     value: DataTypes.INTEGER
   }, {});
-  Question.associate = function(models) {
-    // associations can be defined here
+  Question.associate = function (models) {
+    Question.hasMany(models.TestQuestion);
+    Question.hasMany(models.Answer);
+    Question.belongsTo(models.Subject);
   };
   return Question;
 };

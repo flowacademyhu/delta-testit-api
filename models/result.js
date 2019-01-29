@@ -5,8 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     status: DataTypes.STRING
   }, {});
-  Result.associate = function(models) {
-    // associations can be defined here
+  Result.associate = function (models) {
+    Result.belongsTo(models.Test);
+    Result.belongsTo(models.User);
+    Result.hasMany(models.ChoosenAnswer);
   };
   return Result;
 };

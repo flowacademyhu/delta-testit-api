@@ -7,11 +7,13 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     encryptedPassword: DataTypes.STRING,
     groupId: DataTypes.INTEGER,
-    subjectId: DataTypes.INTEGER,
     lastLoginAt: DataTypes.DATE
   }, {});
-  User.associate = function(models) {
-    // associations can be defined here
+  User.associate = function (models) {
+    User.belongsTo(models.Group);
+    User.hasMany(models.Result);
+    User.hasMany(models.Test);
+    User.hasMany(models.SubjectUser);
   };
   return User;
 };

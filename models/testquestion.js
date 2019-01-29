@@ -4,8 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     questionId: DataTypes.INTEGER,
     testId: DataTypes.INTEGER
   }, {});
-  TestQuestion.associate = function(models) {
-    // associations can be defined here
+  TestQuestion.associate = function (models) {
+    TestQuestion.belongsTo(models.Question);
+    TestQuestion.belongsTo(models.Test);
   };
   return TestQuestion;
 };

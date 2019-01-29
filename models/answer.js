@@ -5,8 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     answerText: DataTypes.STRING,
     isCorrect: DataTypes.BOOLEAN
   }, {});
-  Answer.associate = function(models) {
-    // associations can be defined here
+  Answer.associate = function (models) {
+    Answer.belongsTo(models.Question);
+    Answer.hasMany(models.ChoosenAnswer);
   };
   return Answer;
 };
