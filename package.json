@@ -1,7 +1,6 @@
 {
   "name": "testit",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +14,14 @@
     "pg": "^7.8.0",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowacademyhu/delta-testit-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flowacademyhu/delta-testit-api/issues"
+  },
+  "homepage": "https://github.com/flowacademyhu/delta-testit-api#readme",
+  "description": ""
 }
