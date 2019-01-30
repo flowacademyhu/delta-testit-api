@@ -8,7 +8,7 @@ users.get('/', (req, res) => {
     res.json(result);
   });
 });
-
+/*
 // show
 users.get('/:id', (req, res) => {
   models.User.findById({where: { id: req.params.id }}).then(result => {
@@ -71,5 +71,5 @@ users.delete('/:id', (req, res) => {
   models.User.destroy(
     {where: {id: req.body.id}});
 });
-
-module.exports(users);
+*/
+module.exports = users;
