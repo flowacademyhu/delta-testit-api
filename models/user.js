@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     lastLoginAt: DataTypes.DATE
   }, {});
   User.associate = function (models) {
-    User.belongsTo(models.Group);
-    User.hasMany(models.Result);
-    User.hasMany(models.Test);
-    User.hasMany(models.SubjectUser);
+    User.belongsTo(models.Group, { foreignKey: 'groupId' });
+    User.hasMany(models.Result, { foreignKey: 'userId' });
+    User.hasMany(models.Test, { foreignKey: 'userId' });
+    User.hasMany(models.SubjectUser, { foreignKey: 'userId' });
   };
   return User;
 };
