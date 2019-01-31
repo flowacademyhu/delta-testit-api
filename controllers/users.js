@@ -5,71 +5,66 @@ const users = express();
 // index
 users.get('/', (req, res) => {
   models.User.findAll().then(result => {
-    res.json(result);
+    res.status(200).json(result);
+  }).catch(error => {
+    res.status(404).res.json(error);
   });
 });
-/*
+
 // show
 users.get('/:id', (req, res) => {
-  models.User.findById({where: { id: req.params.id }}).then(result => {
-    if (result) {
-      res.json(result);
-    } else {
-      res.status(404).send('No such user exists in our database.');
-    }
+  models.User.findById(req.params.id).then(result => {
+    res.status(200).json(result);
+  }).catch(error => {
+    res.status(404).json(error);
   });
 });
 
 // create
 users.post('/', (req, res) => {
-  models.User.findById({where: { id: req.body.id }})
-    .then(result => {
-      if (result) {
-        if (req.body.role &&
-          req.body.firstname &&
-          req.body.lastname) {
-          models.User.create({
-            role: req.body.role,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            // encryptedPassword: req.body.encryptedPassword,
-            groupId: req.body.groupId
-            // lastLoginAt: req.body.lastLoginAt
-          });
-        } else {
-          res.send('Please fill in all fields to create new user.');
-        }
-      } else {
-        res.status(404).send('No such user exists in our database.');
-      }
-    });
+  models.User.create({
+    role: req.body.role,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email
+  }).then(user => {
+    res.status(200).json(user);
+  }).catch(error => {
+    res.status(404).json(error);
+  });
 });
 
 // update
 users.put('/:id', (req, res) => {
-  models.User.findById({where: { id: req.body.id }})
+  models.User.findOne({where: {id: req.params.id}})
     .then(result => {
-      if (result) {
-        models.User.update({
-          role: req.body.role,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          // encryptedPassword: req.body.encryptedPassword,
-          groupId: req.body.groupId
-          // lastLoginAt: req.body.lastLoginAt
-        }).then(res.send('User has successfully been updated.'));
-      } else {
-        res.status(404).send('No such user exists in our database.');
-      }
+      const params = {
+        role: req.body.role,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        groupId: req.body.groupId
+        // encryptedPassword: req.body.encryptedPassword,
+        // lastLoginAt: req.body.lastLoginAt
+      };
+      models.User.update(params, { where: {id: req.params.id} })
+        .then(updated => {
+          res.status(200).json(updated);
+        })
+        .catch(error => {
+          res.status(404).json(error);
+        });
     });
 });
 
 // delete
 users.delete('/:id', (req, res) => {
   models.User.destroy(
-    {where: {id: req.body.id}});
+    {where: {id: req.params.id}})
+    .then(res.status(200).send('User deleted.'))
+    .catch(error => {
+      res.send(404).json(error);
+    });
 });
-*/
+
 module.exports = users;
