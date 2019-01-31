@@ -5,9 +5,9 @@ const models = require('../models');
 // index
 questions.get('/', (req, res) => {
   models.Question.findAll().then(questions => {
-    return res.status(200).json(questions);
+    res.status(200).json(questions);
   }).catch(err => {
-    return res.status(400).json('' + err);
+    res.status(400).json('' + err);
   });
 });
 
@@ -18,9 +18,9 @@ questions.get('/:id', (req, res) => {
       if (!question) {
         throw new Error();
       }
-      return res.json(question);
+      res.json(question);
     }).catch(err => {
-      return res.status(400).json('' + err);
+      res.status(400).json('' + err);
     });
 });
 
@@ -29,9 +29,9 @@ questions.post('/', (req, res) => {
   models.Question.create({
     questionText: req.body.questionText
   }).then(question => {
-    return res.status(200).json(question);
+    res.status(200).json(question);
   }).catch(err => {
-    return res.status(400).json('' + err);
+    res.status(400).json('' + err);
   });
 });
 
@@ -48,10 +48,12 @@ questions.put('/:id', (req, res) => {
       models.Question.update(params, { where: { id: req.params.id } })
         .then(updated => {
           res.status(200).json(updated);
+        }).catch(err => {
+          res.status(400).json('' + err);
         });
     })
     .catch(err => {
-      res.status(404).json('' + err);
+      res.status(400).json('' + err);
     });
 });
 
@@ -65,9 +67,9 @@ questions.delete('/:id', (req, res) => {
     if (!question) {
       throw new Error();
     }
-    return res.json(question);
+    res.json(question);
   }).catch(err => {
-    return res.status(400).json('' + err);
+    res.status(400).json('' + err);
   });
 });
 
