@@ -38,6 +38,7 @@ users.post('/', (req, res) => {
   });
 });
 
+// update
 users.put('/:id', (req, res) => {
   models.User.update(
     {
@@ -51,10 +52,31 @@ users.put('/:id', (req, res) => {
       res.status(200).json(updated);
     })
     .catch(error => {
+      res.status(404).json(error);
+    });
+});
+
+/*
+// update
+users.put('/:id', (req, res) => {
+  let firstName = req.body.firstName;
+  models.User.update(
+    {
+      role: req.body.role,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    },
+    {where: {id: req.params.id}})
+    .then(updated => {
+      res.status(200).json(firstName + ' has been successfully updated.');
+    })
+    .catch(error => {
       res.status(404).json({message: error + '! User with given id does not exist!'
       });
     });
 });
+*/
 
 /*
 // update
