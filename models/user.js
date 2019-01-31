@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       // defaultValue: 'role'
     },
     firstName: {
-      type: DataTypes.STRING
-      // allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false
       // validate: {notNull: { msg: 'foo is required' }}
     },
     lastName: {
