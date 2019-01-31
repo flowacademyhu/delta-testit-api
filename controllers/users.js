@@ -7,7 +7,7 @@ users.get('/', (req, res) => {
   models.User.findAll().then(result => {
     res.status(200).json(result);
   }).catch(error => {
-    res.status(404).res.json(error);
+    res.status(404).res.json('' + error);
   });
 });
 
@@ -18,9 +18,9 @@ users.get('/:id', (req, res) => {
       if (!result) {
         throw new Error();
       }
-      return res.status(200).json(result);
+      res.status(200).json(result);
     }).catch(error => {
-      return res.status(404).json({message: 'User with given id does not exist. ' + error});
+      res.status(404).json({message: error + '! User with given id does not exist.'});
     });
 });
 
@@ -50,9 +50,6 @@ users.put('/:id', (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email
-        // groupId: req.body.groupId
-        // encryptedPassword: req.body.encryptedPassword,
-        // lastLoginAt: req.body.lastLoginAt
       };
       models.User.update(params, { where: {id: req.params.id} })
         .then(updated => {
