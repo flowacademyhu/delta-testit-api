@@ -38,9 +38,28 @@ users.post('/', (req, res) => {
   });
 });
 
+users.put('/:id', (req, res) => {
+  models.User.update(
+    {
+      role: req.body.role,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    },
+    {where: {id: req.params.id}})
+    .then(updated => {
+      res.status(200).json(updated);
+    })
+    .catch(error => {
+      res.status(404).json({message: error + '! User with given id does not exist!'
+      });
+    });
+});
+
+/*
 // update
 users.put('/:id', (req, res) => {
-  models.User.findOne({where: {id: req.params.id}})
+  models.User.findOne({ where: {id: req.params.id} })
     .then(result => {
       if (!result) {
         throw new Error();
@@ -54,12 +73,16 @@ users.put('/:id', (req, res) => {
       models.User.update(params, { where: {id: req.params.id} })
         .then(updated => {
           res.status(200).json(updated);
+        })
+        .catch(error => {
+          res.status(404).json({message: error + '! Please fill in all fields!'});
         });
     })
     .catch(error => {
-      res.status(404).json({message: 'User with given id does not exist. ' + error});
+      res.status(404).json({message: error + '! User with given id does not exist!'});
     });
 });
+*/
 
 // delete
 users.delete('/:id', (req, res) => {
@@ -73,7 +96,7 @@ users.delete('/:id', (req, res) => {
         .then(res.send(name + ' has been successfully deleted.'));
     })
     .catch(error => {
-      res.status(404).json({message: 'User with given id does not exist. ' + error});
+      res.status(404).json({message: error + '! User with given id does not exist.'});
     });
 });
 
