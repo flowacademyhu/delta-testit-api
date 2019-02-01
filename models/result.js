@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING
   }, {});
   Result.associate = function (models) {
-    Result.belongsTo(models.Test);
-    Result.belongsTo(models.User);
-    Result.hasMany(models.ChoosenAnswer);
+    Result.belongsTo(models.Test, { foreignKey: 'testId' });
+    Result.belongsTo(models.User, { foreignKey: 'userId' });
+    Result.hasMany(models.ChoosenAnswer, { foreignKey: 'resultId' });
   };
   return Result;
 };
