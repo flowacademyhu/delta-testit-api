@@ -10,27 +10,22 @@ module.exports = {
       },
       subjectId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Subjects',
           key: 'id'
         }
       },
       questionText: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       level: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       type: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       value: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

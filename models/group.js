@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Group.associate = function (models) {
-    Group.hasMany(models.User);
+    Group.hasMany(models.User, { foreignKey: 'groupId' });
   };
   return Group;
 };
