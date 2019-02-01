@@ -14,7 +14,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/users', questions);
-app.use('/users', users);
+app.use('/questions', questions);
+// app.use('/users', users);
 
 app.listen(process.env.PORT);
