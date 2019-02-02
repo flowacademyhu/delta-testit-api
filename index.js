@@ -15,6 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/questions', questions);
-// app.use('/users', users);
+app.use('/users', users);
 
 app.listen(process.env.PORT);
