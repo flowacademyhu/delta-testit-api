@@ -10,8 +10,7 @@ module.exports = {
       },
       role: {
         type: Sequelize.ENUM('student', 'mentor', 'admin'),
-        allowNull: false,
-        defaultValue: 'student'
+        allowNull: false
       },
       firstName: {
         type: Sequelize.STRING,
