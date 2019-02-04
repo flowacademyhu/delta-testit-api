@@ -19,6 +19,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      picture: {
+        type: Sequelize.BLOB
+      },
       level: {
         type: Sequelize.INTEGER,
         allowNull: false
