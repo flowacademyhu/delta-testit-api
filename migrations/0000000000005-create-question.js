@@ -22,7 +22,6 @@ module.exports = {
       questionPicture: {
         type: Sequelize.BLOB
       },
-
       type: {
         type: Sequelize.STRING,
         allowNull: false
