@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         max: 500
       }
     },
-    picture: {
+    userPicture: {
       type: DataTypes.BLOB
     },
     encryptedPassword: DataTypes.STRING,

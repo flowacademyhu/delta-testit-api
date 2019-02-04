@@ -39,7 +39,7 @@ module.exports = {
           max: 500
         }
       },
-      picture: {
+      userPicture: {
         type: Sequelize.BLOB
       },
       encryptedPassword: {
