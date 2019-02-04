@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     answerId: DataTypes.INTEGER
   }, {});
   Test.associate = function (models) {
-    Test.hasMany(models.Result);
-    Test.hasMany(models.TestQuestion);
-    Test.belongsTo(models.User);
+    Test.hasMany(models.Result, { foreignKey: 'resultId' });
+    Test.hasMany(models.TestQuestion, { foreignKey: 'testId' });
+    Test.belongsTo(models.User, { foreignKey: 'userId' });
   };
   return Test;
 };

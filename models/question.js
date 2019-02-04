@@ -1,16 +1,36 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Question = sequelize.define('Question', {
-    subjectId: DataTypes.INTEGER,
-    questionText: DataTypes.STRING,
-    level: DataTypes.INTEGER,
-    type: DataTypes.STRING,
-    value: DataTypes.INTEGER
+    subjectId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    questionText: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    level: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    value: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+
   }, {});
   Question.associate = function (models) {
-    Question.hasMany(models.TestQuestion);
-    Question.hasMany(models.Answer);
-    Question.belongsTo(models.Subject);
+    Question.hasMany(models.TestQuestion, { foreignKey: 'questionId' });
+    Question.hasMany(models.Answer, { foreignKey: 'questionId' });
+    Question.belongsTo(models.Subject, { foreignKey: 'subjectId' });
   };
   return Question;
 };

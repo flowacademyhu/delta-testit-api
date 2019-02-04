@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER
   }, {});
   SubjectUser.associate = function (models) {
-    SubjectUser.belongsTo(models.User);
-    SubjectUser.belongsTo(models.Subject);
+    SubjectUser.belongsTo(models.User, { foreignKey: 'userId' });
+    SubjectUser.belongsTo(models.Subject, { foreignKey: 'subjectId' });
   };
   return SubjectUser;
 };
