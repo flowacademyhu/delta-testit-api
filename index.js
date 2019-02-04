@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const questions = require('./controllers/questions');
 const users = require('./controllers/users');
+const tests = require('./controllers/tests');
 
 // const createMiddleware = require('swagger-express-middleware');
 // const swaggerUi = require('swagger-ui-express');
@@ -16,5 +17,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/questions', questions);
 app.use('/users', users);
+app.use('/tests', tests);
 
 app.listen(process.env.PORT);
