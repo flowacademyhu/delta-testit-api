@@ -11,13 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    picture: {
+    questionPicture: {
       type: DataTypes.BLOB
-    },
-
-    level: {
-      type: DataTypes.INTEGER,
-      allowNull: false
     },
 
     type: {

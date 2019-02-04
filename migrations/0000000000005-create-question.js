@@ -19,13 +19,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      picture: {
+      questionPicture: {
         type: Sequelize.BLOB
       },
-      level: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
+
       type: {
         type: Sequelize.STRING,
         allowNull: false
