@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         max: 500
       }
     },
+    picture: {
+      type: DataTypes.BLOB
+    },
     encryptedPassword: DataTypes.STRING,
     groupId: DataTypes.INTEGER,
     lastLoginAt: {
