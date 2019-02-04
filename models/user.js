@@ -1,14 +1,44 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    role: DataTypes.STRING,
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
+    role: {
+      type: DataTypes.ENUM('student', 'mentor', 'admin'),
+      allowNull: false
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isAlpha: true,
+        min: 3,
+        max: 500
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isAlpha: true,
+        min: 3,
+        max: 500
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+        max: 500
+      }
+    },
     encryptedPassword: DataTypes.STRING,
     groupId: DataTypes.INTEGER,
-    lastLoginAt: DataTypes.DATE
-  }, {});
+    lastLoginAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.NOW
+    }
+  });
   User.associate = function (models) {
     User.belongsTo(models.Group, { foreignKey: 'groupId' });
     User.hasMany(models.Result, { foreignKey: 'userId' });
