@@ -11,6 +11,12 @@ module.exports = {
       groupName: {
         type: Sequelize.STRING
       },
+      groupDescription: {
+        type: Sequelize.STRING
+      },
+      groupPicture: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

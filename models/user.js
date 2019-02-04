@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     userPicture: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     },
     encryptedPassword: DataTypes.STRING,
     groupId: DataTypes.INTEGER,

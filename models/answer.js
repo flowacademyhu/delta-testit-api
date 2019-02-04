@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Answer = sequelize.define('Answer', {
     questionId: DataTypes.INTEGER,
     answerText: DataTypes.STRING,
-    isCorrect: DataTypes.BOOLEAN
+    isCorrect: DataTypes.BOOLEAN,
+    answerPicture: DataTypes.STRING
   }, {});
   Answer.associate = function (models) {
     Answer.belongsTo(models.Question, { foreignKey: 'questionId' });

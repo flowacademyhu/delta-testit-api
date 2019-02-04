@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     questionPicture: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     },
 
     type: {

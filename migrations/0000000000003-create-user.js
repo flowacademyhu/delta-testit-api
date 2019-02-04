@@ -40,7 +40,7 @@ module.exports = {
         }
       },
       userPicture: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       encryptedPassword: {
         type: Sequelize.STRING
