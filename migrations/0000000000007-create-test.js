@@ -22,6 +22,12 @@ module.exports = {
           key: 'id'
         }
       },
+      testName: {
+        type: Sequelize.STRING
+      },
+      testTime: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
