@@ -24,22 +24,40 @@
         }
       },
       "post": {
-        "post": {
-          "parameters": [
-            {
-              "$ref": "#/parameters/userData"
+        "parameters": [
+          {
+            "$ref": "#/parameters/userData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New user created",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "New user created",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "400": {
-              "description": "Failed to create user"
+          },
+          "400": {
+            "description": "Failed to create user"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns user by id",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
+          },
+          "400": {
+            "description": "User with given id does not exist"
           }
         }
       }
@@ -71,7 +89,31 @@
             "isAlpha": true,
             "notEmpty": true
           }
+        },
+        "email": {
+          "type": "string",
+          "allowNull": false,
+          "validate": {
+            "isEmail": true,
+            "max": 500
+          }
+        },
+        "picture": {
+          "type": "string"
+        },
+        "encryptedPassword": {
+          "type": "string"
+        },
+        "lastLoginAt": {
+          "type": "date",
+          "defaultValue": "now"
         }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
       }
     }
   },
