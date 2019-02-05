@@ -6,21 +6,21 @@ module.exports = {
       {
         testId: 1,
         userId: 1,
-        status: 'pending',
+        status: 'PENDING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         testId: 2,
         userId: 2,
-        status: 'finished',
+        status: 'SENT',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         testId: 3,
         userId: 3,
-        status: 'new',
+        status: 'CORRECTED',
         createdAt: new Date(),
         updatedAt: new Date()
       }

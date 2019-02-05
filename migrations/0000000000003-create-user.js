@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       role: {
-        type: Sequelize.ENUM('student', 'mentor', 'admin'),
+        type: Sequelize.ENUM('STUDENT', 'MENTOR', 'ADMIN'),
         allowNull: false
       },
       firstName: {

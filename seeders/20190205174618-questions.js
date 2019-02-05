@@ -9,7 +9,7 @@ module.exports = {
         picture: 'pic1',
         type: 'True or False',
         value: 2,
-        status: 'Good',
+        status: 'PUBLISHED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -19,7 +19,7 @@ module.exports = {
         picture: 'pic1',
         type: 'True or False',
         value: 1,
-        status: 'Bad',
+        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,7 +29,7 @@ module.exports = {
         picture: 'pic1',
         type: 'True or False',
         value: 2,
-        status: 'Ugly',
+        status: 'CLOSED',
         createdAt: new Date(),
         updatedAt: new Date()
       }

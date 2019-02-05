@@ -31,7 +31,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED'),
         allowNull: false
       },
       createdAt: {
