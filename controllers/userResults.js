@@ -1,6 +1,6 @@
 const models = require('../models');
-const userResults = require('express').Router({mergeParams: true});
 const express = require('express');
+const userResults = express.Router({mergeParams: true});
 
 userResults.get('/', (req, res) => {
   models.Result.findAll({where: { userId: req.params.userId }}).then(results => {
