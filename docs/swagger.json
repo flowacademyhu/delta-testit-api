@@ -1,0 +1,106 @@
+{
+  "swagger": "2.0",
+  "host": "localhost:8000",
+  "schemes": [
+    "http"
+  ],
+  "info": {
+    "title": "FLOW TestIT API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Returns a list of all users",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          "400": {
+            "description": "Failed to show users"
+          }
+        }
+      }
+    },
+    "post": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/userData"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "New user created",
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        "400": {
+          "description": "Failed to create user"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "properties": {
+        "role": {
+          "type": "enum",
+          "allowNull": false
+        },
+        "firstName": {
+          "type": "string",
+          "allowNull": false,
+          "validate": {
+            "min": 3,
+            "max": 500,
+            "isAlpha": true
+          }
+        },
+        "lastName": {
+          "type": "string",
+          "allowNull": false,
+          "notEmpty": true,
+          "validate": {
+            "min": 3,
+            "max": 500,
+            "isAlpha": true,
+            "notEmpty": true
+          }
+        },
+        "email": {
+          "type": "string",
+          "allowNull": false,
+          "notEmpty": true,
+          "defaultValue": null,
+          "validate": {
+            "min": 3,
+            "max": 500,
+            "isEmail": true,
+            "notEmpty": true
+          }
+        },
+        "passwordHash": {
+          "type": "string",
+          "allowNull": false,
+          "notEmpty": true,
+          "defaultValue": null,
+          "validate": {
+            "min": 3,
+            "max": 500,
+            "notEmpty": true
+          }
+        },
+        "lastLogin": {
+          "type": "date",
+          "isDate": true
+        },
+        "GroupId": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
