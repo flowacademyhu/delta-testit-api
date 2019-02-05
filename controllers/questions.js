@@ -28,10 +28,10 @@ questions.get('/:id', (req, res) => {
 questions.post('/', (req, res) => {
   models.Question.create({
     subjectId: req.body.subjectId,
-    questionText: req.body.questionText,
-    level: req.body.level,
+    text: req.body.text,
     type: req.body.type,
-    value: req.body.value
+    value: req.body.value,
+    status: req.body.status
   }).then(user => {
     res.status(200).json(user);
   }).catch(error => {
@@ -44,10 +44,10 @@ questions.put('/:id', (req, res) => {
   models.Question.update(
     {
       subjectId: req.body.subjectId,
-      questionText: req.body.questionText,
-      level: req.body.level,
+      text: req.body.text,
       type: req.body.type,
-      value: req.body.value
+      value: req.body.value,
+      status: req.body.status
     },
     {where: {id: req.params.id}})
     .then(updated => {
