@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "host": "localhost:8000",
+  "host": "localhost:5000",
   "schemes": [
     "http"
   ],
@@ -21,24 +21,6 @@
           "400": {
             "description": "Failed to show users"
           }
-        }
-      }
-    },
-    "post": {
-      "parameters": [
-        {
-          "$ref": "#/parameters/userData"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "New user created",
-          "schema": {
-            "$ref": "#/definitions/User"
-          }
-        },
-        "400": {
-          "description": "Failed to create user"
         }
       }
     }
@@ -69,37 +51,22 @@
             "isAlpha": true,
             "notEmpty": true
           }
-        },
-        "email": {
-          "type": "string",
-          "allowNull": false,
-          "notEmpty": true,
-          "defaultValue": null,
-          "validate": {
-            "min": 3,
-            "max": 500,
-            "isEmail": true,
-            "notEmpty": true
-          }
-        },
-        "passwordHash": {
-          "type": "string",
-          "allowNull": false,
-          "notEmpty": true,
-          "defaultValue": null,
-          "validate": {
-            "min": 3,
-            "max": 500,
-            "notEmpty": true
-          }
-        },
-        "lastLogin": {
-          "type": "date",
-          "isDate": true
-        },
-        "GroupId": {
-          "type": "integer"
         }
+      }
+    }
+  },
+  "parameters": {
+    "id": {
+      "name": "id",
+      "in": "path",
+      "required": "true",
+      "type": "integer"
+    },
+    "userData": {
+      "name": "user",
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/User"
       }
     }
   }

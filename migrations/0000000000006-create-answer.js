@@ -15,13 +15,13 @@ module.exports = {
           key: 'id'
         }
       },
-      answerText: {
+      text: {
         type: Sequelize.STRING
       },
       isCorrect: {
         type: Sequelize.BOOLEAN
       },
-      answerPicture: {
+      picture: {
         type: Sequelize.STRING
       },
       createdAt: {

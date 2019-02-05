@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      subjectName: {
+      name: {
         type: Sequelize.STRING
       },
       createdAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE
       }
     });

@@ -22,10 +22,10 @@ module.exports = {
           key: 'id'
         }
       },
-      testName: {
+      name: {
         type: Sequelize.STRING
       },
-      testTime: {
+      time: {
         type: Sequelize.INTEGER
       },
       createdAt: {

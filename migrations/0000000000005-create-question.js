@@ -15,11 +15,11 @@ module.exports = {
           key: 'id'
         }
       },
-      questionText: {
+      text: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      questionPicture: {
+      picture: {
         type: Sequelize.STRING
       },
       type: {
@@ -28,6 +28,10 @@ module.exports = {
       },
       value: {
         type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      status: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {

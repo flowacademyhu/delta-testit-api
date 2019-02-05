@@ -4,8 +4,8 @@ const users = express();
 
 // index
 users.get('/', (req, res) => {
-  models.User.findAll().then(result => {
-    res.status(200).json(result);
+  models.User.findAll().then(users => {
+    res.status(200).json(users);
   }).catch(error => {
     res.status(404).res.json('' + error);
   });
