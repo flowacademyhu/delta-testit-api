@@ -6,12 +6,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    questionText: {
+    text: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    questionPicture: {
+    picture: {
       type: DataTypes.STRING
     },
 

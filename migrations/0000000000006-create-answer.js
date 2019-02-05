@@ -21,7 +21,7 @@ module.exports = {
       isCorrect: {
         type: Sequelize.BOOLEAN
       },
-      answerPicture: {
+      picture: {
         type: Sequelize.STRING
       },
       createdAt: {

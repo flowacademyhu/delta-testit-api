@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     questionId: DataTypes.INTEGER,
     answerText: DataTypes.STRING,
     isCorrect: DataTypes.BOOLEAN,
-    answerPicture: DataTypes.STRING
+    picture: DataTypes.STRING
   }, {});
   Answer.associate = function (models) {
     Answer.belongsTo(models.Question, { foreignKey: 'questionId' });
