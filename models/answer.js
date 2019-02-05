@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Answer = sequelize.define('Answer', {
     questionId: DataTypes.INTEGER,
-    answerText: DataTypes.STRING,
+    text: DataTypes.STRING,
     isCorrect: DataTypes.BOOLEAN,
     picture: DataTypes.STRING
   }, {});
