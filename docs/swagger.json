@@ -1,0 +1,73 @@
+{
+  "swagger": "2.0",
+  "host": "localhost:5000",
+  "schemes": [
+    "http"
+  ],
+  "info": {
+    "title": "FLOW TestIT API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Returns a list of all users",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          "400": {
+            "description": "Failed to show users"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "properties": {
+        "role": {
+          "type": "enum",
+          "allowNull": false
+        },
+        "firstName": {
+          "type": "string",
+          "allowNull": false,
+          "validate": {
+            "min": 3,
+            "max": 500,
+            "isAlpha": true
+          }
+        },
+        "lastName": {
+          "type": "string",
+          "allowNull": false,
+          "notEmpty": true,
+          "validate": {
+            "min": 3,
+            "max": 500,
+            "isAlpha": true,
+            "notEmpty": true
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "id": {
+      "name": "id",
+      "in": "path",
+      "required": "true",
+      "type": "integer"
+    },
+    "userData": {
+      "name": "user",
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/User"
+      }
+    }
+  }
+}
