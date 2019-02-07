@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const questions = require('./controllers/questions');
 const users = require('./controllers/users');
 const tests = require('./controllers/tests');
+<<<<<<< HEAD
+=======
+const answer = require('./controllers/answer');
+>>>>>>> e5222e7d1a1453c941c2376ea74abbebcc66a255
 const userResults = require('./controllers/userResults');
 
 // const swaggerUi = require('swagger-ui-express');
@@ -21,6 +25,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/questions', questions);
 app.use('/users', users);
 app.use('/tests', tests);
+<<<<<<< HEAD
+=======
+app.use('/answer', answer);
+>>>>>>> e5222e7d1a1453c941c2376ea74abbebcc66a255
 app.use('/users/:userId/results', userResults);
 
 /*
