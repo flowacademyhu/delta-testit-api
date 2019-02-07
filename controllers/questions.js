@@ -4,15 +4,11 @@ const questions = express();
 
 // index
 questions.get('/', (req, res) => {
-<<<<<<< HEAD
-  models.Question.findAll().then(result => {
-=======
   models.Question.findAll({
     include: [{
       model: models.Subject
     }]
   }).then(result => {
->>>>>>> e5222e7d1a1453c941c2376ea74abbebcc66a255
     res.status(200).json(result);
   }).catch(error => {
     res.status(404).res.json('' + error);
