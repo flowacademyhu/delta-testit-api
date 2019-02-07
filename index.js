@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const questions = require('./controllers/questions');
 const users = require('./controllers/users');
 const tests = require('./controllers/tests');
+const answer = require('./controllers/answer');
 const userResults = require('./controllers/userResults');
 
 // const swaggerUi = require('swagger-ui-express');
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/questions', questions);
 app.use('/users', users);
 app.use('/tests', tests);
+app.use('/answer', answer);
 app.use('/users/:userId/results', userResults);
 
 /*
