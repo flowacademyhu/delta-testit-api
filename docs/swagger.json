@@ -22,6 +22,175 @@
             "description": "Failed to show users"
           }
         }
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/userData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New user created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed to create user"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns user by id",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "User with given id does not exist"
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/userData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed to update user"
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "User with given id does not exist."
+          }
+        }
+      }
+    },
+    "/questions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Returns a list of all questions",
+            "schema": {
+              "$ref": "#/definitions/Questions"
+            }
+          },
+          "400": {
+            "description": "Failed to show questions"
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/questionData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New question created",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          },
+          "400": {
+            "description": "Failed to create question"
+          }
+        }
+      }
+    },
+    "/questions/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns question by id",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          },
+          "400": {
+            "description": "Question with given id does not exist"
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/questionData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Question updated",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          },
+          "400": {
+            "description": "Failed to update question"
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Question deleted",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          },
+          "400": {
+            "description": "Question with given id does not exist."
+          }
+        }
       }
     }
   },
@@ -48,10 +217,62 @@
           "validate": {
             "min": 3,
             "max": 500,
-            "isAlpha": true,
-            "notEmpty": true
+            "isAlpha": true
           }
+        },
+        "email": {
+          "type": "string",
+          "allowNull": false,
+          "validate": {
+            "isEmail": true,
+            "max": 500
+          }
+        },
+        "picture": {
+          "type": "string"
+        },
+        "encryptedPassword": {
+          "type": "string"
+        },
+        "lastLoginAt": {
+          "type": "date",
+          "defaultValue": "now"
         }
+      }
+    },
+    "Question": {
+      "properties": {
+        "text": {
+          "type" : "string",
+          "allowNull": false
+        },
+        "pictiure": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "allowNull": false
+        },
+        "value": {
+          "type": "integer",
+          "allowNull": false
+        },
+        "status": {
+          "type": "string",
+          "allowNull": false
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "Questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Question"
       }
     }
   },
@@ -67,6 +288,13 @@
       "in": "body",
       "schema": {
         "$ref": "#/definitions/User"
+      }
+    },
+    "questionData": {
+      "name": "question",
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/Question"
       }
     }
   }
