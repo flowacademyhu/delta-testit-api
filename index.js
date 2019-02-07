@@ -16,7 +16,6 @@ const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(require(swaggerFilePath)));
 
 app.use('/questions', questions);
