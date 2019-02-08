@@ -15,13 +15,6 @@ module.exports = {
           key: 'id'
         }
       },
-      answerId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Answers',
-          key: 'id'
-        }
-      },
       name: {
         type: Sequelize.STRING
       },
