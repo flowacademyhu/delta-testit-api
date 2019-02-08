@@ -1,6 +1,5 @@
 #!/bin/bash
 ./node_modules/.bin/sequelize db:migrate
-./node_modules/.bin/sequelize db:seed:all
 ./node_modules/.bin/sequelize db:seed --seed 20190205180826-groups 
 ./node_modules/.bin/sequelize db:seed --seed 20190205141138-subjects 
 ./node_modules/.bin/sequelize db:seed --seed 20190205140212-users 

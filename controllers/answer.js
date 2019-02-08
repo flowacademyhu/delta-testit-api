@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('../models');
-const answer = express();
+const answer = express.Router({mergeParams: true});
 
 answer.post('/', (req, res) => {
   models.Answer.create({
