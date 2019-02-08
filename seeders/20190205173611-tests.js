@@ -6,21 +6,21 @@ module.exports = {
       {
         userId: 1,
         name: 'firstTest',
-        // time: '10:00',
+        // time: 10,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 2,
         name: 'secondTest',
-        // time: '15:00',
+        // time: 15,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 3,
         name: 'thirdTest',
-        // time: '30:00',
+        // time: 30,
         createdAt: new Date(),
         updatedAt: new Date()
       }
