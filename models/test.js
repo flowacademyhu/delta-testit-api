@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     time: DataTypes.TIME
   }, {});
   Test.associate = function (models) {
-    Test.hasMany(models.Result, { foreignKey: 'resultId' });
+    Test.belongsTo(models.Result, { foreignKey: 'resultId' });
     Test.hasMany(models.TestQuestion, { foreignKey: 'testId' });
     Test.belongsTo(models.User, { foreignKey: 'userId' });
   };
