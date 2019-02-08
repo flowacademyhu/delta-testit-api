@@ -34,3 +34,5 @@ createMiddleware(swaggerFilePath, app, (err, middleware) => {
     middleware.validateRequest()
   );
 });
+
+app.listen(process.env.PORT);
