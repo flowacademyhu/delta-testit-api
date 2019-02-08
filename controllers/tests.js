@@ -27,8 +27,8 @@ tests.get('/:id', (req, res) => {
 // create
 tests.post('/', (req, res) => {
   models.Test.create({
-    name: req.body.testName,
-    time: req.body.testTime
+    name: req.body.name,
+    time: req.body.time
   }).then(user => {
     res.status(200).json(user);
   }).catch(error => {
@@ -40,8 +40,8 @@ tests.post('/', (req, res) => {
 tests.put('/:id', (req, res) => {
   models.Test.update(
     {
-      name: req.body.testName,
-      time: req.body.testTime
+      name: req.body.name,
+      time: req.body.time
     },
     {where: {id: req.params.id}})
     .then(updated => {
