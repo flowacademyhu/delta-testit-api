@@ -13,14 +13,14 @@ module.exports = {
       {
         resultId: 2,
         answerId: 2,
-        points: 6,
+        points: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         resultId: 3,
         answerId: 3,
-        points: 1,
+        points: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       }
