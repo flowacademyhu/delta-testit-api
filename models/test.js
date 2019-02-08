@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Test = sequelize.define('Test', {
     userId: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    time: DataTypes.INTEGER
+    time: DataTypes.time
   }, {});
   Test.associate = function (models) {
     Test.hasMany(models.Result, { foreignKey: 'resultId' });
