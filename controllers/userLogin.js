@@ -3,7 +3,7 @@ const express = require('express');
 const userLogin = express.Router({mergeParams: true});
 const bcrypt = require('bcrypt');
 
-userLogin.post('/user/login', (req, res, next) => {
+userLogin.post('/', (req, res, next) => {
   bcrypt.hash(req.body.encryptedPassword, 10, (error, hash) => {
     if (error) {
       res.status(500).json(error);
