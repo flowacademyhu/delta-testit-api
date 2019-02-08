@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       time: {
-        type: Sequelize.TIME
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
