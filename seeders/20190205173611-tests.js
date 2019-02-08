@@ -5,7 +5,6 @@ module.exports = {
     return queryInterface.bulkInsert('Tests', [
       {
         userId: 1,
-        answerId: 1,
         name: 'firstTest',
         time: 10,
         createdAt: new Date(),
@@ -13,7 +12,6 @@ module.exports = {
       },
       {
         userId: 2,
-        answerId: 2,
         name: 'secondTest',
         time: 15,
         createdAt: new Date(),
@@ -21,7 +19,6 @@ module.exports = {
       },
       {
         userId: 3,
-        answerId: 3,
         name: 'thirdTest',
         time: 30,
         createdAt: new Date(),
