@@ -25,35 +25,22 @@ users.get('/:id', (req, res) => {
     });
 });
 
-/*
-// create
 users.post('/', (req, res) => {
-  models.User.create({
-    role: req.body.role,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email
-  }).then(user => {
-    res.status(200).json(user);
-  }).catch(error => {
-    res.status(404).json(error);
-  });
-});*/
-
-users.post('/', (req, res) => {
-  bcrypt.hash(req.body.password).then(hash => {
-    req.body.password = hash;
-  }).then(models.User.create({
-    role: req.body.role,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    encryptedPassword: req.body.password
-  }).then(user => {
-    res.status(200).json(user);
-  }).catch(error => {
-    res.status(404).json(error);
-  }));
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+      req.body.password = hash;
+      models.User.create({
+        role: req.body.role,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        encryptedPassword: req.body.password
+      }).then(user => {
+        res.status(200).json(user);
+      }).catch(error => {
+        res.status(403).json(error);
+      });
+    });
 });
 
 // update
