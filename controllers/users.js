@@ -1,5 +1,6 @@
 const express = require('express');
 const models = require('../models');
+const bcrypt = require('bcrypt');
 const users = express.Router({mergeParams: true});
 
 // index
@@ -24,6 +25,7 @@ users.get('/:id', (req, res) => {
     });
 });
 
+/*
 // create
 users.post('/', (req, res) => {
   models.User.create({
@@ -36,6 +38,22 @@ users.post('/', (req, res) => {
   }).catch(error => {
     res.status(404).json(error);
   });
+});*/
+
+users.post('/', (req, res) => {
+  bcrypt.hash(req.body.password).then(hash => {
+    req.body.password = hash;
+  }).then(models.User.create({
+    role: req.body.role,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    encryptedPassword: req.body.password
+  }).then(user => {
+    res.status(200).json(user);
+  }).catch(error => {
+    res.status(404).json(error);
+  }));
 });
 
 // update
