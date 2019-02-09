@@ -3,8 +3,6 @@ const express = require('express');
 const userLogin = express.Router({mergeParams: true});
 const bcrypt = require('bcrypt');
 
-<<<<<<< HEAD
-=======
 userLogin.post('/', (req, res) => {
   models.User.create({
     role: req.body.role,
@@ -20,7 +18,6 @@ userLogin.post('/', (req, res) => {
   });
 });
 
->>>>>>> develop
 userLogin.post('/', (req, res, next) => {
   bcrypt.hash(req.body.encryptedPassword, 10, (error, hash) => {
     if (error) {
