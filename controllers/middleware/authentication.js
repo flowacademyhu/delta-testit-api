@@ -2,13 +2,14 @@ const jwt = require('jsonwebtoken');
 const models = require('../../models');
 const config = require('../../config/config');
 const endpoints = {
+  'GET /users/{id}': ['STUDENT', 'MENTOR', 'ADMIN'],
   'POST /userRegistration': ['STUDENT', 'MENTOR', 'ADMIN'],
   'GET /userLogin': ['STUDENT', 'MENTOR', 'ADMIN'],
-  'GET /userLogin': ['anonymus']
+  'GET /': ['anonymus']
 
 };
 module.exports = (req, res, next) => {
-  const endpoint = `${req.method} ${req.path}`;
+  const endpoint = `${req.method} ${req.swagger.pathName}`;
   if (!req.headers.authorization && endpoints[endpoint].includes('anonymus')) {
     return next();
   }

@@ -1,4 +1,7 @@
 'use strict';
+
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     role: {
@@ -41,7 +44,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: sequelize.NOW
     }
-  });
+  },
+  {
+    getterMethods: {
+      fullName: function () {
+        return `${this.firstName} ${this.lastName}`;
+      },
+      name: function () {
+        return `${this.firstName} ${this.lastName}`;
+      }
+    },
+    setterMethods: {
+      password: function (password) {
+        let encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+        this.setDataValue('encryptedPassword', encryptedPassword);
+      }
+    }
+  }
+  );
   User.associate = function (models) {
     User.belongsTo(models.Group, { foreignKey: 'groupId' });
     User.hasMany(models.Result, { foreignKey: 'userId' });

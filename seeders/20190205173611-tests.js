@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 'use strict';
 
 module.exports = {
@@ -6,7 +9,10 @@ module.exports = {
     return queryInterface.bulkInsert('Tests', [
       {
         userId: 1,
+<<<<<<< HEAD
         answerId: 1,
+=======
+>>>>>>> develop
         name: 'firstTest',
         time: 10,
         createdAt: new Date(),
@@ -14,7 +20,10 @@ module.exports = {
       },
       {
         userId: 2,
+<<<<<<< HEAD
         answerId: 2,
+=======
+>>>>>>> develop
         name: 'secondTest',
         time: 15,
         createdAt: new Date(),
@@ -22,7 +31,10 @@ module.exports = {
       },
       {
         userId: 3,
+<<<<<<< HEAD
         answerId: 3,
+=======
+>>>>>>> develop
         name: 'thirdTest',
         time: 30,
         createdAt: new Date(),
@@ -34,6 +46,7 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
   }
 };
+<<<<<<< HEAD
 =======
 'use strict';
 
@@ -67,4 +80,6 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
   }
 };
+>>>>>>> develop
+=======
 >>>>>>> develop
