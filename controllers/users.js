@@ -63,7 +63,8 @@ users.put('/:id', (req, res) => {
     },
     {where: {id: req.params.id}})
     .then(updated => {
-      res.status(200).json({message: 'User has been succesfully updated.'});
+      let name = req.body.firstName;
+      res.status(200).json({message: name + ' has been succesfully updated.'});
     })
     .catch(error => {
       res.status(406).json(error);

@@ -7,7 +7,7 @@ tests.get('/', (req, res) => {
   models.Test.findAll().then(result => {
     res.status(200).json(result);
   }).catch(error => {
-    res.status(404).res.json('' + error);
+    res.status(404).res.json(error);
   });
 });
 
@@ -15,12 +15,13 @@ tests.get('/', (req, res) => {
 tests.get('/:id', (req, res) => {
   models.Test.findById(req.params.id)
     .then(result => {
-      if (!result) {
-        throw new Error();
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({message: '! Test with given id does not exist.'});
       }
-      res.status(200).json(result);
     }).catch(error => {
-      res.status(404).json({message: error + '! Test with given id does not exist.'});
+      res.status(500).json(error);
     });
 });
 
@@ -56,15 +57,16 @@ tests.put('/:id', (req, res) => {
 tests.delete('/:id', (req, res) => {
   models.Test.findById(req.params.id)
     .then(result => {
-      if (!result) {
-        throw new Error();
+      if (result) {
+        let id = result.id;
+        models.Test.destroy({where: {id: req.params.id}})
+          .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
+      } else {
+        res.status(404).json({message: '! Test with given id does not exist.'});
       }
-      let id = result.id;
-      models.Test.destroy({where: {id: req.params.id}})
-        .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
     })
     .catch(error => {
-      res.status(404).json({message: error + '! Test with given id does not exist.'});
+      res.status(500).json({message: error});
     });
 });
 
