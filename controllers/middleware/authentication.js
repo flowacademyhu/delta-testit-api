@@ -2,9 +2,27 @@ const jwt = require('jsonwebtoken');
 const models = require('../../models');
 const config = require('../../config/config');
 const endpoints = {
+  'GET /users': ['MENTOR', 'ADMIN'],
   'GET /users/{id}': ['STUDENT', 'MENTOR', 'ADMIN'],
-  'POST /userRegistration': ['STUDENT', 'MENTOR', 'ADMIN'],
-  'GET /userLogin': ['STUDENT', 'MENTOR', 'ADMIN'],
+  'POST /users': ['MENTOR', 'ADMIN'],
+  'PUT /users/{id}': ['STUDENT', 'MENTOR', 'ADMIN'],
+  'DELETE /users/{id}': ['MENTOR', 'ADMIN'],
+
+  'GET /questions': ['MENTOR', 'ADMIN'],
+  'GET /questions/{id}': ['MENTOR', 'ADMIN'],
+  'POST /questions': ['MENTOR', 'ADMIN'],
+  'PUT /questions/{id}': ['MENTOR', 'ADMIN'],
+  'DELETE /questions/{id}': ['MENTOR', 'ADMIN'],
+
+  'GET /tests': ['MENTOR', 'ADMIN'],
+  'GET /tests/{id}': ['MENTOR', 'ADMIN'],
+  'POST /tests': ['MENTOR', 'ADMIN'],
+  'PUT /tests/{id}': ['MENTOR', 'ADMIN'],
+  'DELETE /tests/{id}': ['MENTOR', 'ADMIN'],
+
+  'POST /user/login': ['STUDENT', 'MENTOR', 'ADMIN'],
+  'GET /users/{id}/results': ['STUDENT', 'MENTOR', 'ADMIN'],
+
   'GET /': ['anonymus']
 
 };
