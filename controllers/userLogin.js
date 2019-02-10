@@ -3,24 +3,20 @@ const express = require('express');
 const userLogin = express.Router({mergeParams: true});
 const bcrypt = require('bcrypt');
 
-userLogin.post('/', (req, res, next) => {
-  bcrypt.hash(req.body.encryptedPassword, 10, (error, hash) => {
-    if (error) {
+userLogin.post('/', (req, res) => {
+  models.User.findOne({where: {email: req.body.email}})
+    .then(user => {
+      if (!user) {
+        return res.status(401).json({message: 'Authentication failed.'});
+      } else {
+        bcrypt.compare(req.body.password, user.encryptedPassword)
+          .then(res.status(200).json({message: 'Authentication successful.'}))
+          .catch(res.status(401).json({message: 'Authentication fialed.'}));
+      }
+    })
+    .catch(error => {
       res.status(500).json(error);
-    } else {
-      models.User.create({
-        role: req.body.role,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-        // picture: req.file.path
-      }).then(result => {
-        res.status(201).json({
-          message: 'User created'
-        });
-      }).catch(res.status(500).json(error));
-    }
-  });
+    });
 });
 
 module.exports = userLogin;
