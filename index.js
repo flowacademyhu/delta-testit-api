@@ -8,6 +8,7 @@ const users = require('./controllers/users');
 const tests = require('./controllers/tests');
 const answer = require('./controllers/answer');
 const userResults = require('./controllers/userResults');
+const userLogin = require('./controllers/userLogin');
 const models = require('./models');
 
 const swaggerUi = require('swagger-ui-express');
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
   }
 });
 
+app.use('/users/login', userLogin);
 app.use('/questions', questions);
 app.use('/users', users);
 app.use('/tests', tests);

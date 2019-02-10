@@ -8,7 +8,7 @@ users.get('/', (req, res) => {
   models.User.findAll().then(users => {
     res.status(200).json(users);
   }).catch(error => {
-    res.status(404).res.json('' + error);
+    res.status(404).res.json(error);
   });
 });
 
@@ -16,30 +16,39 @@ users.get('/', (req, res) => {
 users.get('/:id', (req, res) => {
   models.User.findById(req.params.id)
     .then(result => {
-      if (!result) {
-        throw new Error();
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({message: '! User with given id does not exist.'});
       }
-      res.status(200).json(result);
     }).catch(error => {
-      res.status(404).json({message: error + '! User with given id does not exist.'});
+      res.status(500).json(error);
     });
 });
 
+// create
 users.post('/', (req, res) => {
-  bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      req.body.password = hash;
-      models.User.create({
-        role: req.body.role,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        encryptedPassword: req.body.password
-      }).then(user => {
-        res.status(200).json(user);
-      }).catch(error => {
-        res.status(403).json(error);
-      });
+  models.User.findOne({where: {email: req.body.email}})
+    .then(user => {
+      if (user.email) {
+        res.status(409).json('User with such an email already exits!');
+      } else {
+        bcrypt.hash(req.body.password, 10)
+          .then(hash => {
+            req.body.password = hash;
+            models.User.create({
+              role: req.body.role,
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
+              email: req.body.email,
+              encryptedPassword: req.body.password
+            }).then(user => {
+              res.status(201).json({message: 'User has been succesfully created.'});
+            }).catch(error => {
+              res.status(500).json(error);
+            });
+          });
+      }
     });
 });
 
@@ -54,10 +63,10 @@ users.put('/:id', (req, res) => {
     },
     {where: {id: req.params.id}})
     .then(updated => {
-      res.status(200).json(updated);
+      res.status(200).json({message: 'User has been succesfully updated.'});
     })
     .catch(error => {
-      res.status(404).json(error);
+      res.status(406).json(error);
     });
 });
 
@@ -65,15 +74,16 @@ users.put('/:id', (req, res) => {
 users.delete('/:id', (req, res) => {
   models.User.findById(req.params.id)
     .then(result => {
-      if (!result) {
-        throw new Error();
+      if (result) {
+        let name = result.firstName;
+        models.User.destroy({where: {id: req.params.id}})
+          .then(res.json({message: name + ' has been successfully deleted.'}));
+      } else {
+        res.status(404).json({message: '! User with given id does not exist.'});
       }
-      let name = result.firstName;
-      models.User.destroy({where: {id: req.params.id}})
-        .then(res.send(name + ' has been successfully deleted.'));
     })
     .catch(error => {
-      res.status(404).json({message: error + '! User with given id does not exist.'});
+      res.status(500).json(error);
     });
 });
 
