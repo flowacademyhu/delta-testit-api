@@ -30,7 +30,7 @@ users.get('/:id', (req, res) => {
 users.post('/', (req, res) => {
   models.User.findOne({where: {email: req.body.email}})
     .then(user => {
-      if (user.email) {
+      if (user >= 1) {
         res.status(409).json('User with such an email already exits!');
       } else {
         bcrypt.hash(req.body.password, 10)
@@ -63,7 +63,8 @@ users.put('/:id', (req, res) => {
     },
     {where: {id: req.params.id}})
     .then(updated => {
-      res.status(200).json({message: 'User has been succesfully updated.'});
+      let name = req.body.firstName;
+      res.status(200).json({message: name + ' has been succesfully updated.'});
     })
     .catch(error => {
       res.status(406).json(error);
