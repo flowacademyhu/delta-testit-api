@@ -19,7 +19,7 @@ users.get('/:id', (req, res) => {
       if (result) {
         res.status(200).json(result);
       } else {
-        res.status(404).json({message: '! User with given id does not exist.'});
+        res.status(404).json({message: 'User with given id does not exist.'});
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -80,7 +80,7 @@ users.delete('/:id', (req, res) => {
         models.User.destroy({where: {id: req.params.id}})
           .then(res.json({message: name + ' has been successfully deleted.'}));
       } else {
-        res.status(404).json({message: '! User with given id does not exist.'});
+        res.status(404).json({message: 'User with given id does not exist.'});
       }
     })
     .catch(error => {

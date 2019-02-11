@@ -18,7 +18,7 @@ tests.get('/:id', (req, res) => {
       if (result) {
         res.status(200).json(result);
       } else {
-        res.status(404).json({message: '! Test with given id does not exist.'});
+        res.status(404).json({message: 'Test with given id does not exist.'});
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -62,7 +62,7 @@ tests.delete('/:id', (req, res) => {
         models.Test.destroy({where: {id: req.params.id}})
           .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
       } else {
-        res.status(404).json({message: '! Test with given id does not exist.'});
+        res.status(404).json({message: 'Test with given id does not exist.'});
       }
     })
     .catch(error => {

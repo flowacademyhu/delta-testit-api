@@ -1,10 +1,10 @@
 const express = require('express');
 const models = require('../models');
-const subjects = express.Router({mergeParams: true});
+const testQuestion = express.Router({mergeParams: true});
 
 // index
-subjects.get('/', (req, res) => {
-  models.Subject.findAll().then(result => {
+testQuestion.get('/', (req, res) => {
+  models.TestQuestion.findAll().then(result => {
     res.status(200).json(result);
   }).catch(error => {
     res.status(404).res.json(error);
@@ -12,13 +12,13 @@ subjects.get('/', (req, res) => {
 });
 
 // show
-subjects.get('/:id', (req, res) => {
-  models.Subject.findById(req.params.id)
+testQuestion.get('/:id', (req, res) => {
+  models.TestQuestion.findById(req.params.id)
     .then(result => {
       if (result) {
         res.status(200).json(result);
       } else {
-        res.status(404).json({message: 'Subject with given id does not exist.'});
+        res.status(404).json({message: 'Testquestion with given id does not exist.'});
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -26,19 +26,19 @@ subjects.get('/:id', (req, res) => {
 });
 
 // create
-subjects.post('/', (req, res) => {
-  models.Subject.create({
+testQuestion.post('/', (req, res) => {
+  models.TestQuestion.create({
     name: req.body.name
-  }).then(subject => {
-    res.status(200).json(subject);
+  }).then(testQuestion => {
+    res.status(200).json(testQuestion);
   }).catch(error => {
     res.status(404).json(error);
   });
 });
 
 // update
-subjects.put('/:id', (req, res) => {
-  models.Subject.update(
+testQuestion.put('/:id', (req, res) => {
+  models.TestQuestion.update(
     {
       name: req.body.name
     },
@@ -52,15 +52,15 @@ subjects.put('/:id', (req, res) => {
 });
 
 // delete
-subjects.delete('/:id', (req, res) => {
-  models.Subject.findById(req.params.id)
+testQuestion.delete('/:id', (req, res) => {
+  models.TestQuestion.findById(req.params.id)
     .then(result => {
       if (result) {
         let id = result.id;
-        models.Subject.destroy({where: {id: req.params.id}})
-          .then(res.send('Subject with id ' + id + ' has been successfully deleted.'));
+        models.TestQuestion.destroy({where: {id: req.params.id}})
+          .then(res.send('Testquestion with id ' + id + ' has been successfully deleted.'));
       } else {
-        res.status(404).json({message: 'Subject with given id does not exist.'});
+        res.status(404).json({message: 'Testquestion with given id does not exist.'});
       }
     })
     .catch(error => {
@@ -68,4 +68,4 @@ subjects.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = subjects;
+module.exports = testQuestion;
