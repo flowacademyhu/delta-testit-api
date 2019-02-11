@@ -5,8 +5,8 @@ const users = express.Router({mergeParams: true});
 
 // index
 users.get('/', (req, res) => {
-  models.User.findAll().then(users => {
-    res.status(200).json(users);
+  models.User.findAll().then(result => {
+    res.status(200).json(result);
   }).catch(error => {
     res.status(404).res.json(error);
   });
@@ -15,9 +15,9 @@ users.get('/', (req, res) => {
 // show
 users.get('/:id', (req, res) => {
   models.User.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        res.status(200).json(result);
+    .then(user => {
+      if (user) {
+        res.status(200).json(user);
       } else {
         res.status(404).json({message: 'User with given id does not exist.'});
       }
@@ -62,7 +62,7 @@ users.put('/:id', (req, res) => {
       email: req.body.email
     },
     {where: {id: req.params.id}})
-    .then(updated => {
+    .then(user => {
       let name = req.body.firstName;
       res.status(200).json({message: name + ' has been succesfully updated.'});
     })
@@ -74,9 +74,9 @@ users.put('/:id', (req, res) => {
 // delete
 users.delete('/:id', (req, res) => {
   models.User.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        let name = result.firstName;
+    .then(user => {
+      if (user) {
+        let name = user.firstName;
         models.User.destroy({where: {id: req.params.id}})
           .then(res.json({message: name + ' has been successfully deleted.'}));
       } else {

@@ -14,9 +14,9 @@ subjects.get('/', (req, res) => {
 // show
 subjects.get('/:id', (req, res) => {
   models.Subject.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        res.status(200).json(result);
+    .then(subject => {
+      if (subject) {
+        res.status(200).json(subject);
       } else {
         res.status(404).json({message: 'Subject with given id does not exist.'});
       }
