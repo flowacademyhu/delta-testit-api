@@ -30,8 +30,8 @@ tests.post('/', (req, res) => {
   models.Test.create({
     name: req.body.name,
     time: req.body.time
-  }).then(user => {
-    res.status(200).json(user);
+  }).then(test => {
+    res.status(200).json(test);
   }).catch(error => {
     res.status(404).json(error);
   });
