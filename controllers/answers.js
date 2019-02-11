@@ -8,8 +8,8 @@ answers.post('/', (req, res) => {
     text: req.body.text,
     isCorrect: req.body.isCorrect,
     picture: req.body.picture
-  }).then(user => {
-    res.status(200).json(user);
+  }).then(answer => {
+    res.status(200).json(answer);
   }).catch(error => {
     res.status(404).json(error);
   });

@@ -3,8 +3,8 @@ const express = require('express');
 const userResults = express.Router({mergeParams: true});
 
 userResults.get('/', (req, res) => {
-  models.Result.findAll({where: { userId: req.params.userId }}).then(results => {
-    res.status(200).json(results);
+  models.Result.findAll({where: { userId: req.params.userId }}).then(result => {
+    res.status(200).json(result);
   }).catch(error => {
     res.status(400).json(error);
   });

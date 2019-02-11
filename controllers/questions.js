@@ -18,9 +18,9 @@ questions.get('/', (req, res) => {
 // show
 questions.get('/:id', (req, res) => {
   models.Question.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        res.status(200).json(result);
+    .then(question => {
+      if (question) {
+        res.status(200).json(question);
       } else {
         res.status(404).json({message: 'Question with given id does not exist.'});
       }
@@ -37,8 +37,8 @@ questions.post('/', (req, res) => {
     type: req.body.type,
     value: req.body.value,
     status: req.body.status
-  }).then(user => {
-    res.status(200).json(user);
+  }).then(question => {
+    res.status(200).json(question);
   }).catch(error => {
     res.status(404).json(error);
   });
@@ -55,8 +55,8 @@ questions.put('/:id', (req, res) => {
       status: req.body.status
     },
     {where: {id: req.params.id}})
-    .then(updated => {
-      res.status(200).json(updated);
+    .then(question => {
+      res.status(200).json(question);
     })
     .catch(error => {
       res.status(404).json(error);
@@ -66,9 +66,9 @@ questions.put('/:id', (req, res) => {
 // delete
 questions.delete('/:id', (req, res) => {
   models.Question.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        let id = result.id;
+    .then(question => {
+      if (question) {
+        let id = question.id;
         models.Test.destroy({where: {id: req.params.id}})
           .then(res.send('Question with id ' + id + ' has been successfully deleted.'));
       } else {

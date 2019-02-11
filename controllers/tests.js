@@ -14,9 +14,9 @@ tests.get('/', (req, res) => {
 // show
 tests.get('/:id', (req, res) => {
   models.Test.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        res.status(200).json(result);
+    .then(test => {
+      if (test) {
+        res.status(200).json(test);
       } else {
         res.status(404).json({message: 'Test with given id does not exist.'});
       }
@@ -45,8 +45,8 @@ tests.put('/:id', (req, res) => {
       time: req.body.time
     },
     {where: {id: req.params.id}})
-    .then(updated => {
-      res.status(200).json(updated);
+    .then(test => {
+      res.status(200).json(test);
     })
     .catch(error => {
       res.status(404).json(error);
@@ -56,9 +56,9 @@ tests.put('/:id', (req, res) => {
 // delete
 tests.delete('/:id', (req, res) => {
   models.Test.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        let id = result.id;
+    .then(test => {
+      if (test) {
+        let id = test.id;
         models.Test.destroy({where: {id: req.params.id}})
           .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
       } else {
