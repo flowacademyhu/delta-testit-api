@@ -1,5 +1,6 @@
 const express = require('express');
 const models = require('../models');
+// const testQuestions = require('./controllers/testQuestions');
 const tests = express.Router({mergeParams: true});
 
 // index

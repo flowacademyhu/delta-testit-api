@@ -11,14 +11,28 @@ testQuestion.get('/', (req, res) => {
   });
 });
 
-// show
-testQuestion.get('/:id', (req, res) => {
+// show 1
+testQuestion.get('/answerid/:id', (req, res) => {
   models.TestQuestion.findById(req.params.id)
     .then(result => {
       if (result) {
         res.status(200).json(result);
       } else {
-        res.status(404).json({message: 'Testquestion with given id does not exist.'});
+        res.status(404).json({message: 'Testquestion with given answer-id does not exist.'});
+      }
+    }).catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+// show 2
+testQuestion.get('/testid/:id', (req, res) => {
+  models.TestQuestion.findById(req.params.id)
+    .then(result => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({message: 'Testquestion with given test-id does not exist.'});
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -61,6 +75,23 @@ testQuestion.delete('/:id', (req, res) => {
         let id = result.id;
         models.TestQuestion.destroy({where: {id: req.params.id}})
           .then(res.send('Testquestion with id ' + id + ' has been successfully deleted.'));
+      } else {
+        res.status(404).json({message: 'Testquestion with given id does not exist.'});
+      }
+    })
+    .catch(error => {
+      res.status(500).json({message: error});
+    });
+});
+
+// delete 2
+
+testQuestion.delete('/', (req, res) => {
+  models.TestQuestion.findOne({where: {questionId: req.body.questionId} || {testId: req.body.testId}})
+    .then(result => {
+      if (result) {
+        models.TestQuestion.destroy(result)
+          .then(res.send('Testquestion with id has been successfully deleted.'));
       } else {
         res.status(404).json({message: 'Testquestion with given id does not exist.'});
       }

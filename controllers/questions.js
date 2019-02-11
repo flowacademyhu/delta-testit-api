@@ -1,5 +1,6 @@
 const express = require('express');
 const models = require('../models');
+// const testQuestions = require('./controllers/testQuestions');
 const questions = express.Router({mergeParams: true});
 
 // index
@@ -37,8 +38,12 @@ questions.post('/', (req, res) => {
     type: req.body.type,
     value: req.body.value,
     status: req.body.status
-  }).then(user => {
-    res.status(200).json(user);
+  }).then(result => {
+    let questionId = result.id;
+    models.testQuestions.create({
+      questionId: questionId
+    });
+    res.status(200).json(result);
   }).catch(error => {
     res.status(404).json(error);
   });
