@@ -28,9 +28,28 @@ tests.get('/:id', (req, res) => {
 // create
 tests.post('/', (req, res) => {
   models.Test.create({
+    userId: req.body.userId,
     name: req.body.name,
     time: req.body.time
   }).then(test => {
+    models.TestQuestion.findOne({where: {questionId: test.questionId}})
+      .then(testQuestion => {
+        if (testQuestion && testQuestion.testId.length < 1) {
+          models.TestQuestion.update({
+            testId: test.id
+          }, {
+            where: {questionId: testQuestion.questionId}
+          });
+        } else {
+          models.TestQuestion.create({
+            questionId: req.body.questionId,
+            testId: test.id
+          });
+        }
+      })
+      .catch(error => {
+        res.status().json(error);
+      });
     res.status(200).json(test);
   }).catch(error => {
     res.status(404).json(error);
@@ -59,6 +78,7 @@ tests.delete('/:id', (req, res) => {
     .then(test => {
       if (test) {
         let id = test.id;
+        models.TestQuestion.destroy({where: {testId: test.id}});
         models.Test.destroy({where: {id: req.params.id}})
           .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
       } else {

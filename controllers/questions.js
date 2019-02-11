@@ -38,6 +38,7 @@ questions.post('/', (req, res) => {
     value: req.body.value,
     status: req.body.status
   }).then(question => {
+    models.TestQuestion.create({questionId: question.id});
     res.status(200).json(question);
   }).catch(error => {
     res.status(404).json(error);
@@ -69,6 +70,7 @@ questions.delete('/:id', (req, res) => {
     .then(question => {
       if (question) {
         let id = question.id;
+        models.TestQuestion.destroy({where: {questionId: question.id}});
         models.Test.destroy({where: {id: req.params.id}})
           .then(res.send('Question with id ' + id + ' has been successfully deleted.'));
       } else {
