@@ -1,8 +1,8 @@
 const express = require('express');
 const models = require('../models');
-const answer = express.Router({mergeParams: true});
+const answers = express.Router({mergeParams: true});
 
-answer.post('/', (req, res) => {
+answers.post('/', (req, res) => {
   models.Answer.create({
     questionId: req.body.questionId,
     text: req.body.text,
@@ -15,4 +15,4 @@ answer.post('/', (req, res) => {
   });
 });
 
-module.exports = answer;
+module.exports = answers;
