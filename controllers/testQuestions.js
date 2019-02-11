@@ -1,9 +1,9 @@
 const express = require('express');
 const models = require('../models');
-const testQuestion = express.Router({mergeParams: true});
+const testQuestions = express.Router({mergeParams: true});
 
 // index
-testQuestion.get('/', (req, res) => {
+testQuestions.get('/', (req, res) => {
   models.TestQuestion.findAll().then(result => {
     res.status(200).json(result);
   }).catch(error => {
@@ -12,7 +12,7 @@ testQuestion.get('/', (req, res) => {
 });
 
 // show
-testQuestion.get('/:id', (req, res) => {
+testQuestions.get('/:id', (req, res) => {
   models.TestQuestion.findById(req.params.id)
     .then(result => {
       if (result) {
@@ -26,7 +26,7 @@ testQuestion.get('/:id', (req, res) => {
 });
 
 // create
-testQuestion.post('/', (req, res) => {
+testQuestions.post('/', (req, res) => {
   models.TestQuestion.create({
     questionId: req.body.questionId,
     testId: req.body.testId
@@ -38,7 +38,7 @@ testQuestion.post('/', (req, res) => {
 });
 
 // update
-testQuestion.put('/:id', (req, res) => {
+testQuestions.put('/:id', (req, res) => {
   models.TestQuestion.update(
     {
       questionId: req.body.questionId,
@@ -54,7 +54,7 @@ testQuestion.put('/:id', (req, res) => {
 });
 
 // delete
-testQuestion.delete('/:id', (req, res) => {
+testQuestions.delete('/:id', (req, res) => {
   models.TestQuestion.findById(req.params.id)
     .then(result => {
       if (result) {
@@ -70,4 +70,4 @@ testQuestion.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = testQuestion;
+module.exports = testQuestions;
