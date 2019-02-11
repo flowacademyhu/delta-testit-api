@@ -28,7 +28,8 @@ testQuestion.get('/:id', (req, res) => {
 // create
 testQuestion.post('/', (req, res) => {
   models.TestQuestion.create({
-    name: req.body.name
+    questionId: req.body.questionId,
+    testId: req.body.testId
   }).then(testQuestion => {
     res.status(200).json(testQuestion);
   }).catch(error => {
@@ -40,7 +41,8 @@ testQuestion.post('/', (req, res) => {
 testQuestion.put('/:id', (req, res) => {
   models.TestQuestion.update(
     {
-      name: req.body.name
+      questionId: req.body.questionId,
+      testId: req.body.testId
     },
     {where: {id: req.params.id}})
     .then(updated => {
