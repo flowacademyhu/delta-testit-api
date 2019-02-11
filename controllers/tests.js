@@ -32,13 +32,13 @@ tests.post('/', (req, res) => {
     name: req.body.name,
     time: req.body.time
   }).then(test => {
-    models.TestQuestion.findOne({where: {questionId: test.questionId}})
+    models.TestQuestion.findOne({where: {questionId: req.body.questionId}})
       .then(testQuestion => {
-        if (testQuestion && testQuestion.testId.length < 1) {
+        if (testQuestion && !testQuestion.testId) {
           models.TestQuestion.update({
             testId: test.id
           }, {
-            where: {questionId: testQuestion.questionId}
+            where: {questionId: req.body.questionId}
           });
         } else {
           models.TestQuestion.create({
