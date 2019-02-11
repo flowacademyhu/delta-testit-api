@@ -20,7 +20,7 @@ const jwt = require('jsonwebtoken');
 //     });
 // });
 
-userLogin.post('/t', (req, res) => {
+userLogin.post('/', (req, res) => {
   models.User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {

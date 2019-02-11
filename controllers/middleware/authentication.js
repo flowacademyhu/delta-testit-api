@@ -31,6 +31,9 @@ module.exports = (req, res, next) => {
   if (!req.headers.authorization && endpoints[endpoint].includes('anonymus')) {
     return next();
   }
+  if (!req.headers.authorization) {
+    res.status(409).json({message: 'Authorization failed.'});
+  }
   const token = req.headers.authorization;
   const decoded = jwt.verify(token, config.JWT_SECRET);
   const userId = decoded.id;
