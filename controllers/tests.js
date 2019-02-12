@@ -4,7 +4,11 @@ const tests = express.Router({mergeParams: true});
 
 // index
 tests.get('/', (req, res) => {
-  models.Test.findAll().then(result => {
+  models.Test.findAll({
+    include: [{
+      model: models.User
+    }]
+  }).then(result => {
     res.status(200).json(result);
   }).catch(error => {
     res.status(404).res.json(error);
@@ -32,25 +36,32 @@ tests.post('/', (req, res) => {
     name: req.body.name,
     time: req.body.time
   }).then(test => {
-    models.TestQuestion.findOne({where: {questionId: req.body.questionId}})
-      .then(testQuestion => {
-        if (testQuestion && !testQuestion.testId) {
-          models.TestQuestion.update({
-            testId: test.id
-          }, {
-            where: {questionId: req.body.questionId}
-          });
-        } else {
-          models.TestQuestion.create({
-            questionId: req.body.questionId,
-            testId: test.id
-          });
-        }
-      })
-      .catch(error => {
-        res.status().json(error);
-      });
-    res.status(200).json(test);
+    for (let i = 0; i < req.body.questionId.length; i++) {
+      let object = {testId: test.id, questionId: req.body.questionId[i]};
+      models.TestQuestion.findOne({where: {questionId: req.body.questionId[i]}})
+        .then(testQuestion => {
+          if (testQuestion && !testQuestion.testId) {
+            models.TestQuestion.update({
+              testId: test.id,
+              questionId: req.body.questionId[i]
+            }, {
+              where: {questionId: req.body.questionId[i]}
+            })
+              .then(testQuestion => {
+                return res.status(200).json(test);
+              })
+              .catch(error => res.json(error));
+            return res.status(200).json(test);
+          } else {
+            models.TestQuestion.create(object).then(testQuestion => {
+              return res.status(200).json(test);
+            });
+          }
+        })
+        .catch(error => {
+          res.status(404).json(error);
+        });
+    }
   }).catch(error => {
     res.status(404).json(error);
   });
