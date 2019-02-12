@@ -10,7 +10,7 @@ const answers = require('./controllers/answers');
 const subjects = require('./controllers/subjects');
 const userResults = require('./controllers/userResults');
 const userLogin = require('./controllers/userLogin');
-// const models = require('./models');
+const testQuestions = require('./controllers/testQuestions');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFilePath = './docs/swagger.json';
@@ -41,5 +41,6 @@ app.use('/tests', tests);
 app.use('/answers', answers);
 app.use('/subjects', subjects);
 app.use('/users/:userId/results', userResults);
+app.use('/testQuestions', testQuestions);
 
 app.listen(process.env.PORT);
