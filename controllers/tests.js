@@ -7,30 +7,50 @@ tests.get('/', (req, res) => {
   models.Test.findAll().then(result => {
     res.status(200).json(result);
   }).catch(error => {
-    res.status(404).res.json('' + error);
+    res.status(404).res.json(error);
   });
 });
 
 // show
 tests.get('/:id', (req, res) => {
   models.Test.findById(req.params.id)
-    .then(result => {
-      if (!result) {
-        throw new Error();
+    .then(test => {
+      if (test) {
+        res.status(200).json(test);
+      } else {
+        res.status(404).json({message: 'Test with given id does not exist.'});
       }
-      res.status(200).json(result);
     }).catch(error => {
-      res.status(404).json({message: error + '! Test with given id does not exist.'});
+      res.status(500).json(error);
     });
 });
 
 // create
 tests.post('/', (req, res) => {
   models.Test.create({
+    userId: req.body.userId,
     name: req.body.name,
     time: req.body.time
-  }).then(user => {
-    res.status(200).json(user);
+  }).then(test => {
+    models.TestQuestion.findOne({where: {questionId: req.body.questionId}})
+      .then(testQuestion => {
+        if (testQuestion && !testQuestion.testId) {
+          models.TestQuestion.update({
+            testId: test.id
+          }, {
+            where: {questionId: req.body.questionId}
+          });
+        } else {
+          models.TestQuestion.create({
+            questionId: req.body.questionId,
+            testId: test.id
+          });
+        }
+      })
+      .catch(error => {
+        res.status().json(error);
+      });
+    res.status(200).json(test);
   }).catch(error => {
     res.status(404).json(error);
   });
@@ -44,8 +64,8 @@ tests.put('/:id', (req, res) => {
       time: req.body.time
     },
     {where: {id: req.params.id}})
-    .then(updated => {
-      res.status(200).json(updated);
+    .then(test => {
+      res.status(200).json(test);
     })
     .catch(error => {
       res.status(404).json(error);
@@ -55,16 +75,18 @@ tests.put('/:id', (req, res) => {
 // delete
 tests.delete('/:id', (req, res) => {
   models.Test.findById(req.params.id)
-    .then(result => {
-      if (!result) {
-        throw new Error();
+    .then(test => {
+      if (test) {
+        let id = test.id;
+        models.TestQuestion.destroy({where: {testId: test.id}});
+        models.Test.destroy({where: {id: req.params.id}})
+          .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
+      } else {
+        res.status(404).json({message: 'Test with given id does not exist.'});
       }
-      let id = result.id;
-      models.Test.destroy({where: {id: req.params.id}})
-        .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
     })
     .catch(error => {
-      res.status(404).json({message: error + '! Test with given id does not exist.'});
+      res.status(500).json({message: error});
     });
 });
 
