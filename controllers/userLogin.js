@@ -4,6 +4,16 @@ const userLogin = express.Router({ mergeParams: true });
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const generator = require('generate-password');
+const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
+
+let options = {
+  auth: {
+    api_user: 'themeanstack', // Sendgrid username
+    api_key: 'PAssword123!@#' // Sendgrid password
+  }
+};
+let client = nodemailer.createTransport(sgTransport(options));
 
 // userLogin.post('/', (req, res) => {
 //   models.User.findOne({where: {email: req.body.email}})
@@ -63,12 +73,18 @@ userLogin.put('/reset', (req, res) => {
               encryptedPassword: pwd
             });
           });
+
         let email = {
-          form: 'TestIT group, testIT@gmail.com',
+          form: 'TestIT group, testit@gmail.com',
           to: req.body.email,
           subject: 'TestIT reset passwowrd',
-          text: 'Tisztelt regisztált tagunk! Az ön általt igényelet új password' + pwd
-        }
+          text: 'Tisztelt regisztált tagunk! Az ön általt igényelet új password: ' + pwd + ' !'
+        };
+
+        client.sendMail(email, function (err, info) {
+          if (err) console.log(err);
+        });
+        res.json({ success: true, message: 'New password send to email!' });
       }
     });
 });
