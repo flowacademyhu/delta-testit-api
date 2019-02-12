@@ -9,8 +9,8 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 
 let options = {
   auth: {
-    api_user: 'themeanstack', // Sendgrid username
-    api_key: 'PAssword123!@#' // Sendgrid password
+    api_user: 'themeanstack',
+    api_key: 'PAssword123!@#'
   }
 };
 let client = nodemailer.createTransport(sgTransport(options));
