@@ -29,23 +29,18 @@ tests.get('/:id', (req, res) => {
     });
 });
 
+// create
 tests.post('/', (req, res) => {
-  console.log('Test creating...');
-
   models.Test.create({
     userId: req.body.userId,
     name: req.body.name,
     time: req.body.time
   }).then(test => {
-    console.log('>> Test created!');
     for (let i = 0; i < req.body.questionId.length; i++) {
       let object = {testId: test.id, questionId: req.body.questionId[i]};
       models.TestQuestion.findOne({where: {questionId: req.body.questionId[i]}})
         .then(testQuestion => {
-          console.log('>> >> TestQuestion found!');
-          console.log(testQuestion);
           if (testQuestion && !testQuestion.testId) {
-            console.log('updated');
             models.TestQuestion.update({
               testId: test.id,
               questionId: req.body.questionId[i]
@@ -53,29 +48,23 @@ tests.post('/', (req, res) => {
               where: {questionId: req.body.questionId[i]}
             })
               .then(testQuestion => {
-                console.log('>> >> >> TestQuestion updated!');
                 return res.status(200).json(test);
               })
               .catch(error => res.json(error));
             return res.status(200).json(test);
           } else {
             models.TestQuestion.create(object).then(testQuestion => {
-              console.log('>> >> TestQuestion created!');
               return res.status(200).json(test);
             });
           }
         })
         .catch(error => {
-          console.error('TestQuestion NOT found with: ' + req.body.questionId[i]);
           res.status(404).json(error);
         });
     }
-    console.log('>> >> >> BulkCreate ended!');
   }).catch(error => {
     res.status(404).json(error);
   });
-
-  console.log('Test creating finished!');
 });
 
 // update
