@@ -9,5 +9,7 @@ npm install --save swagger
 npm install --save swagger-express-middleware
 npm install --save swagger-ui
 npm install --save swagger-ui-express
-./node_modules/.bin/sequelize init
-
+npm install --save nodemailer
+npm install --save bcrypt
+npm install --save nodemon
+npm install --save jsonwebtoken
