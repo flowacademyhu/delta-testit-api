@@ -71,7 +71,7 @@ questions.delete('/:id', (req, res) => {
       if (question) {
         let id = question.id;
         models.TestQuestion.destroy({where: {questionId: question.id}});
-        models.Test.destroy({where: {id: req.params.id}})
+        models.Question.destroy({where: {id: req.params.id}})
           .then(res.send('Question with id ' + id + ' has been successfully deleted.'));
       } else {
         res.status(404).json({message: 'Question with given id does not exist.'});

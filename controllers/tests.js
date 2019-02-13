@@ -34,7 +34,9 @@ tests.post('/', (req, res) => {
   models.Test.create({
     userId: req.body.userId,
     name: req.body.name,
-    time: req.body.time
+    time: req.body.time,
+    status: req.body.status,
+    archivedTest: req.body.archivedTest
   }).then(test => {
     for (let i = 0; i < req.body.questionId.length; i++) {
       let object = {testId: test.id, questionId: req.body.questionId[i]};
@@ -72,7 +74,8 @@ tests.put('/:id', (req, res) => {
   models.Test.update(
     {
       name: req.body.name,
-      time: req.body.time
+      time: req.body.time,
+      status: req.body.status
     },
     {where: {id: req.params.id}})
     .then(test => {
