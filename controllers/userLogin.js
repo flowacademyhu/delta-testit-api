@@ -5,31 +5,19 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const generator = require('generate-password');
 const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
 
-let options = {
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  secure: false,
+  port: 25,
   auth: {
-    api_user: 'themeanstack',
-    api_key: 'PAssword123!@#'
+    user: 'email',
+    pass: 'password'
+  },
+  tls: {
+    rejectUnauthorized: false
   }
-};
-let client = nodemailer.createTransport(sgTransport(options));
-
-// userLogin.post('/', (req, res) => {
-//   models.User.findOne({where: {email: req.body.email}})
-//     .then(user => {
-//       if (!user) {
-//         res.status(401).json({message: 'Authentication failed.'});
-//       } else {
-//         bcrypt.compare(req.body.password, user.encryptedPassword)
-//           .then(res.status(200).json({message: 'Authentication successful.'}))
-//           .catch(res.status(401).json({message: 'Authentication failed.'}));
-//       }
-//     })
-//     .catch(error => {
-//       res.status(500).json(error);
-//     });
-// });
+});
 
 userLogin.post('/', (req, res) => {
   models.User.findOne({ where: { email: req.body.email } })
@@ -72,19 +60,22 @@ userLogin.put('/reset', (req, res) => {
             models.User.update({
               encryptedPassword: pwd
             });
+            // vagy ide kell az email?!
           });
 
         let email = {
           form: 'TestIT group, testit@gmail.com',
           to: req.body.email,
-          subject: 'TestIT reset passwowrd',
+          subject: 'TestIT reset password',
           text: 'Tisztelt regisztált tagunk! Az ön általt igényelet új password: ' + pwd + ' !'
         };
 
-        client.sendMail(email, function (err, info) {
-          if (err) console.log(err);
+        transporter.sendMail(email, (err, info) => {
+          if (err) {
+            return console.log(err);
+          }
+          res.json({ success: true, message: 'New password send to email!' });
         });
-        res.json({ success: true, message: 'New password send to email!' });
       }
     });
 });
