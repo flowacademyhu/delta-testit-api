@@ -66,24 +66,6 @@ questions.put('/:id', (req, res) => {
 
 // delete
 questions.delete('/:id', (req, res) => {
-  models.Question.findById(req.params.id)
-    .then(models.Answer.update({ questionId: null }, { where: { questionId: req.params.id } }))
-    .then(question => {
-      if (question) {
-        let id = question.id;
-        models.TestQuestion.destroy({ where: { questionId: question.id } });
-        models.Question.destroy({ where: { id: req.params.id } })
-          .then(res.json('Question with id ' + id + ' has been successfully deleted.'));
-      } else {
-        res.status(404).json({ message: 'Question with given id does not exist.' });
-      }
-    })
-    .catch(error => {
-      res.status(500).json({ message: error });
-    });
-});
-
-questions.delete('/:id', (req, res) => {
   let id = req.params.id;
   models.Answer.update({ questionId: null }, { where: { questionId: req.params.id } })
     .then(() => {
