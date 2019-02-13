@@ -7,6 +7,7 @@ module.exports = {
         userId: 1,
         name: 'firstTest',
         time: 10,
+        status: 'PUBLISHED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -14,6 +15,7 @@ module.exports = {
         userId: 2,
         name: 'secondTest',
         time: 15,
+        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -21,6 +23,7 @@ module.exports = {
         userId: 3,
         name: 'thirdTest',
         time: 30,
+        status: 'CLOSED',
         createdAt: new Date(),
         updatedAt: new Date()
       }

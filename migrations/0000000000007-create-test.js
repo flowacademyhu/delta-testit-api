@@ -21,6 +21,12 @@ module.exports = {
       time: {
         type: Sequelize.INTEGER
       },
+      archivedTest: {
+        type: Sequelize.JSONB
+      },
+      status: {
+        type: Sequelize.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED')
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
