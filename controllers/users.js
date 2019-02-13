@@ -33,15 +33,15 @@ users.post('/', (req, res) => {
       if (user >= 1) {
         res.status(409).json('User with such an email already exits!');
       } else {
-        bcrypt.hash(req.body.encryptedPassword, 10)
+        bcrypt.hash(req.body.password, 10)
           .then(hash => {
-            req.body.encryptedPassword = hash;
+            req.body.password = hash;
             models.User.create({
               role: req.body.role,
               firstName: req.body.firstName,
               lastName: req.body.lastName,
               email: req.body.email,
-              encryptedPassword: req.body.encryptedPassword
+              encryptedPassword: req.body.password
             }).then(user => {
               res.status(201).json({message: 'User has been succesfully created.'});
             }).catch(error => {
