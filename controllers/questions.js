@@ -83,4 +83,17 @@ questions.delete('/:id', (req, res) => {
     });
 });
 
+questions.delete('/:id', (req, res) => {
+  let id = req.params.id;
+  models.Answer.update({ questionId: null }, { where: { questionId: req.params.id } })
+    .then(() => {
+      models.TestQuestion.destroy({ where: { questionId: id } });
+      models.Question.destroy({ where: { id: id } });
+    })
+    .then(res.json('Question with id ' + id + ' has been successfully deleted.'))
+    .catch(error => {
+      res.status(404).json(error);
+    });
+});
+
 module.exports = questions;

@@ -30,22 +30,16 @@ answers.post('/', (req, res) => {
 // delete
 answers.delete('/:id', (req, res) => {
   let id = req.params.id;
-  models.ChoosenAnswer.findOne({where: {answerId: req.params.id}})
-    .then(result => {
-      if (result) {
-        models.ChoosenAnswer.update(
-          {answerId: null},
-          {where: {answerId: req.params.id}})
-          .then()
-          .catch(error => {
-            res.status(500).json(error);
-          });
-      }
-    }).then(() => {
+  models.ChoosenAnswer.update(
+    {answerId: null},
+    {where: {answerId: req.params.id}})
+    .then(() => {
       models.Answer.destroy({where: {id: req.params.id}});
-    }
-    ).then(res.status(200).json({message: 'Answer with id ' + id + ' has been successfully deleted.'}))
-    .catch();
+    })
+    .then(res.status(200).json({message: 'Answer with id ' + id + ' has been successfully deleted.'}))
+    .catch(error => {
+      res.json(error);
+    });
 });
 
 module.exports = answers;
