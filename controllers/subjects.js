@@ -60,7 +60,7 @@ subjects.delete('/:id', (req, res) => {
       if (result) {
         let id = req.params.id;
         models.Subject.destroy({where: {id: req.params.id}})
-          .then(res.send('Subject with id ' + id + ' has been successfully deleted.'));
+          .then(res.json('Subject with id ' + id + ' has been successfully deleted.'));
       } else {
         res.status(404).json({message: 'Subject with given id does not exist.'});
       }
