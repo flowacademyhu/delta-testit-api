@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const subjects = require('./controllers/subjects');
 const users = require('./controllers/users');
@@ -19,6 +20,7 @@ const createMiddleware = require('swagger-express-middleware');
 
 const app = express();
 
+app.use(cors());
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
