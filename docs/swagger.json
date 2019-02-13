@@ -192,98 +192,6 @@
           }
         }
       }
-    },
-    "/tests": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Returns a list of all tests",
-            "schema": {
-              "$ref": "#/definitions/Tests"
-            }
-          },
-          "400": {
-            "description": "Failed to show tests"
-          }
-        }
-      },
-      "post": {
-        "parameters": [
-          {
-            "$ref": "#/parameters/testData"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "New test created",
-            "schema": {
-              "$ref": "#/definitions/Test"
-            }
-          },
-          "400": {
-            "description": "Failed to test question"
-          }
-        }
-      }
-    },
-    "/tests/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns test by id",
-            "schema": {
-              "$ref": "#/definitions/Test"
-            }
-          },
-          "400": {
-            "description": "Test with given id does not exist"
-          }
-        }
-      },
-      "put": {
-        "parameters": [
-          {
-            "$ref": "#/parameters/id"
-          },
-          {
-            "$ref": "#/parameters/testData"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Test updated",
-            "schema": {
-              "$ref": "#/definitions/Test"
-            }
-          },
-          "400": {
-            "description": "Failed to update test"
-          }
-        }
-      },
-      "delete": {
-        "parameters": [
-          {
-            "$ref": "#/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Test deleted",
-            "schema": {
-              "$ref": "#/definitions/Test"
-            }
-          },
-          "400": {
-            "description": "Test with given id does not exist."
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -375,12 +283,6 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/Question"
-      },
-      "Tests": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/Test"
-        }
       }
     }
   },
