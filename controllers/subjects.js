@@ -53,10 +53,12 @@ subjects.put('/:id', (req, res) => {
 
 // delete
 subjects.delete('/:id', (req, res) => {
-  models.Subject.findById(req.params.id)
+  models.Question.update({subjectId: null}, {where: {subjectId: req.params.id}})
+    .then(models.SubjectUser.update({subjectId: null}, {where: {subjectId: req.params.id}}))
+    .then(models.Subject.findById(req.params.id))
     .then(result => {
       if (result) {
-        let id = result.id;
+        let id = req.params.id;
         models.Subject.destroy({where: {id: req.params.id}})
           .then(res.send('Subject with id ' + id + ' has been successfully deleted.'));
       } else {

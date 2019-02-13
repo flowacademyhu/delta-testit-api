@@ -49,7 +49,7 @@ questions.post('/', (req, res) => {
 questions.put('/:id', (req, res) => {
   models.Question.update(
     {
-      subjectId: req.body.subjectId,
+      subjectId: req.body.subjectId || null,
       text: req.body.text,
       type: req.body.type,
       value: req.body.value,
