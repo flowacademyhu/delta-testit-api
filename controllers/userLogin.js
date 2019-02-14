@@ -60,22 +60,21 @@ userLogin.put('/reset', (req, res) => {
             models.User.update({
               encryptedPassword: pwd
             });
-            // vagy ide kell az email?!
+          }).then(results => {
+            let email = {
+              form: 'TestIT group, testit@gmail.com',
+              to: req.body.email,
+              subject: 'TestIT reset password',
+              text: 'Tisztelt regisztált tagunk! Az ön általt igényelet új password: ' + pwd + ' !'
+            };
+
+            transporter.sendMail(email, (err, info) => {
+              if (err) {
+                return console.log(err);
+              }
+              res.json({ success: true, message: 'New password send to email!' });
+            });
           });
-
-        let email = {
-          form: 'TestIT group, testit@gmail.com',
-          to: req.body.email,
-          subject: 'TestIT reset password',
-          text: 'Tisztelt regisztált tagunk! Az ön általt igényelet új password: ' + pwd + ' !'
-        };
-
-        transporter.sendMail(email, (err, info) => {
-          if (err) {
-            return console.log(err);
-          }
-          res.json({ success: true, message: 'New password send to email!' });
-        });
       }
     });
 });
