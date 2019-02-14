@@ -29,6 +29,54 @@ tests.get('/:id', (req, res) => {
     });
 });
 
+// get full test
+tests.get('/start/:id', (req, res) => {
+  let test = {
+    id: '',
+    name: '',
+    time: 0,
+    questions: []
+  };
+  models.Test.findOne({where: {id: req.params.id}})
+    .then(result => {
+      test.id = result.id;
+      test.name = result.name;
+      test.time = result.time;
+      models.TestQuestion.find({where: {testId: result.id}})
+        .then(result => {
+          models.Question.findAll({where: {id: result.questionId}})
+            .then(results => {
+              for (let i = 0; i < results.length; i++) {
+                let question = {
+                  subjectId: results[i].subjectId,
+                  text: results[i].text,
+                  value: results[i].value,
+                  status: results[i].status,
+                  picture: results[i].picture,
+                  answers: []
+                };
+                models.Answer.findAll({where: {id: results[i].id}})
+                  .then(results => {
+                    for (let j = 0; j < results.length; j++) {
+                      let answer = {
+                        number: j,
+                        text: results[j].text,
+                        picture: results[j].picture
+                      };
+                      question.answers.push(answer);
+                    }
+                    test.questions.push(question);
+                  });
+              }
+            });
+        });
+    })
+    .catch(error => {
+      res.status(404).json(error);
+    });
+  return res.json(test);
+});
+
 /*
 // create
 tests.post('/', (req, res) => {
@@ -92,12 +140,11 @@ tests.post('/', async (req, res) => {
       }
     });
     let resp = await Promise.all(promises);
-    res.json(resp)
-  } catch {
-    res.status(400).json('error');
+    res.json(resp);
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
-
 
 // update
 tests.put('/:id', (req, res) => {
@@ -105,7 +152,8 @@ tests.put('/:id', (req, res) => {
     {
       name: req.body.name,
       time: req.body.time,
-      status: req.body.status
+      status: req.body.status,
+      userid: req.body.userId
     },
     {where: {id: req.params.id}})
     .then(test => {
