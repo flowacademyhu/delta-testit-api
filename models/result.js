@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Result.associate = function (models) {
     Result.belongsTo(models.Test, { foreignKey: 'testId' });
     Result.belongsTo(models.User, { foreignKey: 'userId' });
-    Result.hasMany(models.ChoosenAnswer, { foreignKey: 'resultId' });
+    Result.hasMany(models.ChoosenAnswer, { foreignKey: 'resultId', onDelete: 'cascade' });
   };
   return Result;
 };
