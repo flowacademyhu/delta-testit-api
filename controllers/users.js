@@ -74,6 +74,7 @@ users.put('/:id', (req, res) => {
     });
 });
 
+/*
 // delete
 users.delete('/:id', (req, res) => {
   models.User.findById(req.params.id)
@@ -88,6 +89,30 @@ users.delete('/:id', (req, res) => {
     })
     .catch(error => {
       res.status(500).json(error);
+    });
+});
+*/
+
+/*
+users.delete('/:id', (req, res) => {
+  models.SubjectUser.update({userId: null}, {where: {userId: req.params.id}})
+    .then(models.User.destroy({where: {id: req.params.id}}))
+    .then(res.json({message: 'User has been successfully deleted.'}))
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+*/
+
+users.delete('/:id', (req, res) => {
+  models.SubjectUser.update({userId: null}, {where: {userId: req.params.id}})
+    .then(() => {
+      models.User.destroy({where: {id: req.params.id}})
+        .then((asd) => {
+          console.log(asd);
+          res.json({message: 'User has been successfully deleted.'});
+        })
+        .catch(error => res.status(500).json(error));
     });
 });
 
