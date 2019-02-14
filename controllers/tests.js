@@ -94,7 +94,7 @@ tests.post('/', async (req, res) => {
     let resp = await Promise.all(promises);
     res.json(resp)
   } catch {
-    res.status(400).json('error')
+    res.status(400).json('error');
   }
 });
 

@@ -14,7 +14,7 @@ userLogin.post('/', (req, res) => {
           if (err) {
             res.status(401).json({message: 'Authentication failed.'});
           } else if (result) {
-            const token = jwt.sign({data: {email: req.body.email, role: user.role}}, 'secretpass', {expiresIn: '1h'});
+            const token = jwt.sign({data: {email: req.body.email, role: user.role, id: user.id}}, 'secretpass', {expiresIn: '1h'});
             res.status(200).json({message: 'Authentication successful.', token});
             console.log(token);
           } else {

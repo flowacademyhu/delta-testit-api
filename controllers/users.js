@@ -74,46 +74,21 @@ users.put('/:id', (req, res) => {
     });
 });
 
-/*
-// delete
-users.delete('/:id', (req, res) => {
-  models.User.findById(req.params.id)
-    .then(user => {
-      if (user) {
-        let name = user.firstName;
-        models.User.destroy({where: {id: req.params.id}})
-          .then(res.json({message: name + ' has been successfully deleted.'}));
-      } else {
-        res.status(404).json({message: 'User with given id does not exist.'});
-      }
-    })
-    .catch(error => {
-      res.status(500).json(error);
-    });
-});
-*/
-
-/*
-users.delete('/:id', (req, res) => {
-  models.SubjectUser.update({userId: null}, {where: {userId: req.params.id}})
-    .then(models.User.destroy({where: {id: req.params.id}}))
-    .then(res.json({message: 'User has been successfully deleted.'}))
-    .catch(error => {
-      res.status(500).json(error);
-    });
-});
-*/
-
 users.delete('/:id', (req, res) => {
   models.SubjectUser.update({userId: null}, {where: {userId: req.params.id}})
     .then(() => {
-      models.User.destroy({where: {id: req.params.id}})
-        .then((asd) => {
-          console.log(asd);
-          res.json({message: 'User has been successfully deleted.'});
-        })
-        .catch(error => res.status(500).json(error));
-    });
+      models.Test.update({userId: null}, {where: {userId: req.params.id}})
+        .then(() => {
+          models.Result.update({userId: null}, {where: {userId: req.params.id}})
+            .then(() => {
+              models.User.destroy({where: {id: req.params.id}})
+                .then(() => {
+                  res.json({message: 'User has been successfully deleted.'});
+                });
+            });
+        });
+    })
+    .catch(error => res.status(500).json(error));
 });
 
 module.exports = users;
