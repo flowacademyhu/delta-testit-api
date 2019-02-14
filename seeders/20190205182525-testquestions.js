@@ -40,7 +40,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        questionId: 9,
+        questionId: 7,
         testId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
