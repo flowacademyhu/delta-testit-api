@@ -13,6 +13,7 @@ const subjectUsers = require('./controllers/subjectUsers');
 const userResults = require('./controllers/userResults');
 const testResults = require('./controllers/testResults');
 const userLogin = require('./controllers/userLogin');
+const groups = require('./controllers/groups');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFilePath = './docs/swagger.json';
@@ -48,5 +49,6 @@ app.use('/subjectUsers', subjectUsers);
 app.use('/users/:userId/results', userResults);
 app.use('/tests/:testId/results', testResults);
 app.use('/users/login', userLogin);
+//app.use('/groups', groups);
 
 app.listen(process.env.PORT);
