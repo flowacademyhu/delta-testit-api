@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('../models');
-const questions = express.Router({mergeParams: true});
+const questions = express.Router({ mergeParams: true });
 
 // index
 questions.get('/', (req, res) => {
@@ -22,7 +22,7 @@ questions.get('/:id', (req, res) => {
       if (question) {
         res.status(200).json(question);
       } else {
-        res.status(404).json({message: 'Question with given id does not exist.'});
+        res.status(404).json({ message: 'Question with given id does not exist.' });
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -38,7 +38,7 @@ questions.post('/', (req, res) => {
     value: req.body.value,
     status: req.body.status
   }).then(question => {
-    models.TestQuestion.create({questionId: question.id});
+    models.TestQuestion.create({ questionId: question.id });
     res.status(200).json(question);
   }).catch(error => {
     res.status(404).json(error);
@@ -55,7 +55,7 @@ questions.put('/:id', (req, res) => {
       value: req.body.value,
       status: req.body.status
     },
-    {where: {id: req.params.id}})
+    { where: { id: req.params.id } })
     .then(question => {
       res.status(200).json(question);
     })

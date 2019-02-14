@@ -1,7 +1,8 @@
 const express = require('express');
 const models = require('../models');
 const bcrypt = require('bcrypt');
-const users = express.Router({mergeParams: true});
+const users = express.Router({ mergeParams: true });
+const mailgunConfig = require('../config/mailgun.json');
 
 // index
 users.get('/', (req, res) => {
@@ -19,7 +20,7 @@ users.get('/:id', (req, res) => {
       if (user) {
         res.status(200).json(user);
       } else {
-        res.status(404).json({message: 'User with given id does not exist.'});
+        res.status(404).json({ message: 'User with given id does not exist.' });
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -28,13 +29,14 @@ users.get('/:id', (req, res) => {
 
 // create
 users.post('/', (req, res) => {
-  models.User.findOne({where: {email: req.body.email}})
+  models.User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (user >= 1) {
-        res.status(409).json('User with such an email already exits!');
+        res.status(200).json('User with such an email already exits!');
       } else {
         bcrypt.hash(req.body.password, 10)
           .then(hash => {
+            let originalPassword = req.body.password;
             req.body.password = hash;
             models.User.create({
               role: req.body.role,
@@ -43,7 +45,8 @@ users.post('/', (req, res) => {
               email: req.body.email,
               encryptedPassword: req.body.password
             }).then(user => {
-              res.status(201).json({message: 'User has been succesfully created.'});
+              sendMail(originalPassword, req.body.email);
+              res.status(201).json({ message: 'User has been succesfully created.' });
             }).catch(error => {
               res.status(500).json(error);
             });
@@ -64,10 +67,10 @@ users.put('/:id', (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email
     },
-    {where: {id: req.params.id}})
+    { where: { id: req.params.id } })
     .then(user => {
       let name = req.body.firstName;
-      res.status(200).json({message: name + ' has been succesfully updated.'});
+      res.status(200).json({ message: name + ' has been succesfully updated.' });
     })
     .catch(error => {
       res.status(406).json(error);
@@ -90,5 +93,25 @@ users.delete('/:id', (req, res) => {
     })
     .catch(error => res.status(500).json(error));
 });
+
+const sendMail = (password, email) => {
+  var api_key = mailgunConfig.api_key;
+  var domain = mailgunConfig.domain;
+  var mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
+
+  let data = {
+    from: 'Flow Academy TestIT <flowacademytestit@gmail.com>',
+    to: `${email}`,
+    subject: 'Registration',
+    text: `Kedves regisztráló! A bejelenkezéshez való jelszavad: ${password}`
+  };
+
+  mailgun.messages().send(data, function (error, body) {
+    if (error) {
+      // console.log(error);
+    }
+    // console.log(body);
+  });
+};
 
 module.exports = users;

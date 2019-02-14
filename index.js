@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const app = express();
 
 const subjects = require('./controllers/subjects');
 const users = require('./controllers/users');
@@ -13,12 +14,11 @@ const subjectUsers = require('./controllers/subjectUsers');
 const userResults = require('./controllers/userResults');
 const testResults = require('./controllers/testResults');
 const userLogin = require('./controllers/userLogin');
+const groups = require('./controllers/groups');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFilePath = './docs/swagger.json';
 const createMiddleware = require('swagger-express-middleware');
-
-const app = express();
 
 app.use(cors());
 app.use(morgan('common'));
@@ -47,5 +47,6 @@ app.use('/subjectUsers', subjectUsers);
 app.use('/users/:userId/results', userResults);
 app.use('/tests/:testId/results', testResults);
 app.use('/users/login', userLogin);
+app.use('/groups', groups);
 
 app.listen(process.env.PORT);

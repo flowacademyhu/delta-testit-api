@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('../models');
-const answers = express.Router({mergeParams: true});
+const answers = express.Router({ mergeParams: true });
 
 // index
 answers.get('/', (req, res) => {
