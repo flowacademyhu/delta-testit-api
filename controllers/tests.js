@@ -86,31 +86,11 @@ tests.put('/:id', (req, res) => {
     });
 });
 
-/*
-// delete
-tests.delete('/:id', (req, res) => {
-  models.Test.findById(req.params.id)
-    .then(test => {
-      if (test) {
-        let id = test.id;
-        models.TestQuestion.destroy({where: {testId: test.id}});
-        models.Test.destroy({where: {id: req.params.id}})
-          .then(res.send('Test with id ' + id + ' has been successfully deleted.'));
-      } else {
-        res.status(404).json({message: 'Test with given id does not exist.'});
-      }
-    })
-    .catch(error => {
-      res.status(500).json({message: error});
-    });
-});
-*/
-
 // delete
 tests.delete('/:id', (req, res) => {
   let id = req.params.id;
   models.TestQuestion.destroy({where: {testId: id}});
-  models.Test.destroy({where: {id: req.params.id}})
+  models.Test.destroy({where: {id: id}})
     .then(res.send('Test with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
       res.status(500).json({message: error});
