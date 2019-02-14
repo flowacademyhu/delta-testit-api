@@ -34,11 +34,11 @@ answers.delete('/:id', (req, res) => {
     {answerId: null},
     {where: {answerId: req.params.id}})
     .then(() => {
-      models.Answer.destroy({where: {id: req.params.id}});
-    })
-    .then(res.status(200).json({message: 'Answer with id ' + id + ' has been successfully deleted.'}))
-    .catch(error => {
-      res.json(error);
+      models.Answer.destroy({where: {id: req.params.id}})
+        .then(res.status(200).json({message: 'Answer with id ' + id + ' has been successfully deleted.'}))
+        .catch(error => {
+          res.json(error);
+        });
     });
 });
 

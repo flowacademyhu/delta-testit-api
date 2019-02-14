@@ -51,27 +51,6 @@ subjects.put('/:id', (req, res) => {
     });
 });
 
-/*
-// delete
-subjects.delete('/:id', (req, res) => {
-  models.Question.update({subjectId: null}, {where: {subjectId: req.params.id}})
-    .then(models.SubjectUser.update({subjectId: null}, {where: {subjectId: req.params.id}}))
-    .then(models.Subject.findById(req.params.id))
-    .then(result => {
-      if (result) {
-        let id = req.params.id;
-        models.Subject.destroy({where: {id: req.params.id}})
-          .then(res.json('Subject with id ' + id + ' has been successfully deleted.'));
-      } else {
-        res.status(404).json({message: 'Subject with given id does not exist.'});
-      }
-    })
-    .catch(error => {
-      res.status(500).json({message: error});
-    });
-});
-*/
-
 // delete
 subjects.delete('/:id', (req, res) => {
   let id = req.params.id;
