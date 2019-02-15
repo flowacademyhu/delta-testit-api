@@ -79,13 +79,13 @@ tests.get('/start/:id', (req, res) => {
 });
 
 tests.post('/', async (req, res) => {
-  let creatorId = req.body.creatorId;
-  models.User.findById(creatorId)
+  let creatorId = null;
+  models.User.findById(req.body.creatorId)
     .then(user => {
       creatorId = user.id;
     })
     .catch(error => {
-      res.status(500).json(error);
+      res.status(404).json(error);
     });
 
   try {
