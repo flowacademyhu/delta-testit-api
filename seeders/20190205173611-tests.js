@@ -26,6 +26,30 @@ module.exports = {
         status: 'CLOSED',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        userId: 2,
+        name: 'fourthTest',
+        time: 20,
+        status: 'CLOSED',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        userId: 3,
+        name: 'niceTest',
+        time: 25,
+        status: 'PROCESSING',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        userId: 1,
+        name: 'killerTest',
+        time: 60,
+        status: 'PUBLISHED',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },

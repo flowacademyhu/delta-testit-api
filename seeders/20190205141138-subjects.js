@@ -42,6 +42,11 @@ module.exports = {
         name: 'Angular',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        name: 'Soft Skills',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },

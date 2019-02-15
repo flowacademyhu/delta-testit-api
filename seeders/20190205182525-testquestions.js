@@ -20,6 +20,30 @@ module.exports = {
         testId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        questionId: 6,
+        testId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        questionId: 8,
+        testId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        questionId: 4,
+        testId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        questionId: 7,
+        testId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },

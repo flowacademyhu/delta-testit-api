@@ -53,16 +53,14 @@ subjects.put('/:id', (req, res) => {
 
 // delete
 subjects.delete('/:id', (req, res) => {
-  models.Subject.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        let id = result.id;
-        models.Subject.destroy({where: {id: req.params.id}})
-          .then(res.send('Subject with id ' + id + ' has been successfully deleted.'));
-      } else {
-        res.status(404).json({message: 'Subject with given id does not exist.'});
-      }
+  let id = req.params.id;
+  models.Question.update({subjectId: null}, {where: {subjectId: req.params.id}})
+    .then(models.SubjectUser.update({subjectId: null}, {where: {subjectId: req.params.id}}))
+    .then(() => {
+      models.Subject.destroy({where: {id: req.params.id}});
     })
+    .then(
+      res.json('Subject with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
       res.status(500).json({message: error});
     });
