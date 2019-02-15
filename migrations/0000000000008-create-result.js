@@ -22,9 +22,6 @@ module.exports = {
           key: 'id'
         }
       },
-      status: {
-        type: Sequelize.ENUM('SENT', 'PENDING', 'CORRECTED')
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

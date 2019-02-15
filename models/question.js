@@ -22,11 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     value: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-
-    status: {
-      type: DataTypes.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED'),
-      allowNull: false
     }
 
   }, {});
