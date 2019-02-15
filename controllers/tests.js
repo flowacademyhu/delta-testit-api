@@ -68,6 +68,7 @@ tests.get('/start/:id', (req, res) => {
                     test.questions.push(question);
                   });
               }
+              console.log(test);
             });
         });
     })
@@ -119,6 +120,7 @@ tests.post('/', (req, res) => {
 */
 
 tests.post('/', async (req, res) => {
+  let creatorId = req.body.creatorId;
   try {
     let test = await models.Test.create(
       {
@@ -140,7 +142,7 @@ tests.post('/', async (req, res) => {
       }
     });
     let resp = await Promise.all(promises);
-    res.json(resp);
+    res.json({resp, creatorId});
   } catch (error) {
     res.status(400).json(error);
   }
