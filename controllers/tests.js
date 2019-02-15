@@ -74,6 +74,7 @@ tests.post('/', async (req, res) => {
     let test = await models.Test.create(
       {
         userId: req.body.userId,
+        creatorId: creatorId,
         name: req.body.name,
         time: req.body.time,
         status: req.body.status,
