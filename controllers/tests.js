@@ -37,14 +37,14 @@ tests.get('/start/:id', (req, res) => {
     time: 0,
     questions: []
   };
-  models.Test.findOne({where: {id: req.params.id}})
+  models.Test.findById(req.params.id)
     .then(result => {
       test.id = result.id;
       test.name = result.name;
       test.time = result.time;
       models.TestQuestion.find({where: {testId: result.id}})
         .then(result => {
-          models.Question.findAll({where: {id: result.questionId}})
+          models.Question.findById(result.questionId)
             .then(results => {
               for (let i = 0; i < results.length; i++) {
                 let question = {
@@ -55,7 +55,7 @@ tests.get('/start/:id', (req, res) => {
                   picture: results[i].picture,
                   answers: []
                 };
-                models.Answer.findAll({where: {id: results[i].id}})
+                models.Answer.findById(results[i].id)
                   .then(results => {
                     for (let j = 0; j < results.length; j++) {
                       let answer = {
@@ -75,52 +75,19 @@ tests.get('/start/:id', (req, res) => {
     .catch(error => {
       res.status(404).json(error);
     });
-  return res.json(test);
+  res.json(test);
 });
-
-/*
-// create
-tests.post('/', (req, res) => {
-  models.Test.create({
-    userId: req.body.userId,
-    name: req.body.name,
-    time: req.body.time,
-    status: req.body.status,
-    archivedTest: req.body.archivedTest
-  }).then(test => {
-    for (let i = 0; i < req.body.questionId.length; i++) {
-      let object = {testId: test.id, questionId: req.body.questionId[i]};
-      models.TestQuestion.findOne({where: {questionId: req.body.questionId[i]}})
-        .then(testQuestion => {
-          if (testQuestion && !testQuestion.testId) {
-            models.TestQuestion.update({
-              testId: test.id
-            }, {
-              where: {questionId: req.body.questionId[i]}
-            })
-              .then(testQuestion => {
-                return res.status(200).json(test);
-              })
-              .catch(error => res.json(error));
-            return res.status(200).json(test);
-          } else {
-            models.TestQuestion.create(object).then(testQuestion => {
-              return res.status(200).json(test);
-            });
-          }
-        })
-        .catch(error => {
-          res.status(404).json(error);
-        });
-    }
-  }).catch(error => {
-    res.status(404).json(error);
-  });
-});
-*/
 
 tests.post('/', async (req, res) => {
   let creatorId = req.body.creatorId;
+  models.User.findById(creatorId)
+    .then(user => {
+      creatorId = user.id;
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+
   try {
     let test = await models.Test.create(
       {
