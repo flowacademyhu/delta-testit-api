@@ -77,6 +77,7 @@ users.put('/:id', (req, res) => {
     });
 });
 
+// delete
 users.delete('/:id', (req, res) => {
   models.SubjectUser.update({userId: null}, {where: {userId: req.params.id}})
     .then(() => {

@@ -118,7 +118,6 @@ tests.post('/', (req, res) => {
 });
 */
 
-/*
 tests.post('/', async (req, res) => {
   try {
     let test = await models.Test.create(
@@ -131,7 +130,7 @@ tests.post('/', async (req, res) => {
       }
     );
     let promises = [];
-    req.body.questionId.map(async item => {
+    req.body.questions.map(async item => {
       let object = {testId: test.id, questionId: item};
       let testQuestion = await models.TestQuestion.findOne({where: {questionId: item}});
       if (testQuestion && !testQuestion.testId) {
@@ -146,7 +145,6 @@ tests.post('/', async (req, res) => {
     res.status(400).json(error);
   }
 });
-*/
 
 // update
 tests.put('/:id', (req, res) => {
