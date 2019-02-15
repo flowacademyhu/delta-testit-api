@@ -62,9 +62,11 @@ tests.get('/start/:id', (req, res) => {
 // create
 tests.post('/', async (req, res) => {
   let creatorId = null;
+  let userFullName = null;
   models.User.findById(req.body.creatorId)
     .then(user => {
       creatorId = user.id;
+      userFullName = user.fullName;
     })
     .catch(error => {
       res.status(404).json(error);
@@ -86,7 +88,7 @@ tests.post('/', async (req, res) => {
       promises.push(models.TestQuestion.create({testId: test.id, questionId: questionId}));
     });
     let resp = await Promise.all(promises);
-    res.json({resp, creatorId});
+    res.json({resp, userFullName});
   } catch (error) {
     res.status(400).json(error);
   }

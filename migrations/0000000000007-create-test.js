@@ -16,7 +16,7 @@ module.exports = {
         }
       },
       creatorId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING
