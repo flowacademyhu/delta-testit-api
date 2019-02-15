@@ -62,33 +62,31 @@ tests.get('/start/:id', (req, res) => {
 // create
 tests.post('/', async (req, res) => {
   let creatorId = null;
-  let userFullName = null;
   models.User.findById(req.body.creatorId)
     .then(user => {
       creatorId = user.id;
-      userFullName = user.fullName;
     })
     .catch(error => {
       res.status(404).json(error);
     });
-
   try {
     let test = await models.Test.create(
       {
         userId: req.body.userId,
-        creatorId: creatorId,
         name: req.body.name,
         time: req.body.time,
         status: req.body.status,
         archivedTest: req.body.archivedTest
       }
     );
+    console.log(test);
     let promises = [];
-    req.body.questions.forEach(async questionId => {
-      promises.push(models.TestQuestion.create({testId: test.id, questionId: questionId}));
+    req.body.questions.map(async question => {
+      promises.push(models.TestQuestion.create({testId: test.id, questionId: question.id}));
+      console.log('Id: ' + question.id);
     });
     let resp = await Promise.all(promises);
-    res.json({resp, userFullName});
+    res.json({resp, creatorId});
   } catch (error) {
     res.status(400).json(error);
   }
