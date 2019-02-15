@@ -38,7 +38,6 @@ questions.post('/', (req, res) => {
     value: req.body.value,
     status: req.body.status
   }).then(question => {
-    models.TestQuestion.create({ questionId: question.id });
     res.status(200).json(question);
   }).catch(error => {
     res.status(404).json(error);

@@ -81,14 +81,8 @@ tests.post('/', async (req, res) => {
       }
     );
     let promises = [];
-    req.body.questions.map(async item => {
-      let object = {testId: test.id, questionId: item};
-      let testQuestion = await models.TestQuestion.findOne({where: {questionId: item}});
-      if (testQuestion && !testQuestion.testId) {
-        promises.push(models.TestQuestion.update({testId: test.id}), {where: {questionId: item}});
-      } else {
-        promises.push(models.TestQuestion.create(object));
-      }
+    req.body.questions.forEach(async questionId => {
+      promises.push(models.TestQuestion.create({testId: test.id, questionId: questionId}));
     });
     let resp = await Promise.all(promises);
     res.json({resp, creatorId});
