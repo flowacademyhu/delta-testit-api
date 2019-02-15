@@ -30,10 +30,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      status: {
-        type: Sequelize.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED'),
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

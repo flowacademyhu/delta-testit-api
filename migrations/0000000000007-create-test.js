@@ -15,6 +15,9 @@ module.exports = {
           key: 'id'
         }
       },
+      creatorId: {
+        type: Sequelize.STRING
+      },
       name: {
         type: Sequelize.STRING
       },

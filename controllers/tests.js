@@ -7,6 +7,14 @@ tests.get('/', (req, res) => {
   models.Test.findAll({
     include: [{
       model: models.User
+    }, {
+      model: models.TestQuestion,
+      include: [{
+        model: models.Question,
+        include: [{
+          model: models.Subject
+        }]
+      }]
     }]
   }).then(result => {
     res.status(200).json(result);
@@ -29,63 +37,37 @@ tests.get('/:id', (req, res) => {
     });
 });
 
-// get full test
+// show test with questions and answers
 tests.get('/start/:id', (req, res) => {
-  let test = {
-    id: '',
-    name: '',
-    time: 0,
-    questions: []
-  };
-  models.Test.findById(req.params.id)
-    .then(result => {
-      test.id = result.id;
-      test.name = result.name;
-      test.time = result.time;
-      models.TestQuestion.find({where: {testId: result.id}})
-        .then(result => {
-          models.Question.findById(result.questionId)
-            .then(results => {
-              for (let i = 0; i < results.length; i++) {
-                let question = {
-                  subjectId: results[i].subjectId,
-                  text: results[i].text,
-                  value: results[i].value,
-                  status: results[i].status,
-                  picture: results[i].picture,
-                  answers: []
-                };
-                models.Answer.findById(results[i].id)
-                  .then(results => {
-                    for (let j = 0; j < results.length; j++) {
-                      let answer = {
-                        number: j,
-                        text: results[j].text,
-                        picture: results[j].picture
-                      };
-                      question.answers.push(answer);
-                    }
-                    test.questions.push(question);
-                  });
-              }
-              console.log(test);
-            });
-        });
-    })
-    .catch(error => {
-      res.status(404).json(error);
-    });
-  res.json(test);
+  models.Test.findAll({
+    where: {id: req.params.id},
+    include: [{
+      model: models.User
+    }, {
+      model: models.TestQuestion,
+      include: [{
+        model: models.Question,
+        include: [{
+          model: models.Answer
+        }]
+      }]
+    }]
+  }).then(result => {
+    res.status(200).json(result);
+  }).catch(error => {
+    res.status(404).res.json(error);
+  });
 });
 
+// create
 tests.post('/', async (req, res) => {
-  let creatorId = req.body.creatorId;
-  models.User.findById(creatorId)
+  let creatorId = null;
+  models.User.findById(req.body.creatorId)
     .then(user => {
       creatorId = user.id;
     })
     .catch(error => {
-      res.status(500).json(error);
+      res.status(404).json(error);
     });
 
   try {
