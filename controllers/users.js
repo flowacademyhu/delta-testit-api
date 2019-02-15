@@ -68,7 +68,9 @@ users.put('/:id', (req, res) => {
         role: req.body.role,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.email
+        email: req.body.email,
+        encryptedPassword: req.body.password,
+        groupId: req.body.groupId
       },
       { where: { id: req.params.id } })
       .then(user => {
