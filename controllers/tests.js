@@ -70,6 +70,7 @@ tests.post('/', (req, res) => {
 });
 */
 
+/*
 tests.post('/', async (req, res) => {
   try {
     let test = await models.Test.create(
@@ -97,6 +98,7 @@ tests.post('/', async (req, res) => {
     res.status(400).json('error');
   }
 });
+*/
 
 
 // update
