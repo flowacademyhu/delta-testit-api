@@ -43,7 +43,8 @@ users.post('/', (req, res) => {
               firstName: req.body.firstName,
               lastName: req.body.lastName,
               email: req.body.email,
-              encryptedPassword: req.body.password
+              encryptedPassword: req.body.password,
+              groupId: req.body.groupId
             }).then(user => {
               sendMail(originalPassword, req.body.email);
               res.status(201).json({ message: 'User has been succesfully created.' });
@@ -68,7 +69,9 @@ users.put('/:id', (req, res) => {
         role: req.body.role,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.email
+        email: req.body.email,
+        encryptedPassword: req.body.password,
+        groupId: req.body.groupId
       },
       { where: { id: req.params.id } })
       .then(user => {
