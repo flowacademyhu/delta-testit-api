@@ -7,6 +7,14 @@ tests.get('/', (req, res) => {
   models.Test.findAll({
     include: [{
       model: models.User
+    }, {
+      model: models.TestQuestion,
+      include: [{
+        model: models.Question,
+        include: [{
+          model: models.Subject
+        }]
+      }]
     }]
   }).then(result => {
     res.status(200).json(result);
@@ -29,6 +37,7 @@ tests.get('/:id', (req, res) => {
     });
 });
 
+/*
 // get full test
 tests.get('/start/:id', (req, res) => {
   let test = {
@@ -76,6 +85,28 @@ tests.get('/start/:id', (req, res) => {
       res.status(404).json(error);
     });
   res.json(test);
+});
+*/
+
+tests.get('/start/:id', (req, res) => {
+  models.Test.findAll({
+    where: {id: req.params.id},
+    include: [{
+      model: models.User
+    }, {
+      model: models.TestQuestion,
+      include: [{
+        model: models.Question,
+        include: [{
+          model: models.Answer
+        }]
+      }]
+    }]
+  }).then(result => {
+    res.status(200).json(result);
+  }).catch(error => {
+    res.status(404).res.json(error);
+  });
 });
 
 tests.post('/', async (req, res) => {
