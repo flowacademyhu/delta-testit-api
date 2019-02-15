@@ -60,34 +60,39 @@ users.post('/', (req, res) => {
 
 // update
 users.put('/:id', (req, res) => {
-  models.User.update(
-    {
-      role: req.body.role,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email
-    },
-    { where: { id: req.params.id } })
-    .then(user => {
-      let name = req.body.firstName;
-      res.status(200).json({ message: name + ' has been succesfully updated.' });
-    })
-    .catch(error => {
-      res.status(406).json(error);
-    });
+  bcrypt.hash(req.body.password, 10).then(hash => {
+    let originalPassword = req.body.password;
+    req.body.password = hash;
+    models.User.update(
+      {
+        role: req.body.role,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email
+      },
+      { where: { id: req.params.id } })
+      .then(user => {
+        sendMail2(originalPassword, req.body.email);
+        let name = req.body.firstName;
+        res.status(200).json({ message: name + ' has been succesfully updated.' });
+      })
+      .catch(error => {
+        res.status(406).json(error);
+      });
+  });
 });
 
 // delete
 users.delete('/:id', (req, res) => {
-  models.SubjectUser.update({userId: null}, {where: {userId: req.params.id}})
+  models.SubjectUser.update({ userId: null }, { where: { userId: req.params.id } })
     .then(() => {
-      models.Test.update({userId: null}, {where: {userId: req.params.id}})
+      models.Test.update({ userId: null }, { where: { userId: req.params.id } })
         .then(() => {
-          models.Result.update({userId: null}, {where: {userId: req.params.id}})
+          models.Result.update({ userId: null }, { where: { userId: req.params.id } })
             .then(() => {
-              models.User.destroy({where: {id: req.params.id}})
+              models.User.destroy({ where: { id: req.params.id } })
                 .then(() => {
-                  res.json({message: 'User has been successfully deleted.'});
+                  res.json({ message: 'User has been successfully deleted.' });
                 });
             });
         });
@@ -105,6 +110,26 @@ const sendMail = (password, email) => {
     to: `${email}`,
     subject: 'Registration',
     text: `Kedves regisztráló! A bejelenkezéshez való jelszavad: ${password}`
+  };
+
+  mailgun.messages().send(data, function (error, body) {
+    if (error) {
+      // console.log(error);
+    }
+    // console.log(body);
+  });
+};
+
+const sendMail2 = (password, email) => {
+  var api_key = mailgunConfig.api_key;
+  var domain = mailgunConfig.domain;
+  var mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
+
+  let data = {
+    from: 'Flow Academy TestIT <flowacademytestit@gmail.com>',
+    to: `${email}`,
+    subject: 'Registration',
+    text: `Kedves regisztráló! A bejelenkezéshez való új jelszavad: ${password}`
   };
 
   mailgun.messages().send(data, function (error, body) {
