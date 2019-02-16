@@ -4,7 +4,6 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Tests', [
       {
-        userId: 1,
         creatorId: 1,
         name: 'firstTest',
         time: 10,
@@ -13,7 +12,6 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        userId: 2,
         creatorId: 3,
         name: 'secondTest',
         time: 15,
@@ -22,7 +20,6 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        userId: 3,
         creatorId: 1,
         name: 'thirdTest',
         time: 30,
@@ -31,7 +28,6 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        userId: 2,
         creatorId: 2,
         name: 'fourthTest',
         time: 20,
@@ -40,7 +36,6 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        userId: 3,
         creatorId: 3,
         name: 'niceTest',
         time: 25,
@@ -49,7 +44,6 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        userId: 1,
         creatorId: 2,
         name: 'killerTest',
         time: 60,

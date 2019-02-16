@@ -25,12 +25,24 @@ tests.get('/', (req, res) => {
 
 // show
 tests.get('/:id', (req, res) => {
-  models.Test.findById(req.params.id)
+  models.Test.findById(req.params.id, {
+    include: [{
+      model: models.User
+    }, {
+      model: models.TestQuestion,
+      include: [{
+        model: models.Question,
+        include: [{
+          model: models.Subject
+        }]
+      }]
+    }]
+  })
     .then(test => {
       if (test) {
         res.status(200).json(test);
       } else {
-        res.status(404).json({message: 'Test with given id does not exist.'});
+        res.status(404).json({ message: 'Test with given id does not exist.' });
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -64,16 +76,17 @@ tests.post('/', async (req, res) => {
   try {
     let test = await models.Test.create(
       {
-        userId: req.body.userId,
         name: req.body.name,
-        time: req.body.time,
-        status: req.body.status,
-        archivedTest: req.body.archivedTest
+        time: req.body.time
+        // creatorId: jwt.verify(... valami)
       }
     );
     let promises = [];
     req.body.questions.map(async questionsId => {
       promises.push(models.TestQuestion.create({testId: test.id, questionId: questionsId}));
+    });
+    req.body.users.map(async userId => {
+      promises.push(models.Results.create({testId: test.id, userId: userId, status: 'PUBLISHED'}));
     });
     let resp = await Promise.all(promises);
     res.json({resp});

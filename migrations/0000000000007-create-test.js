@@ -8,13 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-      },
       creatorId: {
         type: Sequelize.INTEGER
       },
@@ -23,12 +16,6 @@ module.exports = {
       },
       time: {
         type: Sequelize.INTEGER
-      },
-      archivedTest: {
-        type: Sequelize.JSONB
-      },
-      status: {
-        type: Sequelize.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED')
       },
       createdAt: {
         allowNull: false,

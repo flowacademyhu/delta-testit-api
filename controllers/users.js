@@ -70,7 +70,7 @@ users.put('/:id', (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        encryptedPassword: req.body.password,
+        encryptedPassword: req.body.password || null,
         groupId: req.body.groupId
       },
       { where: { id: req.params.id } })
