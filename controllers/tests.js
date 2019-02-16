@@ -34,6 +34,9 @@ tests.get('/:id', (req, res) => {
         model: models.Question,
         include: [{
           model: models.Subject
+        },
+        {
+          model: models.Answer
         }]
       }]
     }]
