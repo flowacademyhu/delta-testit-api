@@ -61,14 +61,6 @@ tests.get('/start/:id', (req, res) => {
 
 // create
 tests.post('/', async (req, res) => {
-  let creatorId = null;
-  models.User.findById(req.body.creatorId)
-    .then(user => {
-      creatorId = user.id;
-    })
-    .catch(error => {
-      res.status(404).json(error);
-    });
   try {
     let test = await models.Test.create(
       {
@@ -79,14 +71,12 @@ tests.post('/', async (req, res) => {
         archivedTest: req.body.archivedTest
       }
     );
-    console.log(test);
     let promises = [];
-    req.body.questions.map(async question => {
-      promises.push(models.TestQuestion.create({testId: test.id, questionId: question.id}));
-      console.log('Id: ' + question.id);
+    req.body.questions.map(async questionsId => {
+      promises.push(models.TestQuestion.create({testId: test.id, questionId: questionsId}));
     });
     let resp = await Promise.all(promises);
-    res.json({resp, creatorId});
+    res.json({resp});
   } catch (error) {
     res.status(400).json(error);
   }
