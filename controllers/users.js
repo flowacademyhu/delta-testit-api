@@ -62,7 +62,6 @@ users.post('/', (req, res) => {
 // update
 users.put('/:id', (req, res) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
-    let originalPassword = req.body.password;
     req.body.password = hash;
     models.User.update(
       {
@@ -75,14 +74,43 @@ users.put('/:id', (req, res) => {
       },
       { where: { id: req.params.id } })
       .then(user => {
-        sendMail2(originalPassword, req.body.email);
         let name = req.body.firstName;
         res.status(200).json({ message: name + ' has been succesfully updated.' });
       })
       .catch(error => {
         res.status(406).json(error);
       });
-  });
+  })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+// update
+users.put('/:id/forgottenPassword', (req, res) => {
+  if (req.body.password) {
+    bcrypt.hash(req.body.password, 10).then(hash => {
+      let originalPassword = req.body.password;
+      req.body.password = hash;
+      models.User.update(
+        {
+          encryptedPassword: req.body.password
+        },
+        { where: { id: req.params.id } })
+        .then(user => {
+          sendMail2(originalPassword, user.email);
+          res.status(200).json({ message: 'New password has been succesfully sent.' });
+        })
+        .catch(error => {
+          res.status(406).json(error);
+        });
+    })
+      .catch(error => {
+        res.status(500).json(error);
+      });
+  } else {
+    res.json({message: 'Please type in your new password.'});
+  }
 });
 
 // delete

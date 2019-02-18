@@ -11,8 +11,8 @@ testResults.get('/', (req, res) => {
   });
 });
 
-// choosenanswers[], userId, resultId, status
 /*
+// choosenanswers[], userId, resultId, status
 testResults.post('/user/:userId/results/:id/fill', (req, res) => {
   models.Result.create({userId: req.params.userId, id: req.params.id, status: req.body.status})
     .then(result => {
