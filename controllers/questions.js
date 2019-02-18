@@ -35,8 +35,7 @@ questions.post('/', (req, res) => {
     subjectId: req.body.subjectId,
     text: req.body.text,
     type: req.body.type,
-    value: req.body.value,
-    status: req.body.status
+    value: req.body.value
   }).then(question => {
     let promises = [];
     req.body.answers.forEach(async element => {
@@ -60,8 +59,7 @@ questions.put('/:id', (req, res) => {
       subjectId: req.body.subjectId || null,
       text: req.body.text,
       type: req.body.type,
-      value: req.body.value,
-      status: req.body.status
+      value: req.body.value
     },
     { where: { id: req.params.id } })
     .then(question => {
