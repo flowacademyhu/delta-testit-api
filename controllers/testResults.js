@@ -2,7 +2,7 @@ const express = require('express');
 const models = require('../models');
 const testResults = express.Router({ mergeParams: true });
 
-// index
+// show
 testResults.get('/', (req, res) => {
   models.Result.findAll({where: {testId: req.params.testId}}).then(results => {
     res.status(200).json(results);
@@ -10,6 +10,22 @@ testResults.get('/', (req, res) => {
     res.status(404).res.json(error);
   });
 });
+
+// choosenanswers[], userId, resultId, status
+/*
+testResults.post('/user/:userId/results/:id/fill', (req, res) => {
+  models.Result.create({userId: req.params.userId, id: req.params.id, status: req.body.status})
+    .then(result => {
+      req.body.choosenAnswers.forEach(async choosenAnswer => {
+        models.choosenAnswer.create({
+          resultId: result.id,
+          answerId: choosenAnswer.id,
+          points: 0
+        });
+      }),
+    
+    .catch();
+});*/
 
 // create
 testResults.post('/', async (req, res) => {
