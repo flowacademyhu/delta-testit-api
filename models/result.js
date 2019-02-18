@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   const Result = sequelize.define('Result', {
     testId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
-    archivedTest: DataTypes.JSONB,
     status: DataTypes.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED')
   }, {});
   Result.associate = function (models) {

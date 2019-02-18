@@ -25,9 +25,6 @@ module.exports = {
       status: {
         type: Sequelize.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED')
       },
-      archivedTest: {
-        type: Sequelize.JSONB
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

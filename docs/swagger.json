@@ -192,6 +192,26 @@
           }
         }
       }
+    },
+    "/tests/{testId}/results": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/testId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of all results",
+            "schema": {
+              "$ref": "#/definitions/Results"
+            }
+          },
+          "400": {
+            "description": "Failed to show results"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -246,7 +266,7 @@
           "type" : "string",
           "allowNull": false
         },
-        "pictiure": {
+        "picture": {
           "type": "string"
         },
         "type": {
@@ -256,6 +276,17 @@
         "value": {
           "type": "integer",
           "allowNull": false
+        }
+      }
+    },
+    "Result": {
+      "properties": {
+        "testId": {
+          "type" : "integer",
+          "allowNull": false
+        },
+        "userId": {
+          "type": "integer"
         },
         "status": {
           "type": "string",
@@ -284,11 +315,23 @@
       "items": {
         "$ref": "#/definitions/Question"
       }
+    },
+    "Results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Result"
+      }
     }
   },
   "parameters": {
     "id": {
       "name": "id",
+      "in": "path",
+      "required": "true",
+      "type": "integer"
+    },
+    "testId": {
+      "name": "testId",
       "in": "path",
       "required": "true",
       "type": "integer"

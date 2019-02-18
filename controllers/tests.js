@@ -54,8 +54,8 @@ tests.get('/:id', (req, res) => {
 
 // show test with questions and answers
 tests.get('/start/:id', (req, res) => {
-  models.Test.findAll({
-    where: {id: req.params.id},
+  models.Test.findOne({
+    where: {userId: req.params.id},
     include: [{
       model: models.User
     }, {

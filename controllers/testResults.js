@@ -1,10 +1,10 @@
 const express = require('express');
 const models = require('../models');
-const results = express.Router({ mergeParams: true });
+const testResults = express.Router({ mergeParams: true });
 
 // index
-results.get('/', (req, res) => {
-  models.Result.findAll().then(results => {
+testResults.get('/', (req, res) => {
+  models.Result.findAll({where: {testId: req.params.testId}}).then(results => {
     res.status(200).json(results);
   }).catch(error => {
     res.status(404).res.json(error);
@@ -12,7 +12,7 @@ results.get('/', (req, res) => {
 });
 
 // create
-results.post('/', async (req, res) => {
+testResults.post('/', async (req, res) => {
   let questionsBlock = req.body.questions;            // a tesztben található összes kérdés
   let answersBlock = req.body.answers;                // a tesztben a található összes kérdés összes lehetséges válasza sorrendben
   let choosenAnswersBlock = req.body.choosenAnswers;  // a vizsgázó által kiválasztott válaszok
@@ -68,3 +68,5 @@ results.post('/', async (req, res) => {
     res.status(404).json(error);
   });
 });
+
+module.exports = testResults;
