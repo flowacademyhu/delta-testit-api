@@ -80,8 +80,8 @@ tests.post('/', async (req, res) => {
     let test = await models.Test.create(
       {
         name: req.body.name,
-        time: req.body.time
-        // creatorId: jwt.verify(... valami)
+        time: req.body.time,
+        userId: req.body.userId
       }
     );
     let promises = [];
@@ -104,8 +104,7 @@ tests.put('/:id', (req, res) => {
     {
       name: req.body.name,
       time: req.body.time,
-      status: req.body.status,
-      userid: req.body.userId
+      cratorId: req.body.userId
     },
     {where: {id: req.params.id}})
     .then(test => {
