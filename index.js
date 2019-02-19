@@ -14,6 +14,7 @@ const subjectUsers = require('./controllers/subjectUsers');
 const userLogin = require('./controllers/userLogin');
 const groups = require('./controllers/groups');
 const testResults = require('./controllers/testResults');
+const userResults = require('./controllers/userResults');
 const authentication = require('./controllers/middleware/authentication');
 
 const swaggerUi = require('swagger-ui-express');
@@ -46,6 +47,7 @@ app.use('/testQuestions', testQuestions);
 app.use('/subjectUsers', subjectUsers);
 app.use('/users/login', userLogin);
 app.use('/groups', groups);
-app.use('/tests/results', testResults);
+app.use('/tests/:testId/results', testResults);
+app.use('/users/:userId/results', userResults);
 
 app.listen(process.env.PORT);
