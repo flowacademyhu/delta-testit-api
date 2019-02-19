@@ -27,24 +27,29 @@ userResults.get('/:userId', (req, res) => {
 });
 
 // choosenanswers[], userId, resultId, status
-userResults.post('/:id/fill', async (req, res) => {
+userResults.post('/fill', async (req, res) => {
   let promises = [];
   models.Result.create({testId: req.body.testId, userId: req.params.userId, status: req.body.status})
-    .then(result => {
-      req.body.choosenAnswers.forEach(async choosenAnswer => {
-        promises.push(
-          models.choosenAnswer.create({
-            resultId: result.id,
-            answerId: choosenAnswer.id,
-            points: choosenAnswer.points
-          }));
-      });
+    .then(async result => {
+      try {
+        req.body.choosenAnswers.forEach(async choosenAnswer => {
+          promises.push(
+            models.ChoosenAnswer.create({
+              resultId: result.id,
+              answerId: choosenAnswer.id,
+              points: choosenAnswer.points
+            }));
+        });
+      } catch (error) {
+        res.status(400).send(error);
+      }
+
+      let resp = await Promise.all(promises);
+      res.status(200).json(resp);
     })
     .catch(error => {
-      res.status(500).res.json(error);
+      res.status(500).json(error);
     });
-  let resp = await Promise.all(promises);
-  res.json({resp});
 });
 
 module.exports = userResults;
