@@ -2,9 +2,24 @@ const express = require('express');
 const models = require('../models');
 const testResults = express.Router({ mergeParams: true });
 
-// show
+// index
 testResults.get('/', (req, res) => {
-  models.Result.findAll({where: {testId: req.params.testId}}).then(results => {
+  models.Result.findAll({
+    include: [{
+      model: models.User
+    }, {
+      model: models.Test
+    }]
+  }).then(result => {
+    res.status(200).json(result);
+  }).catch(error => {
+    res.status(404).res.json(error);
+  });
+});
+
+// show
+testResults.get('/:userId', (req, res) => {
+  models.Result.findAll({where: {userId: req.params.userId}}).then(results => {
     res.status(200).json(results);
   }).catch(error => {
     res.status(404).res.json(error);
@@ -12,7 +27,7 @@ testResults.get('/', (req, res) => {
 });
 
 // choosenanswers[], userId, resultId, status
-testResults.post('/user/:userId/results/:id/fill', async (req, res) => {
+testResults.post('/users/:userId/results/:id/fill', async (req, res) => {
   let promises = [];
   models.Result.create({testId: req.params.testId, userId: req.params.userId, status: req.body.status})
     .then(result => {

@@ -46,6 +46,6 @@ app.use('/testQuestions', testQuestions);
 app.use('/subjectUsers', subjectUsers);
 app.use('/users/login', userLogin);
 app.use('/groups', groups);
-app.use('/tests/:testId/results', testResults);
+app.use('/tests/results', testResults);
 
 app.listen(process.env.PORT);
