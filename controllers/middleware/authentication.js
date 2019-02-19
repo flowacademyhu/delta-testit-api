@@ -23,18 +23,21 @@ const endpoints = {
   'POST /user/login': ['STUDENT', 'MENTOR', 'ADMIN'],
   'GET /users/{id}/results': ['STUDENT', 'MENTOR', 'ADMIN'],
 
+  'GET /login': ['anonymus'],
   'GET /': ['anonymus']
 
 };
 module.exports = (req, res, next) => {
   const endpoint = `${req.method} ${req.swagger.pathName}`;
+  if (!endpoints[endpoint]) return next();
   if (!req.headers.authorization && endpoints[endpoint].includes('anonymus')) {
     return next();
   }
   if (!req.headers.authorization) {
     res.status(409).json({message: 'Authorization failed.'});
   }
-  const token = req.headers.authorization;
+  const token = req.headers.authorization.split(' ')[1];
+  console.log('Token is: ' + token);
   const decoded = jwt.verify(token, config.JWT_SECRET);
   const userId = decoded.id;
   models.User.findById(userId)

@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 
 const subjects = require('./controllers/subjects');
+const results = require('./controllers/results');
 const users = require('./controllers/users');
 const questions = require('./controllers/questions');
 const answers = require('./controllers/answers');
@@ -13,6 +14,7 @@ const testQuestions = require('./controllers/testQuestions');
 const subjectUsers = require('./controllers/subjectUsers');
 const userLogin = require('./controllers/userLogin');
 const groups = require('./controllers/groups');
+const auth = require('./controllers/middleware/authentication');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFilePath = './docs/swagger.json';
@@ -30,19 +32,20 @@ createMiddleware(swaggerFilePath, app, (err, middleware) => {
     middleware.metadata(),
     middleware.CORS(),
     middleware.files(),
-    middleware.parseRequest(),
-    middleware.validateRequest()
+    middleware.parseRequest()
+    // middleware.validateRequest()
   );
+  app.use(auth);
+  app.use('/subjects', subjects);
+  app.use('/questions', questions);
+  app.use('/users', users);
+  app.use('/answers', answers);
+  app.use('/tests', tests);
+  app.use('/testQuestions', testQuestions);
+  app.use('/subjectUsers', subjectUsers);
+  app.use('/users/login', userLogin);
+  app.use('/groups', groups);
+  app.use('/results', results);
 });
-
-app.use('/subjects', subjects);
-app.use('/questions', questions);
-app.use('/users', users);
-app.use('/answers', answers);
-app.use('/tests', tests);
-app.use('/testQuestions', testQuestions);
-app.use('/subjectUsers', subjectUsers);
-app.use('/users/login', userLogin);
-app.use('/groups', groups);
 
 app.listen(process.env.PORT);

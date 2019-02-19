@@ -40,4 +40,20 @@ groups.post('/', (req, res) => {
   });
 });
 
+// update
+groups.put('/:id', (req, res) => {
+  models.Group.update(
+    {
+      name: req.body.name,
+      description: req.body.description
+    },
+    {where: {id: req.params.id}})
+    .then(updated => {
+      res.status(200).json(updated);
+    })
+    .catch(error => {
+      res.status(404).json(error);
+    });
+});
+
 module.exports = groups;
