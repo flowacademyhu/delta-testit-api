@@ -61,28 +61,28 @@ users.post('/', (req, res) => {
 
 // update
 users.put('/:id', (req, res) => {
-  bcrypt.hash(req.body.password, 10).then(hash => {
-    req.body.password = hash;
-    models.User.update(
-      {
-        role: req.body.role,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        encryptedPassword: req.body.password || null,
-        groupId: req.body.groupId
-      },
-      { where: { id: req.params.id } })
-      .then(user => {
-        let name = req.body.firstName;
-        res.status(200).json({ message: name + ' has been succesfully updated.' });
-      })
+  if (req.body.password) {
+    bcrypt.hash(req.body.password, 10).then(hash => { req.body.password = hash; })
       .catch(error => {
-        res.status(406).json(error);
+        res.status(500).json(error);
       });
-  })
+  }
+  models.User.update(
+    {
+      role: req.body.role,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      encryptedPassword: req.body.password || null,
+      groupId: req.body.groupId
+    },
+    { where: { id: req.params.id } })
+    .then(user => {
+      let name = req.body.firstName;
+      res.status(200).json({ message: name + ' has been succesfully updated.' });
+    })
     .catch(error => {
-      res.status(500).json(error);
+      res.status(406).json(error);
     });
 });
 
