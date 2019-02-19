@@ -23,6 +23,8 @@ const endpoints = {
   'POST /user/login': ['STUDENT', 'MENTOR', 'ADMIN'],
   'GET /users/{id}/results': ['STUDENT', 'MENTOR', 'ADMIN'],
 
+  'POST /users/{id}/results/{id}/fill': ['STUDENT', 'MENTOR', 'ADMIN'],
+
   'GET /login': ['anonymus'],
   'GET /': ['anonymus']
 
