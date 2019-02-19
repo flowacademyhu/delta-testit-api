@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('../models');
-const tests = express.Router({mergeParams: true});
+const tests = express.Router({ mergeParams: true });
 
 // index
 tests.get('/', (req, res) => {
@@ -106,7 +106,7 @@ tests.put('/:id', (req, res) => {
       time: req.body.time,
       userId: req.body.userId
     },
-    {where: {id: req.params.id}})
+    { where: { id: req.params.id } })
     .then(test => {
       res.status(200).json(test);
     })
@@ -118,11 +118,11 @@ tests.put('/:id', (req, res) => {
 // delete
 tests.delete('/:id', (req, res) => {
   let id = req.params.id;
-  models.TestQuestion.destroy({where: {testId: id}});
-  models.Test.destroy({where: {id: id}})
+  models.TestQuestion.destroy({ where: { testId: id } });
+  models.Test.destroy({ where: { id: id } })
     .then(res.send('Test with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
-      res.status(500).json({message: error});
+      res.status(500).json({ message: error });
     });
 });
 
