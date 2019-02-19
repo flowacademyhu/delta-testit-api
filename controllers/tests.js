@@ -104,7 +104,7 @@ tests.put('/:id', (req, res) => {
     {
       name: req.body.name,
       time: req.body.time,
-      cratorId: req.body.userId
+      userId: req.body.userId
     },
     {where: {id: req.params.id}})
     .then(test => {
