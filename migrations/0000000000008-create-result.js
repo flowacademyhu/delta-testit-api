@@ -22,6 +22,9 @@ module.exports = {
           key: 'id'
         }
       },
+      status: {
+        type: Sequelize.ENUM('PUBLISHED', 'CLOSED')
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

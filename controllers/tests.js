@@ -54,8 +54,8 @@ tests.get('/:id', (req, res) => {
 
 // show test with questions and answers
 tests.get('/start/:id', (req, res) => {
-  models.Test.findAll({
-    where: { id: req.params.id },
+  models.Test.findOne({
+    where: {userId: req.params.id},
     include: [{
       model: models.User
     }, {
@@ -79,19 +79,20 @@ tests.post('/', async (req, res) => {
   try {
     let test = await models.Test.create(
       {
-        userId: req.body.userId,
         name: req.body.name,
         time: req.body.time,
-        status: req.body.status,
-        archivedTest: req.body.archivedTest
+        userId: req.body.userId
       }
     );
     let promises = [];
     req.body.questions.map(async questionsId => {
-      promises.push(models.TestQuestion.create({ testId: test.id, questionId: questionsId }));
+      promises.push(models.TestQuestion.create({testId: test.id, questionId: questionsId}));
+    });
+    req.body.users.map(async userId => {
+      promises.push(models.Results.create({testId: test.id, userId: userId, status: 'PUBLISHED'}));
     });
     let resp = await Promise.all(promises);
-    res.json({ resp });
+    res.json({resp});
   } catch (error) {
     res.status(400).json(error);
   }
@@ -103,8 +104,7 @@ tests.put('/:id', (req, res) => {
     {
       name: req.body.name,
       time: req.body.time,
-      status: req.body.status,
-      userid: req.body.userId
+      userId: req.body.userId
     },
     { where: { id: req.params.id } })
     .then(test => {

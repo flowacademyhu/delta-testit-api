@@ -2,11 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   const Test = sequelize.define('Test', {
     userId: DataTypes.INTEGER,
-    creatorId: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    time: DataTypes.INTEGER,
-    archivedTest: DataTypes.JSONB,
-    status: DataTypes.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED')
+    time: DataTypes.INTEGER
   }, {});
   Test.associate = function (models) {
     // Test.belongsTo(models.Result, { foreignKey: 'resultId' });
