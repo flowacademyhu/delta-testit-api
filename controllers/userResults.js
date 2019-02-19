@@ -18,37 +18,31 @@ userResults.get('/', (req, res) => {
 });
 
 // show
-userResults.get('/:userId', (req, res) => {
-  models.Result.findAll({where: {userId: req.params.userId}}).then(results => {
-    res.status(200).json(results);
+userResults.get('/:id', (req, res) => {
+  models.Result.findByPk(req.params.id).then(result => {
+    res.status(200).res.json(result);
   }).catch(error => {
     res.status(404).res.json(error);
   });
 });
 
-// choosenanswers[], userId, resultId, status
-userResults.post('/fill', async (req, res) => {
-  let promises = [];
-  models.Result.create({testId: req.body.testId, userId: req.params.userId, status: req.body.status})
+userResults.post('/:id/fill', (req, res) => {
+  models.Result.findByPk(req.params.id)
     .then(async result => {
-      try {
-        req.body.choosenAnswers.forEach(async choosenAnswer => {
-          promises.push(
-            models.ChoosenAnswer.create({
-              resultId: result.id,
-              answerId: choosenAnswer.id,
-              points: choosenAnswer.points
-            }));
+      result.update({status: 'CLOSED'});
+      const choosenAnswers = [];
+      req.body.answerIds.forEach(async answerId => {
+        const answer = await models.Answer.findByPk(answerId);
+        const question = await answer.getQuestion();
+        const points = answer.isCorrect ? question.value : 0;
+        const choosenAnswer = await models.ChoosenAnswer.create({
+          resultId: result.id,
+          answerId: answerId,
+          points
         });
-      } catch (error) {
-        res.status(400).send(error);
-      }
-
-      let resp = await Promise.all(promises);
-      res.status(200).json(resp);
-    })
-    .catch(error => {
-      res.status(500).json(error);
+        choosenAnswers.push(choosenAnswer);
+      });
+      res.json({choosenAnswers});
     });
 });
 

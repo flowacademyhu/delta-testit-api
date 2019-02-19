@@ -6,7 +6,7 @@ module.exports = {
       {
         testId: 1,
         userId: 1,
-        status: 'PROCESSING',
+        status: 'PUBLISHED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
