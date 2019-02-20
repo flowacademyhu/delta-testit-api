@@ -218,7 +218,12 @@
     "User": {
       "properties": {
         "role": {
-          "type": "enum",
+          "type": "string",
+          "enum": [
+            "STUDENT",
+            "MENTOR",
+            "ADMIN"
+          ],
           "allowNull": false
         },
         "firstName": {
