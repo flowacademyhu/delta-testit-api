@@ -193,22 +193,35 @@
         }
       }
     },
-    "/tests/{testId}/results": {
+    "/tests": {
       "get": {
+        "responses": {
+          "200": {
+            "description": "Returns a list of all tests",
+            "schema": {
+              "$ref": "#/definitions/Tests"
+            }
+          },
+          "404": {
+            "description": "Failed to show questions"
+          }
+        }
+      },
+      "post": {
         "parameters": [
           {
-            "$ref": "#/parameters/testId"
+            "$ref": "#/parameters/testData"
           }
         ],
         "responses": {
           "200": {
-            "description": "Returns a list of all results",
+            "description": "New question created",
             "schema": {
-              "$ref": "#/definitions/Results"
+              "$ref": "#/definitions/Question"
             }
           },
           "400": {
-            "description": "Failed to show results"
+            "description": "Failed to create question"
           }
         }
       }
@@ -254,6 +267,9 @@
         "encryptedPassword": {
           "type": "string"
         },
+        "groupId": {
+          "type": "integer"
+        },
         "lastLoginAt": {
           "type": "date",
           "defaultValue": "now"
@@ -296,6 +312,9 @@
     },
     "Test": {
       "properties": {
+        "userId": {
+          "type": "integer"
+        },
         "name": {
           "type": "string"
         },
