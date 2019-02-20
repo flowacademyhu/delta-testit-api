@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('../models');
-const tests = express.Router({mergeParams: true});
+const tests = express.Router({ mergeParams: true });
 
 // index
 tests.get('/', (req, res) => {
@@ -25,12 +25,27 @@ tests.get('/', (req, res) => {
 
 // show
 tests.get('/:id', (req, res) => {
-  models.Test.findById(req.params.id)
+  models.Test.findById(req.params.id, {
+    include: [{
+      model: models.User
+    }, {
+      model: models.TestQuestion,
+      include: [{
+        model: models.Question,
+        include: [{
+          model: models.Subject
+        },
+        {
+          model: models.Answer
+        }]
+      }]
+    }]
+  })
     .then(test => {
       if (test) {
         res.status(200).json(test);
       } else {
-        res.status(404).json({message: 'Test with given id does not exist.'});
+        res.status(404).json({ message: 'Test with given id does not exist.' });
       }
     }).catch(error => {
       res.status(500).json(error);
@@ -39,8 +54,8 @@ tests.get('/:id', (req, res) => {
 
 // show test with questions and answers
 tests.get('/start/:id', (req, res) => {
-  models.Test.findAll({
-    where: {id: req.params.id},
+  models.Test.findOne({
+    where: {userId: req.params.id},
     include: [{
       model: models.User
     }, {
@@ -61,31 +76,23 @@ tests.get('/start/:id', (req, res) => {
 
 // create
 tests.post('/', async (req, res) => {
-  let creatorId = null;
-  models.User.findById(req.body.creatorId)
-    .then(user => {
-      creatorId = user.id;
-    })
-    .catch(error => {
-      res.status(404).json(error);
-    });
-
   try {
     let test = await models.Test.create(
       {
-        userId: req.body.userId,
         name: req.body.name,
         time: req.body.time,
-        status: req.body.status,
-        archivedTest: req.body.archivedTest
+        userId: req.body.userId
       }
     );
     let promises = [];
-    req.body.questions.forEach(async questionId => {
-      promises.push(models.TestQuestion.create({testId: test.id, questionId: questionId}));
+    req.body.questions.map(async questionsId => {
+      promises.push(models.TestQuestion.create({testId: test.id, questionId: questionsId}));
+    });
+    req.body.users.map(async userId => {
+      promises.push(models.Results.create({testId: test.id, userId: userId, status: 'PUBLISHED'}));
     });
     let resp = await Promise.all(promises);
-    res.json({resp, creatorId});
+    res.json({resp});
   } catch (error) {
     res.status(400).json(error);
   }
@@ -97,10 +104,9 @@ tests.put('/:id', (req, res) => {
     {
       name: req.body.name,
       time: req.body.time,
-      status: req.body.status,
-      userid: req.body.userId
+      userId: req.body.userId
     },
-    {where: {id: req.params.id}})
+    { where: { id: req.params.id } })
     .then(test => {
       res.status(200).json(test);
     })
@@ -112,11 +118,11 @@ tests.put('/:id', (req, res) => {
 // delete
 tests.delete('/:id', (req, res) => {
   let id = req.params.id;
-  models.TestQuestion.destroy({where: {testId: id}});
-  models.Test.destroy({where: {id: id}})
+  models.TestQuestion.destroy({ where: { testId: id } });
+  models.Test.destroy({ where: { id: id } })
     .then(res.send('Test with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
-      res.status(500).json({message: error});
+      res.status(500).json({ message: error });
     });
 });
 

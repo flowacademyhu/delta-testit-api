@@ -35,10 +35,18 @@ questions.post('/', (req, res) => {
     subjectId: req.body.subjectId,
     text: req.body.text,
     type: req.body.type,
-    value: req.body.value,
-    status: req.body.status
+    value: req.body.value
   }).then(question => {
-    res.status(200).json(question);
+    let promises = [];
+    req.body.answers.forEach(async element => {
+      promises.push(models.Answer.create({
+        questionId: question.id,
+        text: element.text,
+        isCorrect: element.isCorrect,
+        picture: element.picture}));
+    });
+    let resp = Promise.all(promises);
+    res.status(200).json(resp);
   }).catch(error => {
     res.status(404).json(error);
   });
@@ -51,8 +59,7 @@ questions.put('/:id', (req, res) => {
       subjectId: req.body.subjectId || null,
       text: req.body.text,
       type: req.body.type,
-      value: req.body.value,
-      status: req.body.status
+      value: req.body.value
     },
     { where: { id: req.params.id } })
     .then(question => {
