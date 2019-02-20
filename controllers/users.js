@@ -147,7 +147,7 @@ users.put('/login/password', (req, res) => {
       });
     } else {
       models.User.update({
-        passwordHash: hash
+        encryptedPassword: hash
       }, { where: { email: req.body.email } })
         .then(user => {
           sendMail(password, req.body.email);
