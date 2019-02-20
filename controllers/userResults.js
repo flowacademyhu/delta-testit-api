@@ -18,14 +18,29 @@ userResults.get('/', (req, res) => {
 });
 
 // show
-userResults.get('/:userId', (req, res) => {
-  models.Result.findByPk(req.params.userId)
+userResults.get('/:id', (req, res) => {
+  models.Result.findByPk(req.params.id, {
+    include: [{
+      model: models.Test,
+      include: [{
+        model: models.TestQuestion,
+        include: [{
+          model: models.Question,
+          include: [{
+            model: models.Answer
+          }]
+        }]
+      }]
+    }, {
+      model: models.User
+    }]
+  })
     .then(result => {
       console.log(result.id);
       result.sum.then(sum => {
         console.log('sum is : ' + sum);
       });
-      res.status(200).json(result.sum);
+      res.status(200).json(result);
     })
     .catch(error => {
       res.status(404).json(error);
