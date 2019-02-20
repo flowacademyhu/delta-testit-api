@@ -14,6 +14,8 @@ const testQuestions = require('./controllers/testQuestions');
 const subjectUsers = require('./controllers/subjectUsers');
 const userLogin = require('./controllers/userLogin');
 const groups = require('./controllers/groups');
+const testResults = require('./controllers/testResults');
+const userResults = require('./controllers/userResults');
 const authentication = require('./controllers/middleware/authentication');
 
 const swaggerUi = require('swagger-ui-express');
@@ -35,7 +37,7 @@ createMiddleware(swaggerFilePath, app, (err, middleware) => {
     middleware.parseRequest()
     // middleware.validateRequest()
   );
-  // app.use(authentication);
+  app.use(authentication);
   app.use('/subjects', subjects);
   app.use('/questions', questions);
   app.use('/users', users);
