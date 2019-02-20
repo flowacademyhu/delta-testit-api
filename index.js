@@ -53,3 +53,5 @@ createMiddleware(swaggerFilePath, app, (err, middleware) => {
 });
 
 app.listen(process.env.PORT);
+
+module.exports = app;
