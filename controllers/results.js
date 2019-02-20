@@ -20,7 +20,10 @@ results.get('/', (req, res) => {
 results.get('/:userId', (req, res) => {
   models.Result.findByPk(req.params.userId)
     .then(result => {
-      console.log('x = ' + result.sum);
+      console.log(result.id);
+      result.sum.then(sum => {
+        console.log('sum is : ' + sum);
+      });
       res.status(200).json(result.sum);
     })
     .catch(error => {
