@@ -17,18 +17,4 @@ results.get('/', (req, res) => {
   });
 });
 
-results.get('/:userId', (req, res) => {
-  models.Result.findByPk(req.params.userId)
-    .then(result => {
-      console.log(result.id);
-      result.sum.then(sum => {
-        console.log('sum is : ' + sum);
-      });
-      res.status(200).json(result.sum);
-    })
-    .catch(error => {
-      res.status(404).json(error);
-    });
-});
-
 module.exports = results;
