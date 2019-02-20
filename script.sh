@@ -15,3 +15,4 @@ npm install --save jsonwebtoken
 npm install --save mailgun
 npm install --save mailgun-js
 npm install --save cors
+npm install --save generate-password

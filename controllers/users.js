@@ -3,6 +3,7 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 const users = express.Router({ mergeParams: true });
 const mailgunConfig = require('../config/mailgun.json');
+const generator = require('generate-password');
 
 // index
 users.get('/', (req, res) => {
@@ -109,7 +110,7 @@ users.put('/:id/forgottenPassword', (req, res) => {
         res.status(500).json(error);
       });
   } else {
-    res.json({message: 'Please type in your new password.'});
+    res.json({ message: 'Please type in your new password.' });
   }
 });
 
@@ -129,6 +130,31 @@ users.delete('/:id', (req, res) => {
         });
     })
     .catch(error => res.status(500).json(error));
+});
+
+// FORGET PASSWORD
+users.put('/login/password', (req, res) => {
+  const password = generator.generate({
+    length: 10,
+    numbers: true
+  });
+  bcrypt.hash(password, 10, (err, hash) => {
+    if (err) {
+      return res.status(500).json({
+        error: err
+      });
+    } else {
+      models.User.update({
+        passwordHash: hash
+      }, { where: { email: req.body.email } })
+        .then(user => {
+          sendMail(password, req.body.email);
+          return res.json(user);
+        }).catch(err => {
+          return res.status(400).json({ message: err.message });
+        });
+    }
+  });
 });
 
 const sendMail = (password, email) => {
