@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test mocha --exit"
   },
   "author": "",
   "license": "ISC",
@@ -37,5 +37,10 @@
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.",
   "directories": {
     "doc": "docs"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.0",
+    "supertest": "^3.4.2"
   }
 }
