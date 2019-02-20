@@ -17,11 +17,10 @@ userLogin.post('/', (req, res) => {
           } else if (result) {
             const token = jwt.sign({data: {email: req.body.email, role: user.role, id: user.id}}, config.JWT_SECRET, {expiresIn: '1h'});
             res.status(200).json({message: 'Authentication successful.', token});
-            console.log(token);
+            models.User.update({lastLoginAt: new Date()}, {where: {id: user.id}});
           } else {
             res.status(401).json({ message: 'Authentication failed.' });
           }
-          console.log(result);
         });
       }
     })
