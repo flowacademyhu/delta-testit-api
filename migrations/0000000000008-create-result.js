@@ -23,7 +23,7 @@ module.exports = {
         }
       },
       status: {
-        type: Sequelize.ENUM('SENT', 'PENDING', 'CORRECTED')
+        type: Sequelize.ENUM('PUBLISHED', 'CLOSED')
       },
       createdAt: {
         allowNull: false,

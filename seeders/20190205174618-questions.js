@@ -9,7 +9,6 @@ module.exports = {
         picture: 'pic1',
         type: 'SelectOne',
         value: 2,
-        status: 'PUBLISHED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -19,7 +18,6 @@ module.exports = {
         picture: 'pic2',
         type: 'True or False',
         value: 1,
-        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,7 +27,6 @@ module.exports = {
         picture: 'pic3',
         type: 'SelectOne',
         value: 3,
-        status: 'CLOSED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -39,7 +36,6 @@ module.exports = {
         picture: 'pic4',
         type: 'True or False',
         value: 5,
-        status: 'PUBLISHED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -49,7 +45,6 @@ module.exports = {
         picture: 'pic5',
         type: 'SelectOne',
         value: 2,
-        status: 'CLOSED',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -59,7 +54,6 @@ module.exports = {
         picture: 'pic6',
         type: 'SelectOne',
         value: 3,
-        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -69,7 +63,6 @@ module.exports = {
         picture: 'pic6',
         type: 'SelectOne',
         value: 3,
-        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -79,7 +72,6 @@ module.exports = {
         picture: 'pic7',
         type: 'SelectOne',
         value: 3,
-        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       }

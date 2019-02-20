@@ -9,23 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING
       },
       time: {
         type: Sequelize.INTEGER
-      },
-      archivedTest: {
-        type: Sequelize.JSONB
-      },
-      status: {
-        type: Sequelize.ENUM('PUBLISHED', 'PROCESSING', 'CLOSED')
       },
       createdAt: {
         allowNull: false,
