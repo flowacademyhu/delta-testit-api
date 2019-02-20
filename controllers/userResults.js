@@ -26,6 +26,7 @@ userResults.get('/:id', (req, res) => {
   });
 });
 
+// create
 userResults.post('/:id/fill', (req, res) => {
   models.Result.findByPk(req.params.id)
     .then(async result => {

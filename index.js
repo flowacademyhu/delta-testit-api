@@ -45,7 +45,7 @@ createMiddleware(swaggerFilePath, app, (err, middleware) => {
   app.use('/tests', tests);
   app.use('/testQuestions', testQuestions);
   app.use('/subjectUsers', subjectUsers);
-  app.use('/users/login', userLogin);
+  app.use('/login', userLogin);
   app.use('/groups', groups);
   app.use('/results', results);
   app.use('/tests/:testId/results', testResults);
