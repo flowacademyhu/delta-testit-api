@@ -11,3 +11,5 @@ choosenAnswers.get('/', (req, res) => {
       res.status(404).json(error);
     });
 });
+
+module.exports = choosenAnswers;
