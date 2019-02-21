@@ -21,9 +21,9 @@ answers.post('/', (req, res) => {
     isCorrect: req.body.isCorrect,
     picture: req.body.picture
   }).then(answer => {
-    res.status(200).json(answer);
+    res.status(201).json(answer);
   }).catch(error => {
-    res.status(404).json(error);
+    res.status(500).json(error);
   });
 });
 
@@ -37,7 +37,7 @@ answers.delete('/:id', (req, res) => {
       models.Answer.destroy({where: {id: req.params.id}})
         .then(res.status(200).json({message: 'Answer with id ' + id + ' has been successfully deleted.'}))
         .catch(error => {
-          res.json(error);
+          res.status(500).json(error);
         });
     });
 });

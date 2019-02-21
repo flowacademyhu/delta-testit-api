@@ -19,13 +19,33 @@ userResults.get('/', (req, res) => {
 
 // show
 userResults.get('/:id', (req, res) => {
-  models.Result.findByPk(req.params.id).then(result => {
-    res.status(200).res.json(result);
-  }).catch(error => {
-    res.status(404).res.json(error);
-  });
+  models.Result.findByPk(req.params.id, {
+    include: [{
+      model: models.Test,
+      include: [{
+        model: models.TestQuestion,
+        include: [{
+          model: models.Question,
+          include: [{
+            model: models.Answer
+          }]
+        }]
+      }]
+    }, {
+      model: models.User
+    }]
+  })
+    .then(result => {
+      result.sum.then(sum => {
+      });
+      res.status(200).json(result);
+    })
+    .catch(error => {
+      res.status(404).json(error);
+    });
 });
 
+// create
 userResults.post('/:id/fill', (req, res) => {
   models.Result.findByPk(req.params.id)
     .then(async result => {
@@ -42,7 +62,7 @@ userResults.post('/:id/fill', (req, res) => {
         });
         choosenAnswers.push(choosenAnswer);
       });
-      res.json({choosenAnswers});
+      res.status(201).json({choosenAnswers});
     });
 });
 

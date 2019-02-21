@@ -36,7 +36,7 @@ module.exports = (req, res, next) => {
     return next();
   }
   if (!req.headers.authorization) {
-    res.status(409).json({message: 'Authorization failed.'});
+    res.status(401).json({message: 'Authorization failed.'});
   }
   const token = req.headers.authorization.split(' ')[1];
   console.log('Token is: ' + token);
@@ -48,7 +48,7 @@ module.exports = (req, res, next) => {
       if (endpoints[endpoint].includes(user.role)) {
         next();
       } else {
-        res.status(403).send('Unauthorized');
+        res.status(401).send('Unauthorized');
       }
     });
 };

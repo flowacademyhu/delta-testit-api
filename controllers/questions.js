@@ -46,9 +46,9 @@ questions.post('/', (req, res) => {
         picture: element.picture}));
     });
     let resp = Promise.all(promises);
-    res.status(200).json(resp);
+    res.status(201).json(resp);
   }).catch(error => {
-    res.status(404).json(error);
+    res.status(500).json(error);
   });
 });
 
@@ -66,7 +66,7 @@ questions.put('/:id', (req, res) => {
       res.status(200).json(question);
     })
     .catch(error => {
-      res.status(404).json(error);
+      res.status(500).json(error);
     });
 });
 
@@ -78,9 +78,9 @@ questions.delete('/:id', (req, res) => {
       models.TestQuestion.destroy({ where: { questionId: id } });
       models.Question.destroy({ where: { id: id } });
     })
-    .then(res.json('Question with id ' + id + ' has been successfully deleted.'))
+    .then(res.status(200).json('Question with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
-      res.status(404).json(error);
+      res.status(500).json(error);
     });
 });
 

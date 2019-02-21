@@ -13,6 +13,8 @@ tests.get('/', (req, res) => {
         model: models.Question,
         include: [{
           model: models.Subject
+        }, {
+          model: models.Answer
         }]
       }]
     }]
@@ -92,10 +94,56 @@ tests.post('/', async (req, res) => {
       promises.push(models.Results.create({testId: test.id, userId: userId, status: 'PUBLISHED'}));
     });
     let resp = await Promise.all(promises);
-    res.json({resp});
+    res.status(200).json({resp});
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
+});
+
+/*
+// create empty result
+tests.post('/:id', (req, res) => {
+  models.Test.findById(req.params.id)
+    .then(test => {
+      models.Result.create({
+        testId: test.id,
+        userId: req.body.userId,
+        status: 'PUBLISHED'
+      })
+        .then(result => {
+          res.status(201).json(result);
+        })
+        .catch(error => {
+          res.status(400).json(error);
+        });
+    })
+    .catch(error => {
+      res.status(404).json(error);
+    });
+});
+*/
+
+// create empty result
+tests.post('/:id', (req, res) => {
+  models.Test.findById(req.params.id)
+    .then(async test => {
+      let promises = [];
+      req.body.userIds.forEach(async userId => {
+        promises.push(models.Result.create({
+          testId: test.id,
+          userId: userId,
+          status: 'PUBLISHED'
+        }));
+        console.log(userId);
+      });
+      await Promise.all(promises);
+    })
+    .then(results => {
+      res.status(201).json({message: 'Test has been linked to group.'});
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
 });
 
 // update
