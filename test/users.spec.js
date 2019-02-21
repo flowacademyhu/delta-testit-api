@@ -1,3 +1,4 @@
+/* global describe it before */
 const request = require('supertest');
 const app = require('../index');
 const models = require('../models');
@@ -9,53 +10,34 @@ describe('TestIT API users tests', function () {
   before(function (done) {
     models.sequelize.sync({ force: true }).then(() => {
       console.log('Database rebuilt');
-        models.User.bulkCreate(
-          {
-            firstName: 'Adam',
-            lastName: 'Admin',
-            email: 'adam@admin.com',
-            encryptedPassword: '$2b$10$Cb4JfOVfZpJUnoN7VgJGeuWdLcfDxAwFGuPaLUosxoES6gE.CV9gm',
-            role: 'ADMIN',
-            groupId: group.id,
-            lastLogin: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            firstName: 'Stewart',
-            lastName: 'Student',
-            email: 'stewart@student.com',
-            encryptedPassword: '$2b$10$EoGUW0Mz342heoxa3JZolOEFZQPkOgYw1R9I10lVj7F4tiJlPsRRi',
-            role: 'STUDENT',
-            groupId: group.id,
-            lastLogin: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            firstName: 'Melvin',
-            lastName: 'Mentor',
-            email: 'melvin@mentor.com',
-            encryptedPassword: '$2b$10$vIZLboRowKILueNLeMTvEeYzjisZN86obb/WV0VMtNaT3ZquneU8O',
-            role: 'MENTOR',
-            groupId: group.id,
-            lastLogin: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date()
-          }
-        ).then((user) => {
-          global.token = jwt.sign(
+      models.Group.create({
+        name: 'DemoGroup'
+      })
+        .then(
+          models.User.create(
             {
-              email: user.email,
-              id: user.id,
-              role: user.role
-            },
-            config.JWT_SECRET,
-            { expiresIn: '1h' });
-          console.log('Admin user created');
-          done();
-        });
-      );
+              firstName: 'Adam',
+              lastName: 'Admin',
+              email: 'adam@admin.com',
+              encryptedPassword: '$2b$10$Cb4JfOVfZpJUnoN7VgJGeuWdLcfDxAwFGuPaLUosxoES6gE.CV9gm',
+              role: 'ADMIN',
+              groupId: 1,
+              lastLogin: new Date(),
+              createdAt: new Date(),
+              updatedAt: new Date()
+            }
+          ).then((user) => {
+            global.token = jwt.sign(
+              {
+                email: user.email,
+                id: user.id,
+                role: user.role
+              },
+              config.JWT_SECRET,
+              { expiresIn: '1h' });
+            console.log('Admin user created');
+            done();
+          }));
     });
   });
 
@@ -72,14 +54,24 @@ describe('TestIT API users tests', function () {
   describe('GET /user/:id', function () {
     it('respond with json user not found', function (done) {
       request(app)
-        .get('/users/11')
+        .get('/users/1')
         .set('Accept', 'application/json')
-        .set('Authorization', token)
+        .set('Authorization', global.token)
         .expect(400)
         .end((err) => {
           if (err) return done(err);
           done();
         });
     });
+  });
+});
+
+describe('PUT /users', function () {
+  it('respond with json containing the updated user', function (done) {
+    request(app)
+      .put('/users')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
   });
 });
