@@ -14,13 +14,7 @@
         "description": "Logs in user",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "required": "true",
-            "type": "object",
-            "schema": {
-              "$ref": "#/definitions/LoginRequest"
-            }
+            "$ref": "#/definitions/LoginRequest"
           }
         ],
         "responses": {
@@ -556,7 +550,7 @@
     },
     "/subjectUsers": {
       "get": {
-        "describtion": "Show subjectUsers",
+        "description": "Show subjectUsers",
         "responses": {
           "200": {
             "description": "Show groups by userid",
@@ -572,7 +566,7 @@
     },
     "/testQuestions": {
       "get": {
-        "describtion": "Show testQuestions",
+        "description": "Show testQuestions",
         "responses": {
           "200": {
             "description": "Show testQuestions by userid",
@@ -593,7 +587,7 @@
           {
             "name": "testId",
             "in": "path",
-            "required": "true",
+            "required": true,
             "type": "integer"
           }
         ],
@@ -611,7 +605,7 @@
           {
             "name": "userId",
             "in": "path",
-            "required": "true",
+            "required": true,
             "type": "integer"
           }
         ],
@@ -652,40 +646,16 @@
     "User": {
       "properties": {
         "role": {
-          "type": "string",
-          "enum": [
-            "ADMIN",
-            "STUDENT",
-            "MENTOR"
-          ],
-          "allowNull": false
+          "type": "string"
         },
         "firstName": {
-          "type": "string",
-          "allowNull": false,
-          "validate": {
-            "min": 3,
-            "max": 500,
-            "isAlpha": true
-          }
+          "type": "string"
         },
         "lastName": {
-          "type": "string",
-          "allowNull": false,
-          "notEmpty": true,
-          "validate": {
-            "min": 3,
-            "max": 500,
-            "isAlpha": true
-          }
+          "type": "string"
         },
         "email": {
-          "type": "string",
-          "allowNull": false,
-          "validate": {
-            "isEmail": true,
-            "max": 500
-          }
+          "type": "string"
         },
         "picture": {
           "type": "string"
@@ -697,27 +667,23 @@
           "type": "integer"
         },
         "lastLoginAt": {
-          "type": "date",
-          "defaultValue": "now"
+          "type": "string"
         }
       }
     },
     "Question": {
       "properties": {
         "text": {
-          "type": "string",
-          "allowNull": false
+          "type": "string"
         },
         "picture": {
           "type": "string"
         },
         "type": {
-          "type": "string",
-          "allowNull": false
+          "type": "string"
         },
         "value": {
-          "type": "integer",
-          "allowNull": false
+          "type": "integer"
         }
       }
     },
@@ -747,7 +713,13 @@
           "type": "string"
         },
         "time": {
-          "type": "integer"
+          "type": "string"
+        },
+        "questions": {
+          "type": "array"
+        },
+        "status": {
+          "type": "string"
         }
       }
     },
@@ -823,7 +795,7 @@
     "ChoosenAnswers": {
       "type": "array",
       "items": {
-        "$ref":"#/definitions/ChoosenAnswer"
+        "$ref": "#/definitions/ChoosenAnswer"
       }
     },
     "Answers": {
@@ -879,7 +851,7 @@
     "id": {
       "name": "id",
       "in": "path",
-      "required": "true",
+      "required": true,
       "type": "integer"
     },
     "userData": {

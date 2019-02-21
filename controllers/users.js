@@ -33,7 +33,7 @@ users.post('/', (req, res) => {
   models.User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (user >= 1) {
-        res.status(409).json('User with such an email already exits!');
+        res.status(400).json('User with such an email already exits!');
       } else {
         bcrypt.hash(req.body.password, 10)
           .then(hash => {

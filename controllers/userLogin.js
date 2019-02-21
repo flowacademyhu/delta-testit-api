@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
 userLogin.post('/', (req, res) => {
+  console.log(req.body);
   models.User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (!user) {
