@@ -9,6 +9,7 @@ const results = require('./controllers/results');
 const users = require('./controllers/users');
 const questions = require('./controllers/questions');
 const answers = require('./controllers/answers');
+const choosenAnswers = require('./controllers/choosenAnswers');
 const tests = require('./controllers/tests');
 const testQuestions = require('./controllers/testQuestions');
 const subjectUsers = require('./controllers/subjectUsers');
@@ -42,6 +43,7 @@ createMiddleware(swaggerFilePath, app, (err, middleware) => {
   app.use('/questions', questions);
   app.use('/users', users);
   app.use('/answers', answers);
+  app.use('/choosenAnswers', choosenAnswers);
   app.use('/tests', tests);
   app.use('/testQuestions', testQuestions);
   app.use('/subjectUsers', subjectUsers);
