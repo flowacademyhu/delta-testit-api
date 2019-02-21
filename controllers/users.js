@@ -7,7 +7,11 @@ const generator = require('generate-password');
 
 // index
 users.get('/', (req, res) => {
-  models.User.findAll().then(result => {
+  models.User.findAll({
+    include: [{
+      model: models.Group
+    }]
+  }).then(result => {
     res.status(200).json(result);
   }).catch(error => {
     res.status(404).res.json(error);

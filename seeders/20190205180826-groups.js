@@ -23,6 +23,13 @@ module.exports = {
         picture: 'groupPic3',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        name: 'Delta',
+        description: 'Best group',
+        picture: 'groupPic3',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },

@@ -22,13 +22,13 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        questionId: 6,
+        questionId: 5,
         testId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        questionId: 8,
+        questionId: 3,
         testId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -40,7 +40,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        questionId: 7,
+        questionId: 5,
         testId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
