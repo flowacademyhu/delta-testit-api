@@ -6,7 +6,12 @@ const tests = express.Router({ mergeParams: true });
 tests.get('/', (req, res) => {
   models.Test.findAll({
     include: [{
-      model: models.User
+      model: models.User,
+      include: [{
+        model: models.Group
+      }, {
+        model: models.Result
+      }]
     }, {
       model: models.TestQuestion,
       include: [{
@@ -90,13 +95,11 @@ tests.post('/', async (req, res) => {
     req.body.questions.map(async questionsId => {
       promises.push(models.TestQuestion.create({testId: test.id, questionId: questionsId}));
     });
-    req.body.users.map(async userId => {
-      promises.push(models.Results.create({testId: test.id, userId: userId, status: 'PUBLISHED'}));
-    });
     let resp = await Promise.all(promises);
     res.status(200).json({resp});
   } catch (error) {
-    res.status(500).json(error);
+    console.log(error);
+    res.status(500).json(error.message);
   }
 });
 
@@ -124,7 +127,7 @@ tests.post('/:id', (req, res) => {
 */
 
 // create empty result
-tests.post('/:id', (req, res) => {
+tests.post('/:id/create', (req, res) => {
   models.Test.findById(req.params.id)
     .then(async test => {
       let promises = [];
@@ -139,7 +142,7 @@ tests.post('/:id', (req, res) => {
       await Promise.all(promises);
     })
     .then(results => {
-      res.status(201).json({message: 'Test has been linked to group.'});
+      res.status(200).json({message: 'Test has been linked to group.'});
     })
     .catch(error => {
       res.status(500).json(error);

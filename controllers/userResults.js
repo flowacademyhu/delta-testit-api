@@ -1,6 +1,7 @@
 const express = require('express');
 const models = require('../models');
 const userResults = express.Router({ mergeParams: true });
+const { resultWithSum } = require('../lib/sum');
 
 // index
 userResults.get('/', (req, res) => {
@@ -36,8 +37,6 @@ userResults.get('/:id', (req, res) => {
     }]
   })
     .then(result => {
-      result.sum.then(sum => {
-      });
       res.status(200).json(result);
     })
     .catch(error => {
@@ -51,18 +50,33 @@ userResults.post('/:id/fill', (req, res) => {
     .then(async result => {
       result.update({status: 'CLOSED'});
       const choosenAnswers = [];
-      req.body.answerIds.forEach(async answerId => {
-        const answer = await models.Answer.findByPk(answerId);
+      // await req.body.answerIds.forEach(async answerId => {
+      // const answer = await models.Answer.findByPk(answerId);
+      // const question = await answer.getQuestion();
+      // const points = answer.isCorrect ? question.value : 0;
+      // const choosenAnswer = await models.ChoosenAnswer.create({
+      //   resultId: result.id,
+      //   answerId: answerId,
+      //   points
+      // });
+      for (let i = 0; i < req.body.answerIds.length; i++) {
+        const answer = await models.Answer.findByPk(req.body.answerIds[i]);
         const question = await answer.getQuestion();
         const points = answer.isCorrect ? question.value : 0;
         const choosenAnswer = await models.ChoosenAnswer.create({
           resultId: result.id,
-          answerId: answerId,
+          answerId: req.body.answerIds[i],
           points
         });
         choosenAnswers.push(choosenAnswer);
-      });
-      res.status(201).json({choosenAnswers});
+      }
+      try {
+        resultWithSum(result).then(preparedResults => {
+          res.status(201).json(preparedResults);
+        }).catch(console.log);
+      } catch (error) {
+        console.log(error);
+      }
     });
 });
 
