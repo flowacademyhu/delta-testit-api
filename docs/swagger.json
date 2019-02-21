@@ -621,6 +621,21 @@
           }
         }
       }
+    },
+    "/choosenAnswers": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Returns a list of all choosenAnswer",
+            "schema": {
+              "$ref": "#/definitions/ChoosenAnswer"
+            }
+          },
+          "400": {
+            "description": "Failed to show choosenAnswers"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -790,6 +805,25 @@
         "testId": {
           "type": "integer"
         }
+      }
+    },
+    "ChoosenAnswer": {
+      "properties": {
+        "resultId": {
+          "type": "integer"
+        },
+        "answerId": {
+          "type": "integer"
+        },
+        "points": {
+          "type": "integer"
+        }
+      }
+    },
+    "ChoosenAnswers": {
+      "type": "array",
+      "items": {
+        "$ref":"#/definitions/ChoosenAnswer"
       }
     },
     "Answers": {
