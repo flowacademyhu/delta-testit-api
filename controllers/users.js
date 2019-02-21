@@ -80,7 +80,7 @@ users.put('/:id', (req, res) => {
           res.status(200).json({ message: name + ' has been succesfully updated.' });
         })
         .catch(error => {
-          res.status(406).json(error);
+          res.status(400).json(error);
         });
     })
       .catch(error => {

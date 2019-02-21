@@ -64,14 +64,57 @@ describe('TestIT API users tests', function () {
         });
     });
   });
-});
 
-describe('PUT /users', function () {
-  it('respond with json containing the updated user', function (done) {
-    request(app)
-      .put('/users')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
+  describe('POST /users', function () {
+    it('creates new user', function (done) {
+      let firstName = 'Stewart';
+      let lastName = 'Student';
+      let email = 'stewart@admin.com';
+      let password = 'stewart';
+      let role = 'STUDENT';
+      let groupId = 1;
+
+      request(app)
+        .post('/users')
+        .set('Accept', 'application/json')
+        .set('Authorization', global.token)
+        .send({role, firstName, lastName, email, password, groupId})
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('PUT /users/:id', function () {
+    it('updates user', function (done) {
+      let firstName = 'Stephen';
+
+      request(app)
+        .put('/users/1')
+        .set('Accept', 'application/json')
+        .set('Authorization', global.token)
+        .send({firstName})
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /users/:id', function () {
+    it('deletes user by id', function (done) {
+      request(app)
+        .delete('/users/1')
+        .set('Accept', 'application/json')
+        .set('Authorization', global.token)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
   });
 });
