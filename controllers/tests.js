@@ -13,6 +13,8 @@ tests.get('/', (req, res) => {
         model: models.Question,
         include: [{
           model: models.Subject
+        }, {
+          model: models.Answer
         }]
       }]
     }]
@@ -104,7 +106,7 @@ tests.post('/:id', (req, res) => {
     .then(test => {
       models.Result.create({
         testId: test.id,
-        userId: test.userId,
+        userId: req.body.userId,
         status: 'PUBLISHED'
       })
         .then(result => {
