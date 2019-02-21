@@ -634,12 +634,17 @@
   },
   "definitions": {
     "LoginRequest": {
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
+      "name": "body",
+      "in": "body",
+      "type": "object",
+      "schema": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
         }
       }
     },
