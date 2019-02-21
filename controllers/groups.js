@@ -34,9 +34,9 @@ groups.post('/', (req, res) => {
     description: req.body.description,
     picture: req.body.picture
   }).then(result => {
-    res.status(200).json(result);
+    res.status(201).json(result);
   }).catch(error => {
-    res.status(404).json(error);
+    res.status(500).json(error);
   });
 });
 
@@ -52,7 +52,7 @@ groups.put('/:id', (req, res) => {
       res.status(200).json(updated);
     })
     .catch(error => {
-      res.status(404).json(error);
+      res.status(500).json(error);
     });
 });
 

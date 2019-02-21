@@ -36,9 +36,7 @@ userResults.get('/:id', (req, res) => {
     }]
   })
     .then(result => {
-      console.log(result.id);
       result.sum.then(sum => {
-        console.log('sum is : ' + sum);
       });
       res.status(200).json(result);
     })
@@ -64,7 +62,7 @@ userResults.post('/:id/fill', (req, res) => {
         });
         choosenAnswers.push(choosenAnswer);
       });
-      res.json({choosenAnswers});
+      res.status(201).json({choosenAnswers});
     });
 });
 

@@ -4,6 +4,16 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Subjects', [
       {
+        name: 'Demo',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Soft Skills',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         name: 'Linux',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -15,6 +25,11 @@ module.exports = {
       },
       {
         name: 'Progtetelek',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'NodeJs',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -34,17 +49,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'NodeJs',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
         name: 'Angular',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: 'Soft Skills',
         createdAt: new Date(),
         updatedAt: new Date()
       }

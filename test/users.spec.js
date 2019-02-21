@@ -4,20 +4,41 @@ const models = require('../models');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
-describe('Cardit API users tests', function () {
+describe('TestIT API users tests', function () {
   this.timeout(10000);
   before(function (done) {
     models.sequelize.sync({ force: true }).then(() => {
       console.log('Database rebuilt');
-      models.Group.create({ name: 'Group 1' }).then(group => {
-        models.User.create(
+        models.User.bulkCreate(
           {
-            firstName: 'Admin',
+            firstName: 'Adam',
             lastName: 'Admin',
-            email: 'admin@admin.com',
-            passwordHash: '$2a$10$g7ILhN6usXTJ56B3sOVbwuX4LLGwumdIzeAr4s0xHabLnfSJIaKSa',
-            role: 'admin',
-            GroupId: group.id,
+            email: 'adam@admin.com',
+            encryptedPassword: '$2b$10$Cb4JfOVfZpJUnoN7VgJGeuWdLcfDxAwFGuPaLUosxoES6gE.CV9gm',
+            role: 'ADMIN',
+            groupId: group.id,
+            lastLogin: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            firstName: 'Stewart',
+            lastName: 'Student',
+            email: 'stewart@student.com',
+            encryptedPassword: '$2b$10$EoGUW0Mz342heoxa3JZolOEFZQPkOgYw1R9I10lVj7F4tiJlPsRRi',
+            role: 'STUDENT',
+            groupId: group.id,
+            lastLogin: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            firstName: 'Melvin',
+            lastName: 'Mentor',
+            email: 'melvin@mentor.com',
+            encryptedPassword: '$2b$10$vIZLboRowKILueNLeMTvEeYzjisZN86obb/WV0VMtNaT3ZquneU8O',
+            role: 'MENTOR',
+            groupId: group.id,
             lastLogin: new Date(),
             createdAt: new Date(),
             updatedAt: new Date()
@@ -34,7 +55,7 @@ describe('Cardit API users tests', function () {
           console.log('Admin user created');
           done();
         });
-      });
+      );
     });
   });
 

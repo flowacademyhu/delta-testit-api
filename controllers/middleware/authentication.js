@@ -48,7 +48,7 @@ module.exports = (req, res, next) => {
       if (endpoints[endpoint].includes(user.role)) {
         next();
       } else {
-        res.status(403).send('Unauthorized');
+        res.status(401).send('Unauthorized');
       }
     });
 };

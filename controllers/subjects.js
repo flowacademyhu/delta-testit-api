@@ -30,9 +30,9 @@ subjects.post('/', (req, res) => {
   models.Subject.create({
     name: req.body.name
   }).then(subject => {
-    res.status(200).json(subject);
+    res.status(201).json(subject);
   }).catch(error => {
-    res.status(404).json(error);
+    res.status(500).json(error);
   });
 });
 
@@ -47,7 +47,7 @@ subjects.put('/:id', (req, res) => {
       res.status(200).json(updated);
     })
     .catch(error => {
-      res.status(404).json(error);
+      res.status(500).json(error);
     });
 });
 
@@ -60,7 +60,7 @@ subjects.delete('/:id', (req, res) => {
       models.Subject.destroy({where: {id: req.params.id}});
     })
     .then(
-      res.json('Subject with id ' + id + ' has been successfully deleted.'))
+      res.status(200).json('Subject with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
       res.status(500).json({message: error});
     });

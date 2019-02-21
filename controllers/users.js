@@ -33,7 +33,7 @@ users.post('/', (req, res) => {
   models.User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (user >= 1) {
-        res.status(200).json('User with such an email already exits!');
+        res.status(409).json('User with such an email already exits!');
       } else {
         bcrypt.hash(req.body.password, 10)
           .then(hash => {
@@ -71,7 +71,7 @@ users.put('/:id', (req, res) => {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
-          encryptedPassword: req.body.password || null,
+          encryptedPassword: req.body.password,
           groupId: req.body.groupId
         },
         { where: { id: req.params.id } })
@@ -89,31 +89,29 @@ users.put('/:id', (req, res) => {
   }
 });
 
-// update
-users.put('/:id/forgottenPassword', (req, res) => {
-  if (req.body.password) {
-    bcrypt.hash(req.body.password, 10).then(hash => {
-      let originalPassword = req.body.password;
-      req.body.password = hash;
-      models.User.update(
-        {
-          encryptedPassword: req.body.password
-        },
-        { where: { id: req.params.id } })
-        .then(user => {
-          sendMail2(originalPassword, user.email);
-          res.status(200).json({ message: 'New password has been succesfully sent.' });
-        })
-        .catch(error => {
-          res.status(406).json(error);
-        });
-    })
-      .catch(error => {
-        res.status(500).json(error);
+// Forgotten password
+users.put('/login/password', (req, res) => {
+  const password = generator.generate({
+    length: 10,
+    numbers: true
+  });
+  bcrypt.hash(password, 10, (err, hash) => {
+    if (err) {
+      res.status(500).json({
+        error: err
       });
-  } else {
-    res.json({ message: 'Please type in your new password.' });
-  }
+    } else {
+      models.User.update({
+        encryptedPassword: hash
+      }, { where: { email: req.body.email } })
+        .then(user => {
+          sendMail2(password, req.body.email);
+          res.status(200).json(user);
+        }).catch(error => {
+          res.status(500).json(error);
+        });
+    }
+  });
 });
 
 // delete
@@ -126,37 +124,12 @@ users.delete('/:id', (req, res) => {
             .then(() => {
               models.User.destroy({ where: { id: req.params.id } })
                 .then(() => {
-                  res.json({ message: 'User has been successfully deleted.' });
+                  res.status(200).json({ message: 'User has been successfully deleted.' });
                 });
             });
         });
     })
     .catch(error => res.status(500).json(error));
-});
-
-// FORGET PASSWORD
-users.put('/login/password', (req, res) => {
-  const password = generator.generate({
-    length: 10,
-    numbers: true
-  });
-  bcrypt.hash(password, 10, (err, hash) => {
-    if (err) {
-      return res.status(500).json({
-        error: err
-      });
-    } else {
-      models.User.update({
-        encryptedPassword: hash
-      }, { where: { email: req.body.email } })
-        .then(user => {
-          sendMail(password, req.body.email);
-          return res.json(user);
-        }).catch(err => {
-          return res.status(400).json({ message: err.message });
-        });
-    }
-  });
 });
 
 const sendMail = (password, email) => {

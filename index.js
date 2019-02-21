@@ -19,7 +19,7 @@ const userResults = require('./controllers/userResults');
 const authentication = require('./controllers/middleware/authentication');
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerFilePath = './docs/swagger.json';
+const swaggerFilePath = __dirname + './docs/swagger.json';
 const createMiddleware = require('swagger-express-middleware');
 
 app.use(cors());
