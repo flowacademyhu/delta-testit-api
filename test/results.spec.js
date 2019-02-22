@@ -33,37 +33,50 @@ describe('TestIT API users tests', function () {
               role: 'ADMIN',
               groupId: group.id
             }
-          ).then((user) => {
-            const token = jwt.sign({
-              data: {
-                email: user.email,
-                id: user.id,
-                role: user.role
-              }},
-            config.JWT_SECRET,
-            { expiresIn: '1h' });
-            global.token = `Bearer ${token}`;
-            console.log('Admin user created');
-            done();
-          });
+          )
+            .then((user) => {
+              global.token = jwt.sign(
+                {
+                  email: user.email,
+                  id: user.id,
+                  role: user.role
+                },
+                config.JWT_SECRET,
+                { expiresIn: '1h' });
+              console.log('Admin user created');
+              models.Test.create({
+                name: 'Demo Test',
+                time: 30
+              })
+                .then((test) => {
+                  models.Result.create(
+                    {
+                      userId: test.userId,
+                      testId: test.id,
+                      status: 'PUBLISHED'
+                    }).then((result) => {
+                    done();
+                  });
+                });
+            });
         });
     });
   });
 
-  describe('GET /users', function () {
-    it('responds with json containing a list of all users', function (done) {
+  describe('GET /results', function () {
+    it('responds with json containing a list of all results', function (done) {
       request(app)
-        .get('/users')
+        .get('/results')
         .set('Accept', 'application/json')
-        .set('Authorization', global.token)
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
   });
-  describe('GET /users/:id', function () {
-    it('responds with json containing user with given id', function (done) {
+
+  describe('GET /results/:id', function () {
+    it('responds with json containing result with given id', function (done) {
       request(app)
-        .get('/users/1')
+        .get('/results/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .expect(200)
@@ -74,21 +87,18 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('POST /users', function () {
-    it('creates new user', function (done) {
-      let firstName = 'Stewart';
-      let lastName = 'Student';
-      let email = 'stewart@admin.com';
-      let password = 'stewart';
-      let role = 'STUDENT';
-      let groupId = 1;
+  describe('POST /results', function () {
+    it('creates new result', function (done) {
+      let testId = 1;
+      let userId = 1;
+      let status = 'PUBLISHED';
 
       request(app)
-        .post('/users')
+        .post('/results')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({role, firstName, lastName, email, password, groupId})
-        .expect(201)
+        .send({testId, userId, status})
+        .expect(200)
         .end((err) => {
           if (err) return done(err);
           done();
@@ -96,28 +106,27 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('PUT /users/:id', function () {
-    it('updates user with given id', function (done) {
-      let firstName = 'Stephen';
+  describe('PUT /results/:id', function () {
+    it('updates result with given id', function (done) {
+      let status = 'CLOSED';
 
       request(app)
-        .put('/users/1')
+        .put('/results/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({firstName})
+        .send({status})
         .expect(200)
-        .end((err, res) => {
-          console.log(err, res);
+        .end((err) => {
           if (err) return done(err);
           done();
         });
     });
   });
 
-  describe('DELETE /users/:id', function () {
-    it('deletes user by id with given id', function (done) {
+  describe('DELETE /results/:id', function () {
+    it('deletes result with given id', function (done) {
       request(app)
-        .delete('/users/1')
+        .delete('/results/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .expect(200)

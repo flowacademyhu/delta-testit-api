@@ -14,7 +14,7 @@ users.get('/', (req, res) => {
   }).then(result => {
     res.status(200).json(result);
   }).catch(error => {
-    res.status(404).res.json(error);
+    res.status(404).json(error);
   });
 });
 
