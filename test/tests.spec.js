@@ -32,16 +32,16 @@ describe('TestIT API tests tests', function () {
             role: 'ADMIN',
             groupId: group.id
           }).then(user => {
-            global.token = jwt.sign(
-              {
+            const token = jwt.sign({
+              data: {
                 email: user.email,
                 id: user.id,
                 role: user.role
-              },
-              config.JWT_SECRET,
-              { expiresIn: '1h' });
+              }},
+            config.JWT_SECRET,
+            { expiresIn: '1h' });
+            global.token = `Bearer ${token}`;
             console.log('Admin user created');
-
             models.Test.create({
               userId: user.id,
               name: 'Demo Test',
@@ -89,7 +89,7 @@ describe('TestIT API tests tests', function () {
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .send({ userId, name, time })
-        .expect(200)
+        .expect(201)
         .end((err) => {
           if (err) return done(err);
           done();

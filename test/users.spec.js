@@ -60,6 +60,7 @@ describe('TestIT API users tests', function () {
         .expect(200, done);
     });
   });
+
   describe('GET /users/:id', function () {
     it('responds with json containing user with given id', function (done) {
       request(app)
