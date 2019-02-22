@@ -16,3 +16,6 @@ npm install --save mailgun
 npm install --save mailgun-js
 npm install --save cors
 npm install --save generate-password
+npm install --save-dev mocha
+npm install --save-dev chai
+npm install --save-dev supertest

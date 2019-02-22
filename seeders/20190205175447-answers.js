@@ -5,15 +5,15 @@ module.exports = {
     return queryInterface.bulkInsert('Answers', [
       {
         questionId: 1,
-        text: 'Answer A',
-        isCorrect: true,
+        text: 'Attól függ mennyire van reggel.',
+        isCorrect: false,
         picture: 'answerPic1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         questionId: 1,
-        text: 'Answer B',
+        text: 'Mindig asszertív vagyok.',
         isCorrect: true,
         picture: 'answerPic2',
         createdAt: new Date(),
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         questionId: 1,
-        text: 'Answer C',
+        text: 'Hajaj...',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         questionId: 1,
-        text: 'Answer D',
+        text: 'Nem kávézok.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         questionId: 2,
-        text: 'Answer A',
+        text: 'Próbáltam, de csak japán nyelvű leírást találtam.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         questionId: 2,
-        text: 'Answer B',
+        text: 'Mi az a sequelize dokumentáció?',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -53,7 +53,7 @@ module.exports = {
       },
       {
         questionId: 2,
-        text: 'Answer C',
+        text: 'Nem kellett, tudom fejből.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -61,7 +61,15 @@ module.exports = {
       },
       {
         questionId: 2,
-        text: 'Answer D',
+        text: 'Igen, csemegéztem belőle ma is.',
+        isCorrect: true,
+        picture: 'answerPic3',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        questionId: 3,
+        text: 'Motivált/demotivált.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -69,7 +77,15 @@ module.exports = {
       },
       {
         questionId: 3,
-        text: 'Answer A',
+        text: 'Modulator-demodulator.',
+        isCorrect: true,
+        picture: 'answerPic3',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        questionId: 3,
+        text: 'Modern organikus déli egészséges mandarin.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -77,23 +93,7 @@ module.exports = {
       },
       {
         questionId: 3,
-        text: 'Answer B',
-        isCorrect: false,
-        picture: 'answerPic3',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        questionId: 3,
-        text: 'Answer C',
-        isCorrect: false,
-        picture: 'answerPic3',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        questionId: 3,
-        text: 'Answer D',
+        text: 'Mindjárt óriásit derülünk ezen a műsoron.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -101,7 +101,7 @@ module.exports = {
       },
       {
         questionId: 4,
-        text: 'Answer A',
+        text: 'Kettő.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -109,7 +109,15 @@ module.exports = {
       },
       {
         questionId: 4,
-        text: 'Answer B',
+        text: 'Egy sem, te lüke.',
+        isCorrect: true,
+        picture: 'answerPic3',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        questionId: 4,
+        text: 'Négy.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -117,15 +125,7 @@ module.exports = {
       },
       {
         questionId: 4,
-        text: 'Answer C',
-        isCorrect: false,
-        picture: 'answerPic3',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        questionId: 4,
-        text: 'Answer D',
+        text: 'Nyolc.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -133,7 +133,7 @@ module.exports = {
       },
       {
         questionId: 5,
-        text: 'Answer A',
+        text: 'Azt a "stash" paranccsal kell?',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -141,7 +141,7 @@ module.exports = {
       },
       {
         questionId: 5,
-        text: 'Answer B',
+        text: 'A főnök mondta, hogy olyat itt nem csinálunk.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),
@@ -149,15 +149,15 @@ module.exports = {
       },
       {
         questionId: 5,
-        text: 'Answer C',
-        isCorrect: false,
+        text: 'Igen, ahányszor egy új funkció működött.',
+        isCorrect: true,
         picture: 'answerPic3',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         questionId: 5,
-        text: 'Answer D',
+        text: 'Igen, de sikertelenül.',
         isCorrect: false,
         picture: 'answerPic3',
         createdAt: new Date(),

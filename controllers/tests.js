@@ -103,29 +103,6 @@ tests.post('/', async (req, res) => {
   }
 });
 
-/*
-// create empty result
-tests.post('/:id', (req, res) => {
-  models.Test.findById(req.params.id)
-    .then(test => {
-      models.Result.create({
-        testId: test.id,
-        userId: req.body.userId,
-        status: 'PUBLISHED'
-      })
-        .then(result => {
-          res.status(201).json(result);
-        })
-        .catch(error => {
-          res.status(400).json(error);
-        });
-    })
-    .catch(error => {
-      res.status(404).json(error);
-    });
-});
-*/
-
 // create empty result
 tests.post('/:id/create', (req, res) => {
   models.Test.findById(req.params.id)
