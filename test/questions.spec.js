@@ -33,37 +33,50 @@ describe('TestIT API users tests', function () {
               role: 'ADMIN',
               groupId: group.id
             }
-          ).then((user) => {
-            const token = jwt.sign({
-              data: {
-                email: user.email,
-                id: user.id,
-                role: user.role
-              }},
-            config.JWT_SECRET,
-            { expiresIn: '1h' });
-            global.token = `Bearer ${token}`;
-            console.log('Admin user created');
-            done();
-          });
+          )
+            .then((user) => {
+              global.token = jwt.sign(
+                {
+                  email: user.email,
+                  id: user.id,
+                  role: user.role
+                },
+                config.JWT_SECRET,
+                { expiresIn: '1h' });
+              console.log('Admin user created');
+              models.Subject.create({
+                name: 'DemoSubject'
+              })
+                .then((subject) => {
+                  models.Question.create(
+                    {
+                      subjectId: 1,
+                      text: 'Demo text',
+                      type: 'True of False',
+                      value: 3
+                    }).then((question) => {
+                    done();
+                  });
+                });
+            });
         });
     });
   });
 
-  describe('GET /users', function () {
-    it('responds with json containing a list of all users', function (done) {
+  describe('GET /questions', function () {
+    it('responds with json containing a list of all questions', function (done) {
       request(app)
-        .get('/users')
+        .get('/questions')
         .set('Accept', 'application/json')
-        .set('Authorization', global.token)
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
   });
-  describe('GET /users/:id', function () {
-    it('responds with json containing user with given id', function (done) {
+
+  describe('GET /questions/:id', function () {
+    it('responds with json containing question with given id', function (done) {
       request(app)
-        .get('/users/1')
+        .get('/questions/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .expect(200)
@@ -74,21 +87,20 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('POST /users', function () {
-    it('creates new user', function (done) {
-      let firstName = 'Stewart';
-      let lastName = 'Student';
-      let email = 'stewart@admin.com';
-      let password = 'stewart';
-      let role = 'STUDENT';
-      let groupId = 1;
+  describe('POST /questions', function () {
+    it('creates new question', function (done) {
+      let subjectId = 1;
+      let text = 'Demo question';
+      let picture = null;
+      let type = 'True or False';
+      let value = 2;
 
       request(app)
-        .post('/users')
+        .post('/questions')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({role, firstName, lastName, email, password, groupId})
-        .expect(201)
+        .send({subjectId, text, picture, type, value})
+        .expect(200)
         .end((err) => {
           if (err) return done(err);
           done();
@@ -96,28 +108,27 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('PUT /users/:id', function () {
-    it('updates user with given id', function (done) {
-      let firstName = 'Stephen';
+  describe('PUT /questions/:id', function () {
+    it('updates question with given id', function (done) {
+      let text = 'This is a demo question';
 
       request(app)
-        .put('/users/1')
+        .put('/questions/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({firstName})
+        .send({text})
         .expect(200)
-        .end((err, res) => {
-          console.log(err, res);
+        .end((err) => {
           if (err) return done(err);
           done();
         });
     });
   });
 
-  describe('DELETE /users/:id', function () {
-    it('deletes user by id with given id', function (done) {
+  describe('DELETE /questions/:id', function () {
+    it('deletes question with given id', function (done) {
       request(app)
-        .delete('/users/1')
+        .delete('/questions/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .expect(200)

@@ -33,37 +33,42 @@ describe('TestIT API users tests', function () {
               role: 'ADMIN',
               groupId: group.id
             }
-          ).then((user) => {
-            const token = jwt.sign({
-              data: {
-                email: user.email,
-                id: user.id,
-                role: user.role
-              }},
-            config.JWT_SECRET,
-            { expiresIn: '1h' });
-            global.token = `Bearer ${token}`;
-            console.log('Admin user created');
-            done();
-          });
+          )
+            .then((user) => {
+              global.token = jwt.sign(
+                {
+                  email: user.email,
+                  id: user.id,
+                  role: user.role
+                },
+                config.JWT_SECRET,
+                { expiresIn: '1h' });
+              console.log('Admin user created');
+              models.Subject.create({
+                name: 'Demo Subject'
+              })
+                .then((subject) => {
+                  done();
+                });
+            });
         });
     });
   });
 
-  describe('GET /users', function () {
-    it('responds with json containing a list of all users', function (done) {
+  describe('GET /subjects', function () {
+    it('responds with json containing a list of all subjects', function (done) {
       request(app)
-        .get('/users')
+        .get('/subjects')
         .set('Accept', 'application/json')
-        .set('Authorization', global.token)
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
   });
-  describe('GET /users/:id', function () {
-    it('responds with json containing user with given id', function (done) {
+
+  describe('GET /subjects/:id', function () {
+    it('responds with json containing subject with given id', function (done) {
       request(app)
-        .get('/users/1')
+        .get('/subjects/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .expect(200)
@@ -74,21 +79,16 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('POST /users', function () {
-    it('creates new user', function (done) {
-      let firstName = 'Stewart';
-      let lastName = 'Student';
-      let email = 'stewart@admin.com';
-      let password = 'stewart';
-      let role = 'STUDENT';
-      let groupId = 1;
+  describe('POST /subjects', function () {
+    it('creates new subject', function (done) {
+      let name = 'Java';
 
       request(app)
-        .post('/users')
+        .post('/subjects')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({role, firstName, lastName, email, password, groupId})
-        .expect(201)
+        .send({name})
+        .expect(200)
         .end((err) => {
           if (err) return done(err);
           done();
@@ -96,28 +96,27 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('PUT /users/:id', function () {
-    it('updates user with given id', function (done) {
-      let firstName = 'Stephen';
+  describe('PUT /subjects/:id', function () {
+    it('updates subject with given id', function (done) {
+      let name = 'Angular';
 
       request(app)
-        .put('/users/1')
+        .put('/subjects/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({firstName})
+        .send({name})
         .expect(200)
-        .end((err, res) => {
-          console.log(err, res);
+        .end((err) => {
           if (err) return done(err);
           done();
         });
     });
   });
 
-  describe('DELETE /users/:id', function () {
-    it('deletes user by id with given id', function (done) {
+  describe('DELETE /subjects/:id', function () {
+    it('deletes subject with given id', function (done) {
       request(app)
-        .delete('/users/1')
+        .delete('/subjects/1')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
         .expect(200)
