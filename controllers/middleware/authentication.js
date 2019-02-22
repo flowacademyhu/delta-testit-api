@@ -14,7 +14,7 @@ const endpoints = {
   'PUT /questions/{id}': ['MENTOR', 'ADMIN'],
   'DELETE /questions/{id}': ['MENTOR', 'ADMIN'],
 
-  'GET /tests': ['MENTOR', 'ADMIN'],
+  'GET /tests': ['MENTOR', 'ADMIN', 'STUDENT'],
   'GET /tests/{id}': ['MENTOR', 'ADMIN'],
   'POST /tests': ['MENTOR', 'ADMIN'],
   'PUT /tests/{id}': ['MENTOR', 'ADMIN'],
