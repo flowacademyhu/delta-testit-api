@@ -14,9 +14,9 @@ subjects.get('/', (req, res) => {
 // show
 subjects.get('/:id', (req, res) => {
   models.Subject.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        res.status(200).json(result);
+    .then(subject => {
+      if (subject) {
+        res.status(200).json(subject);
       } else {
         res.status(404).json({message: 'Subject with given id does not exist.'});
       }
@@ -30,9 +30,9 @@ subjects.post('/', (req, res) => {
   models.Subject.create({
     name: req.body.name
   }).then(subject => {
-    res.status(200).json(subject);
+    res.status(201).json(subject);
   }).catch(error => {
-    res.status(404).json(error);
+    res.status(500).json(error);
   });
 });
 
@@ -47,22 +47,20 @@ subjects.put('/:id', (req, res) => {
       res.status(200).json(updated);
     })
     .catch(error => {
-      res.status(404).json(error);
+      res.status(500).json(error);
     });
 });
 
 // delete
 subjects.delete('/:id', (req, res) => {
-  models.Subject.findById(req.params.id)
-    .then(result => {
-      if (result) {
-        let id = result.id;
-        models.Subject.destroy({where: {id: req.params.id}})
-          .then(res.send('Subject with id ' + id + ' has been successfully deleted.'));
-      } else {
-        res.status(404).json({message: 'Subject with given id does not exist.'});
-      }
+  let id = req.params.id;
+  models.Question.update({subjectId: null}, {where: {subjectId: req.params.id}})
+    .then(models.SubjectUser.update({subjectId: null}, {where: {subjectId: req.params.id}}))
+    .then(() => {
+      models.Subject.destroy({where: {id: req.params.id}});
     })
+    .then(
+      res.status(200).json('Subject with id ' + id + ' has been successfully deleted.'))
     .catch(error => {
       res.status(500).json({message: error});
     });

@@ -5,31 +5,46 @@ module.exports = {
     return queryInterface.bulkInsert('Questions', [
       {
         subjectId: 1,
-        text: 'First question',
-        picture: 'pic1',
-        type: 'True or False',
-        value: 2,
-        status: 'PUBLISHED',
+        text: 'Mennyire vagy asszertív a reggeli kávéd előtt?',
+        picture: 'pic7',
+        type: 'Select one',
+        value: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         subjectId: 1,
-        text: 'First question',
-        picture: 'pic1',
-        type: 'True or False',
+        text: 'Olvastál e ma a Sequelize dokumentációból?',
+        picture: 'pic2',
+        type: 'Select one',
         value: 1,
-        status: 'PROCESSING',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         subjectId: 1,
-        text: 'First question',
-        picture: 'pic1',
-        type: 'True or False',
+        text: 'Minek a rövidítése a Modem?',
+        picture: 'pic3',
+        type: 'Select one',
+        value: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        subjectId: 1,
+        text: 'Hány pontosvessző van egy átlagos for ciklusban Python-ban?',
+        picture: 'pic5',
+        type: 'Select one',
         value: 2,
-        status: 'CLOSED',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        subjectId: 1,
+        text: 'Push-oltál e ma a git-re?',
+        picture: 'pic6',
+        type: 'Select one',
+        value: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       }
