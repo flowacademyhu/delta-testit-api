@@ -84,20 +84,6 @@ describe('TestIT API users tests', function () {
     });
   });
 
-  describe('GET /answers/:id', function () {
-    it('responds with json containing answer with given id', function (done) {
-      request(app)
-        .get('/answers/1')
-        .set('Accept', 'application/json')
-        .set('Authorization', global.token)
-        .expect(200)
-        .end((err) => {
-          if (err) return done(err);
-          done();
-        });
-    });
-  });
-
   describe('POST /answers', function () {
     it('creates new question', function (done) {
       let questionId = 1;
@@ -111,23 +97,6 @@ describe('TestIT API users tests', function () {
         .set('Authorization', global.token)
         .send({questionId, text, isCorrect, picture})
         .expect(201)
-        .end((err) => {
-          if (err) return done(err);
-          done();
-        });
-    });
-  });
-
-  describe('PUT /answers/:id', function () {
-    it('updates answer with given id', function (done) {
-      let text = 'This is a demo answer';
-
-      request(app)
-        .put('/answers/1')
-        .set('Accept', 'application/json')
-        .set('Authorization', global.token)
-        .send({text})
-        .expect(200)
         .end((err) => {
           if (err) return done(err);
           done();
