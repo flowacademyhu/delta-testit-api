@@ -109,18 +109,4 @@ describe('TestIT API groups tests', function () {
         });
     });
   });
-
-  describe('DELETE /groups/:id', function () {
-    it('deletes group by id with given id', function (done) {
-      request(app)
-        .delete('/groups/1')
-        .set('Accept', 'application/json')
-        .set('Authorization', global.token)
-        .expect(200)
-        .end((err) => {
-          if (err) return done(err);
-          done();
-        });
-    });
-  });
 });

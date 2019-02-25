@@ -90,9 +90,8 @@ describe('TestIT API users tests', function () {
 
   describe('POST /questions', function () {
     it('creates new question', function (done) {
-      let subjectId = 1;
+      // let subjectId = 1;
       let text = 'Demo question';
-      let picture = null;
       let type = 'True or False';
       let value = 2;
 
@@ -100,9 +99,10 @@ describe('TestIT API users tests', function () {
         .post('/questions')
         .set('Accept', 'application/json')
         .set('Authorization', global.token)
-        .send({subjectId, text, picture, type, value})
+        .send({text, type, value})
         .expect(201)
-        .end((err) => {
+        .end((err, res) => {
+          console.log(err);
           if (err) return done(err);
           done();
         });
